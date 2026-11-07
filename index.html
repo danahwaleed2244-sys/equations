@@ -353,7 +353,7 @@ const G={
 function makeTest(kind){return (kind==="pre"?PRE:POST).map(id=>BYID[id]);}
 
 /* ---------- Google Sheets (اختياري) ---------- */
-const CFG={scriptUrl:""}; /* ← ضعي هنا رابط تطبيق الويب من Google Apps Script */
+const CFG={scriptUrl:"https://script.google.com/macros/s/AKfycbxZAUVLbZHn9UK33mJMecJezFs8Ocws3_F1X5cqDSpXzRiqVeUzQ8p6Ol4PEZH5UpvE/exec"}; /* ← ضعي هنا رابط تطبيق الويب من Google Apps Script */
 const TRIP="المعادلات الخطية";
 const remote=()=>/^https:\/\/script\.google(usercontent)?\.com\//.test(CFG.scriptUrl);
 function post(body){if(!remote())return;try{fetch(CFG.scriptUrl,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({trip:TRIP},body))}).catch(()=>{});}catch(e){}}
