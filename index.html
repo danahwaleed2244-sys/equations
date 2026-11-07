@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>المعادلات الخطية – الاختبارات والتدريب العلاجي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#F4F6FF; --card:#FFFFFF; --ink:#1E2A5A; --muted:#5A6488;
+  --grid:#DFE4FA; --line:#CCD3F0; --primary:#4152D9; --on-primary:#FFFFFF; --accent:#FF8A1F;
+  --ok:#12936F; --ok-bg:#DDF5EC; --bad:#D9434F; --bad-bg:#FDE5E7;
+  --c1:#4152D9; --c2:#FF8A1F; --c3:#12936F; --c4:#D94C8A;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#10142B; --card:#191F3D; --ink:#E8ECFF; --muted:#A3ABD1;
+    --grid:#1A2147; --line:#2E3766; --primary:#7D8BFF; --on-primary:#10142B; --accent:#FFA34D;
+    --ok:#3FD3A1; --ok-bg:#12362C; --bad:#FF7A84; --bad-bg:#3D1A22;
+    --c1:#7D8BFF; --c2:#FFA34D; --c3:#3FD3A1; --c4:#FF7AB8;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+    --paper:#10142B; --card:#191F3D; --ink:#E8ECFF; --muted:#A3ABD1;
+    --grid:#1A2147; --line:#2E3766; --primary:#7D8BFF; --on-primary:#10142B; --accent:#FFA34D;
+    --ok:#3FD3A1; --ok-bg:#12362C; --bad:#FF7A84; --bad-bg:#3D1A22;
+    --c1:#7D8BFF; --c2:#FFA34D; --c3:#3FD3A1; --c4:#FF7AB8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; color:var(--ink); background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px;
+  font-family:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+  font-size:17px; line-height:1.7;
+}
+main{max-width:660px;margin:0 auto;padding:22px 16px 56px}
+h1{font-size:2.1rem;line-height:1.25;margin:.3em 0 .1em;font-weight:700}
+h2{font-size:1.35rem;margin:0 0 .4em}
+p{margin:.4em 0}
+.sub{color:var(--muted);margin:0 0 1.3em}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+label{display:block;font-weight:600;margin-bottom:6px}
+select,input,textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+input{margin-top:10px}
+.actions{display:grid;gap:12px;margin-top:16px}
+.act{display:flex;justify-content:flex-start;align-items:center;gap:12px;width:100%;text-align:start;padding:16px 18px;border-radius:14px;border:2px solid var(--ink);background:var(--card);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
+.act small{font-weight:400;color:var(--muted);font-size:.9rem;text-align:end}
+.act.primary{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.act.primary small{color:inherit;opacity:.8}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hint{color:var(--muted);font-size:.95rem;margin-top:10px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;color:var(--muted);font-size:.95rem}
+.bar{height:8px;background:var(--grid);border-radius:4px;overflow:hidden;margin-bottom:14px}
+.bar>i{display:block;height:100%;background:var(--accent)}
+.eq{font-size:2.05rem;font-weight:600;text-align:center;padding:24px 8px;margin:10px 0 18px;border-block:2px dashed var(--line);overflow-x:auto;white-space:nowrap}
+.eq.text{white-space:normal;font-size:1.3rem;line-height:1.9}
+.opts{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+@media (max-width:440px){.opts{grid-template-columns:1fr}}
+.opt{font:inherit;font-size:1.15rem;padding:12px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;min-height:58px}
+.opt.sel{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.15;margin:0 .15em;font-size:.9em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding:0 .25em}
+.abs{border-inline:2px solid currentColor;padding:0 .3em}
+.nl{width:100%;max-width:360px;height:auto;color:var(--ink);display:block;margin:0 auto}
+.rev .nl{max-width:260px}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:18px}
+.btn{font:inherit;font-weight:600;padding:12px 20px;border-radius:12px;border:2px solid var(--primary);background:var(--primary);color:var(--on-primary);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--primary)}
+.btn.danger{border-color:var(--bad);background:transparent;color:var(--bad)}
+.link{background:none;border:0;color:var(--ink);text-decoration:underline;font:inherit;cursor:pointer;padding:6px 0}
+.score{font-size:3.6rem;font-weight:700;line-height:1.1;text-align:center;margin:10px 0 4px}
+.cmp{text-align:center;color:var(--muted)}
+.skills{list-style:none;padding:0;margin:14px 0}
+.skills li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}
+.tag{font-size:.85rem;padding:2px 12px;border-radius:999px;white-space:nowrap}
+.tag.ok{background:var(--ok-bg);color:var(--ok)}
+.tag.bad{background:var(--bad-bg);color:var(--bad)}
+.fb{margin-top:16px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:var(--paper)}
+.fb.ok{border-color:var(--ok)}
+.fb.bad{border-color:var(--bad)}
+.fb ol{margin:.4em 0;padding-inline-start:1.4em}
+.fb li{margin:.25em 0}
+.master{margin-top:12px;font-weight:600;color:var(--ok)}
+details{margin-top:14px}
+summary{cursor:pointer;font-weight:600}
+.rev{border-bottom:1px solid var(--line);padding:10px 0}
+.rev .q{font-size:1.1rem}
+.mine.bad{color:var(--bad)} .mine.ok{color:var(--ok)}
+.table-wrap{overflow-x:auto;margin-top:10px}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:start;white-space:nowrap}
+th{color:var(--muted);font-weight:600}
+.note{font-size:.9rem;color:var(--muted)}
+.status{color:var(--ok);font-weight:600}
+
+.act .lbl{flex:1}
+.ico{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:1.5rem;font-weight:700;background:var(--grid);color:var(--primary)}
+.act.primary .ico{background:rgba(255,255,255,.18);color:inherit}
+.act:nth-child(2) .ico{color:var(--c2)} .act:nth-child(3) .ico{color:var(--c3)}
+.act.primary:nth-child(n) .ico{color:inherit}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.formula{font-size:1.25rem;font-weight:700;padding:6px 14px;border-radius:10px;background:var(--card);border:2px solid var(--c2);color:var(--c2);transform:rotate(-3deg)}
+h1{color:var(--primary)}
+.bar>i{background:linear-gradient(90deg,var(--c3),var(--c1))}
+.eq{color:var(--primary);border-block-color:var(--c2)}
+.panel{position:relative}
+main{position:relative;z-index:1}
+.bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bg span{position:absolute;bottom:-12vh;font-weight:700;opacity:.16;animation:float linear infinite}
+@keyframes float{from{transform:translateY(0) rotate(0)}to{transform:translateY(-125vh) rotate(200deg)}}
+.burst{position:fixed;pointer-events:none;z-index:5;font-weight:700;font-size:1.4rem;animation:burst .9s ease-out forwards}
+@keyframes burst{from{transform:translate(0,0) scale(.6);opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(1.2) rotate(var(--rot));opacity:0}}
+.opt.ok{animation:pop .35s ease-out}
+@keyframes pop{50%{transform:scale(1.05)}}
+.opt.bad{animation:shake .35s ease-in-out}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.score{color:var(--primary)}
+@media (prefers-reduced-motion: reduce){.bg span{animation:none;bottom:auto}.burst{display:none}.opt.ok,.opt.bad{animation:none}}
+
+body.wide main{max-width:1040px}
+.narrow{max-width:460px}
+.err{color:var(--bad);min-height:1.2em;margin:8px 0 0}
+.dash-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.dash-top select{width:auto}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.tabs button,.seg button{font:inherit;font-size:.95rem;padding:8px 14px;border-radius:999px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.tabs button.on,.seg button.on{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.seg{display:flex;gap:6px;margin-bottom:10px}
+h3{font-size:1.1rem;margin:22px 0 8px;color:var(--primary)}
+h3:first-child{margin-top:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--paper)}
+.kpi b{display:block;font-size:1.6rem;color:var(--primary);line-height:1.3}
+.kpi span{font-size:.88rem;color:var(--muted)}
+.hb{display:grid;grid-template-columns:minmax(120px,210px) 1fr;gap:10px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--line)}
+.hb-l{font-size:.95rem}
+.hb-bars{display:grid;gap:4px}
+.hb-t{display:flex;align-items:center;gap:8px;background:var(--grid);border-radius:6px;height:18px;position:relative}
+.hb-t i{display:block;height:100%;border-radius:6px}
+.hb-t b{position:absolute;inset-inline-end:6px;font-size:.8rem;font-weight:600}
+i.pre{background:#9AA6C9} i.post{background:var(--c3)} i.bad{background:var(--bad)}
+.legend{display:flex;gap:16px;font-size:.88rem;color:var(--muted);margin-bottom:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-inline-end:6px;vertical-align:middle}
+td.wrap{white-space:normal;min-width:160px}
+table.kv th{width:55%}
+.tag.warn{background:var(--grid);color:var(--c2)}
+.tag{background:var(--grid)}
+.qa{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0}
+.qa.low{border-color:var(--bad)}
+.qa-h{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.qa-eq{font-size:1.2rem;font-weight:600;color:var(--primary);margin:4px 0;overflow-x:auto}
+.qa-eq .nl{max-width:260px;margin:0}
+@media (max-width:560px){.hb{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="bg" id="bg" aria-hidden="true"></div>
+<main id="app"></main>
+<script>
+(function(){
+"use strict";
+const STUDENTS=[
+ {n:"فاطمه سطام القثامي",c:"ثالث/١"},{n:"سبأ قاسم داود",c:"ثالث/١"},{n:"لانا همام العتيبي",c:"ثالث/١"},
+ {n:"ريمان نواف الجعيد",c:"ثالث/١"},{n:"وسن عبدالله القثامي",c:"ثالث/١"},
+ {n:"أميرة بدر المطيري",c:"ثالث/١"},{n:"هوازن ماجد القثامي",c:"ثالث/١"},
+ {n:"ألماس منصور العتيبي",c:"ثالث/٢"},{n:"ريوف بدر المقاطي",c:"ثالث/٢"},{n:"عائشة غازي العتيبي",c:"ثالث/٢"},
+ {n:"رتيل حميد المطيري",c:"ثالث/٢"}
+];
+const SKILLS={
+ eq:{name:"المعادلات ومجموعة التعويض",hint:"عوّضي كل قيمة من مجموعة التعويض في المعادلة، والقيمة التي تجعلها صحيحة هي الحل. وطبّقي ترتيب العمليات: الأقواس، ثم الأسس، ثم الضرب والقسمة، ثم الجمع والطرح."},
+ write:{name:"كتابة المعادلات",hint:"حوّلي الكلمات إلى رموز: «أمثال» و«أضعاف» ضرب، «مضافاً إليه» جمع، «يساوي» =. والأعداد المتتالية: ن، ن + ١، ن + ٢، والفردية أو الزوجية: ن، ن + ٢، ن + ٤."},
+ onestep:{name:"معادلات بخطوة واحدة",hint:"استخدمي العملية العكسية على الطرفين: الطرح يعكس الجمع، والقسمة تعكس الضرب، ومع الكسر اضربي في مقلوبه."},
+ multi:{name:"معادلات متعددة الخطوات",hint:"إن وُجدت أقواس فوزّعي أو اقسمي عليها أولاً، ثم تخلّصي من العدد المضاف أو المطروح، ثم اقسمي على معامل المتغير."},
+ both:{name:"المتغير في الطرفين والمتطابقات",hint:"اجمعي حدود المتغير في طرف والأعداد في الطرف الآخر. إذا اختفى المتغير وبقيت جملة صحيحة فهي متطابقة (جميع الأعداد الحقيقية)، وإن بقيت جملة خاطئة فلا يوجد حل ∅."},
+ abs:{name:"معادلات القيمة المطلقة",hint:"القيمة المطلقة تعطي حالتين: ما بداخلها يساوي العدد، أو يساوي سالبه. وإذا كانت تساوي عدداً سالباً فلا يوجد حل ∅."}
+};
+const SYM={eq:"=",write:"ن",onestep:"+",multi:"( )",both:"⇄",abs:"| |"};
+const ORDER=["eq","write","onestep","multi","both","abs"];
+const PRE=["q1","q25","q2","q18","q14","q19","q22","q8","q7","q55"];
+const POST=["q24","q57","q38","q54","q48","q60","q56","q53","q20","q26"];
+
+/* ---------- helpers ---------- */
+const AR="٠١٢٣٤٥٦٧٨٩";
+const ar=n=>String(n).replace(/\d/g,d=>AR[d]);
+const N=n=>`<bdi dir="rtl">${n<0?"−":""}${ar(Math.abs(n))}</bdi>`;
+const term=(k,v)=>k===1?(v||"س"):`${N(k)}${v||"س"}`;
+const opS=b=>b>=0?`+ ${N(b)}`:`− ${N(-b)}`;
+const frac=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+const AB=s=>`<span class="abs">${s}</span>`;
+const sx=v=>`س = ${N(v)}`;
+const setOf=(...v)=>`{ ${v.map(N).join(" ، ")} }`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function rng(seed){let a=seed>>>0;return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const ri=(r,a,b)=>a+Math.floor(r()*(b-a+1));
+const nz=(r,a,b)=>{let v;do{v=ri(r,a,b)}while(v===0);return v;};
+function shuffle(r,arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function fillNums(x,cands){const out=[];for(const v of cands){if(Number.isInteger(v)&&v!==x&&!out.includes(v))out.push(v);if(out.length===3)break;}let d=1;while(out.length<3){for(const v of [x+d,x-d]){if(out.length<3&&v!==x&&!out.includes(v))out.push(v);}d++;}return out;}
+function pack(r,correct,wrongs){const all=[correct].concat(wrongs.slice(0,3));const idx=shuffle(r,[0,1,2,3]);return{opts:idx.map(i=>all[i]),ans:idx.indexOf(0)};}
+function uniqStrings(correct,list,extra){const out=[];for(const s of list.concat(extra||[])){if(s!==correct&&!out.includes(s))out.push(s);}return out;}
+function NL(pts){
+ const x=v=>30+(v+5)*27;let s=`<svg class="nl" viewBox="0 0 360 64" role="img" aria-label="خط أعداد"><g stroke="currentColor" stroke-width="2" fill="none"><line x1="8" y1="22" x2="352" y2="22"/><path d="M16 15 L6 22 L16 29 M344 15 L354 22 L344 29"/>`;
+ for(let v=-5;v<=6;v++)s+=`<line x1="${x(v)}" y1="15" x2="${x(v)}" y2="29"/>`;
+ s+=`</g><g fill="currentColor" font-size="14" text-anchor="middle" font-family="inherit">`;
+ for(let v=-5;v<=6;v++)s+=`<text x="${x(v)}" y="52">${v<0?ar(-v)+"−":ar(v)}</text>`;
+ s+=`</g>`;pts.forEach(p=>{s+=`<circle cx="${x(p)}" cy="22" r="7" fill="var(--c2)"/>`;});
+ return s+`</svg>`;
+}
+
+/* ---------- questions from the chapter collection ---------- */
+const BANK=[
+ {id:"q1",skill:"eq",prompt:"مجموعة الحل للمعادلة في مجموعة التعويض { ٠ ، ١ ، ٣ ، ٥ } هي:",eq:"٨م + ٧ = ٧",opts:["{ ٢ }","{ ٠ }","{ ١ }","{ ٣ }"],ans:1,steps:["عوّضي م = ٠: ٨ × ٠ + ٧ = ٧ ✓","القيم ١ و٣ و٥ تعطي ناتجاً أكبر من ٧، إذن مجموعة الحل { ٠ }"]},
+ {id:"q5",skill:"eq",prompt:"حل المعادلة هو ص =",eq:"ص = ٧ + (٩<sup>٢</sup> − ٩) ÷ ٢",opts:["٨","١١٫٥","٣٩٫٥","٤٣"],ans:3,steps:["داخل القوس أولاً: ٩<sup>٢</sup> − ٩ = ٨١ − ٩ = ٧٢","ثم القسمة: ٧٢ ÷ ٢ = ٣٦","ثم الجمع: ٧ + ٣٦ = ٤٣"]},
+ {id:"q16",skill:"eq",prompt:"ما حل المعادلة إذا كانت مجموعة التعويض { ٣٦ ، ٣٧ ، ٣٨ ، ٣٩ }؟",eq:"٧٤ = ٢ق",opts:["٣٦","٣٧","٣٨","٣٩"],ans:1,steps:["عوّضي ق = ٣٧: ٢ × ٣٧ = ٧٤ ✓"]},
+ {id:"q24",skill:"eq",prompt:"حل المعادلة إذا كانت مجموعة التعويض { ١٢ ، ١٥ ، ١٦ ، ١٨ } هو:",eq:"٢س − ٥ = ٢٧",opts:["{ ١٢ }","{ ١٥ }","{ ١٦ }","{ ١٨ }"],ans:2,steps:["عوّضي س = ١٦: ٢ × ١٦ − ٥ = ٣٢ − ٥ = ٢٧ ✓"]},
+ {id:"q52",skill:"eq",prompt:"مجموعة الحل إذا كانت مجموعة التعويض { ١١ ، ١٢ ، ١٣ ، ١٤ ، ١٥ } هي:",eq:"٣س − ٧ = ٢٩",opts:["{ ١١ }","{ ١٢ }","{ ١٣ }","{ ١٤ }"],ans:1,steps:["عوّضي س = ١٢: ٣ × ١٢ − ٧ = ٣٦ − ٧ = ٢٩ ✓"]},
+
+ {id:"q9",skill:"write",prompt:"ما العدد؟",eq:"ستة أمثال عدد تساوي ٢٦٤",eqText:true,opts:["٢٢","٤٤","٥٥","٦٤"],ans:1,steps:["المعادلة: ٦ن = ٢٦٤","اقسمي على ٦: ن = ٤٤"]},
+ {id:"q13",skill:"write",prompt:"ما العلاقة بين العدد الصحيح ن والعدد الصحيح ن + ١؟",eq:"ن ، ن + ١",opts:["عددان زوجيان متتاليان","عددان فرديان متتاليان","عددان صحيحان متتاليان","عددان متطابقان"],ans:2,steps:["الفرق بينهما ١، فهما عددان صحيحان متتاليان","الزوجيان أو الفرديان المتتاليان يكون الفرق بينهما ٢"]},
+ {id:"q25",skill:"write",prompt:"المعادلة التي تمثل المسألة:",eq:"ستة أضعاف عدد مضاف إليه ١٢ يساوي ٣٠",eqText:true,opts:["٦س + ٣٠ = ١٢","٦س = ٣٠","٦س + ١٢ = ٣٠","٣٠س + ١٢ = ٦"],ans:2,steps:["ستة أضعاف عدد: ٦س","مضاف إليه ١٢: ٦س + ١٢","يساوي ٣٠: ٦س + ١٢ = ٣٠"]},
+ {id:"q31",skill:"write",prompt:"ثلاثة أعداد متتالية مجموعها ١٥، فإن معادلة المسألة هي:",eq:"ن ، ن + ١ ، ن + ٢",opts:["ن + ٣ = ١٥","ن + ١ = ٥","٣ن + ٣ = ١٥","٣ن = ١٥"],ans:2,steps:["اجمعي الأعداد: ن + ن + ١ + ن + ٢","ن + ن + ن = ٣ن، و١ + ٢ = ٣","المعادلة: ٣ن + ٣ = ١٥"]},
+ {id:"q57",skill:"write",prompt:"المعادلة التي تمثل ثلاثة أعداد صحيحة فردية متتالية مجموعها ٧٥ هي:",eq:"س ، س + ٢ ، س + ٤",opts:["٣س + ٣ = ٧٥","٦س + ٣ = ٧٥","٦س + ٦ = ٧٥","٣س + ٦ = ٧٥"],ans:3,steps:["كل عدد فردي يزيد على الذي قبله ٢: س، س + ٢، س + ٤","المجموع: ٣س + ٦","المعادلة: ٣س + ٦ = ٧٥"]},
+
+ {id:"q2",skill:"onestep",prompt:"حل المعادلة هو س =",eq:"س − ٦ = ٤",opts:["١٠","١٢","١","٥"],ans:0,steps:["أضيفي ٦ إلى الطرفين: س = ٤ + ٦ = ١٠"]},
+ {id:"q3",skill:"onestep",prompt:"حل المعادلة هو س =",eq:"−٤س = ٢٤",opts:["−٢٨","٢٨","−٦","٦"],ans:2,steps:["اقسمي الطرفين على −٤: س = ٢٤ ÷ (−٤) = −٦","موجب ÷ سالب = سالب"]},
+ {id:"q4",skill:"onestep",prompt:"المعادلة التي تختلف عن المعادلات الثلاث الأخرى:",opts:["ن + ١٤ = ٢٧","ن + ١٢ = ٢٥","ن − ١٦ = ٢٩","ن − ٤ = ٩"],ans:2,steps:["حلول المعادلات: ١٣، ١٣، ٤٥، ١٣","المعادلة ن − ١٦ = ٢٩ حلها ٤٥، فهي المختلفة"]},
+ {id:"q17",skill:"onestep",prompt:"ما العدد الذي نضربه في −٧ فيكون الناتج −٨٤؟",eq:"−٧ن = −٨٤",opts:["١٢","٩","−٩","−١٢"],ans:0,steps:["اقسمي الطرفين على −٧: ن = −٨٤ ÷ (−٧) = ١٢","سالب ÷ سالب = موجب"]},
+ {id:"q18",skill:"onestep",prompt:"حل المعادلة هو ص =",eq:"−٩ص = −٦٣",opts:["−٨","−٧","٧","٨"],ans:2,steps:["اقسمي الطرفين على −٩: ص = −٦٣ ÷ (−٩) = ٧"]},
+ {id:"q21",skill:"onestep",prompt:"قيمة ع التي تحقق المعادلة:",eq:"٩ − ع = −٨",opts:["١٧","−٨","−١٧","١"],ans:0,steps:["اطرحي ٩ من الطرفين: −ع = −١٧","اضربي الطرفين في −١: ع = ١٧"]},
+ {id:"q27",skill:"onestep",prompt:"حل المعادلة هو ك =",eq:`${frac("٢","٥")} ك = ٦`,opts:["−١٥","−٦","٦","١٥"],ans:3,steps:[`اضربي الطرفين في مقلوب الكسر ${frac("٥","٢")}`,`ك = ٦ × ${frac("٥","٢")} = ١٥`]},
+ {id:"q37",skill:"onestep",prompt:"ما حل المعادلة؟",eq:"جـ − ٢٢ = ٥٤",opts:["٧٤","٧٥","٧٦","٧٧"],ans:2,steps:["أضيفي ٢٢ إلى الطرفين: جـ = ٥٤ + ٢٢ = ٧٦"]},
+ {id:"q38",skill:"onestep",prompt:"ما حل المعادلة؟",eq:"٦٣ + م = ٧٩",opts:["٦","١٦","٢٦","٣٦"],ans:1,steps:["اطرحي ٦٣ من الطرفين: م = ٧٩ − ٦٣ = ١٦"]},
+ {id:"q46",skill:"onestep",prompt:"حل المعادلة هو ق =",eq:"١١٣ = ق − ٢٥",opts:["١٣٧","١٣٨","١٣٩","١٤٠"],ans:1,steps:["أضيفي ٢٥ إلى الطرفين: ق = ١١٣ + ٢٥ = ١٣٨"]},
+ {id:"q47",skill:"onestep",prompt:"حل المعادلة هو س =",eq:"١٨ + س = ٤٠",opts:["٢٠","٢١","٢٢","٢٣"],ans:2,steps:["اطرحي ١٨ من الطرفين: س = ٤٠ − ١٨ = ٢٢"]},
+ {id:"q54",skill:"onestep",prompt:"حل المعادلة:",eq:`${frac("٢","٣")} س = ١٤`,opts:["س = ٤","س = ٩","س = ١٤","س = ٢١"],ans:3,steps:[`اضربي الطرفين في مقلوب الكسر ${frac("٣","٢")}`,`س = ١٤ × ${frac("٣","٢")} = ٢١`]},
+
+ {id:"q14",skill:"multi",prompt:"ما حل المعادلة؟",eq:"١٣س + ٨ = ٣٤",opts:["٤","٣","٢","١"],ans:2,steps:["اطرحي ٨ من الطرفين: ١٣س = ٢٦","اقسمي على ١٣: س = ٢"]},
+ {id:"q19",skill:"multi",prompt:"حل المعادلة هو ن =",eq:"٦(ن + ٤) = −١٨",opts:["−٧","٧","١","−١"],ans:0,steps:["اقسمي الطرفين على ٦: ن + ٤ = −٣","اطرحي ٤: ن = −٧"]},
+ {id:"q39",skill:"multi",prompt:"ما حل المعادلة؟",eq:"٢ك + ٥ = ١٣",opts:["٢","٣","٤","٥"],ans:2,steps:["اطرحي ٥ من الطرفين: ٢ك = ٨","اقسمي على ٢: ك = ٤"]},
+ {id:"q40",skill:"multi",prompt:"ما العدد الذي إذا قُسم على ٤ ثم أضيف ٣ إلى الناتج، كانت النتيجة ٢٤؟",eq:`${frac("ن","٤")} + ٣ = ٢٤`,opts:["٧٤","٨٤","٩٤","١٠٤"],ans:1,steps:["اطرحي ٣ من الطرفين: ن ÷ ٤ = ٢١","اضربي في ٤: ن = ٨٤"]},
+ {id:"q48",skill:"multi",prompt:"حل المعادلة:",eq:"١١س − ٤ = ٢٩",opts:["٣","٤","٥","٦"],ans:0,steps:["أضيفي ٤ إلى الطرفين: ١١س = ٣٣","اقسمي على ١١: س = ٣"]},
+ {id:"q60",skill:"multi",prompt:"طُرح من عدد ما ستة، ثم قُسم الناتج على أربعة، وأضيف إلى الناتج الجديد ١٠ ليصبح الناتج النهائي ٣٠. فما العدد؟",eq:`${frac("ن − ٦","٤")} + ١٠ = ٣٠`,opts:["٤","٨٠","٨٦","١٦"],ans:2,steps:["اطرحي ١٠ من الطرفين: (ن − ٦) ÷ ٤ = ٢٠","اضربي في ٤: ن − ٦ = ٨٠","أضيفي ٦: ن = ٨٦"]},
+
+ {id:"q8",skill:"both",prompt:"مجموعة حل المعادلة هي:",eq:"٥س − ٧ = ٥س + ٢",opts:["{ ٠ }","{ −٧ }","مجموعة الأعداد الحقيقية","∅"],ans:3,steps:["اطرحي ٥س من الطرفين: −٧ = ٢","جملة خاطئة، إذن لا يوجد حل ∅"]},
+ {id:"q10",skill:"both",prompt:"أي العبارات الآتية تمثل متطابقة؟",opts:["٢س + ٥ = ٧","٢(س + ٥) = ٢س + ١٠","٢(س + ٥) = ٢س + ٧","٢س + ٥ = ٧س"],ans:1,steps:["وزّعي: ٢(س + ٥) = ٢س + ١٠","الطرفان متساويان لكل قيم س، إذن متطابقة"]},
+ {id:"q15",skill:"both",prompt:"أي مما يأتي يمثل متطابقة؟",opts:["٥س + ٤ = ١٤","٨(س + ٤) = ٨س + ٤","٢س + ٧ = ٤س + ١٣","٣(س − ١) = ٣س − ٣"],ans:3,steps:["وزّعي: ٣(س − ١) = ٣س − ٣","الطرفان متطابقان لكل قيم س"]},
+ {id:"q22",skill:"both",prompt:"قيمة س في المعادلة:",eq:"٤(س + ١) = ٦س − ٢",opts:["١","٦","−٣","٣"],ans:3,steps:["وزّعي: ٤س + ٤ = ٦س − ٢","اطرحي ٤س: ٤ = ٢س − ٢","أضيفي ٢: ٦ = ٢س، إذن س = ٣"]},
+ {id:"q29",skill:"both",prompt:"إذا كانت مجموعة التعويض { ٣ ، ٥ ، ٧ ، ٩ } فإن مجموعة حل المعادلة:",eq:"٥ص + ٣ = ٥ص + ٧",opts:["{ ٣ ، ٧ }","{ ٥ }","{ ٩ }","∅"],ans:3,steps:["اطرحي ٥ص من الطرفين: ٣ = ٧","جملة خاطئة، إذن ∅"]},
+ {id:"q51",skill:"both",prompt:"حل المعادلة هو ك =",eq:"٢ + ٥ك = ٣ك − ٦",opts:["−٢","−٣","−٤","−٥"],ans:2,steps:["اطرحي ٣ك: ٢ + ٢ك = −٦","اطرحي ٢: ٢ك = −٨","اقسمي على ٢: ك = −٤"]},
+ {id:"q53",skill:"both",prompt:"حل المعادلة:",eq:"(٣ × ٥)ن + (٢١ − ١٢) = ١٥ن + ٢٣",opts:["مجموعة الأعداد الحقيقية","لا يوجد حل","ن = ٢","ن = ٥"],ans:1,steps:["بسّطي: ١٥ن + ٩ = ١٥ن + ٢٣","اطرحي ١٥ن: ٩ = ٢٣ جملة خاطئة","إذن لا يوجد حل"]},
+ {id:"q56",skill:"both",prompt:"حل المعادلة:",eq:"٢م − ١٣ = −٨م + ٢٧",opts:["م = ٦","م = ٥","م = ٤","م = ٣"],ans:2,steps:["أضيفي ٨م إلى الطرفين: ١٠م − ١٣ = ٢٧","أضيفي ١٣: ١٠م = ٤٠","اقسمي على ١٠: م = ٤"]},
+ {id:"q58",skill:"both",prompt:"حل المعادلة:",eq:"٢س = ٢(س − ٣)",opts:["٤","٢","١","ليس لها حل"],ans:3,steps:["وزّعي: ٢س = ٢س − ٦","اطرحي ٢س: ٠ = −٦ جملة خاطئة","إذن ليس لها حل"]},
+ {id:"q59",skill:"both",prompt:"أوجدي قيمة ق في المعادلة:",eq:"٥(ق − ٢) + ق = ٦(ق − ٤)",opts:["جميع الأعداد الحقيقية","٠","٢","∅"],ans:3,steps:["وزّعي: ٥ق − ١٠ + ق = ٦ق − ٢٤","بسّطي: ٦ق − ١٠ = ٦ق − ٢٤","اطرحي ٦ق: −١٠ = −٢٤ جملة خاطئة، إذن ∅"]},
+
+ {id:"q7",skill:"abs",prompt:"مجموعة حل المعادلة:",eq:`${AB("ص + ٢")} = ٤`,opts:["{ −٦ ، ٢ }","{ ٦ ، −٢ }","{ −٦ ، −٢ }","{ ٦ ، ٢ }"],ans:0,steps:["الحالة الأولى: ص + ٢ = ٤، إذن ص = ٢","الحالة الثانية: ص + ٢ = −٤، إذن ص = −٦"]},
+ {id:"q20",skill:"abs",prompt:"مجموعة حل المعادلة هي:",eq:`${AB("ف + ١٠")} = ١`,opts:["{ ٩ ، ١١ }","{ −٥ ، ٤ }","{ −١ ، ١ }","{ −٩ ، −١١ }"],ans:3,steps:["الحالة الأولى: ف + ١٠ = ١، إذن ف = −٩","الحالة الثانية: ف + ١٠ = −١، إذن ف = −١١"]},
+ {id:"q23",skill:"abs",prompt:"مجموعة الحل للمعادلة هي:",eq:`${AB("ن − ٧")} = −٣`,opts:["∅","{ ٧ ، −٧ }","{ ٣ ، −٣ }","{ ٤ ، −٤ }"],ans:0,steps:["القيمة المطلقة لا تكون سالبة أبداً","إذن لا يوجد حل ∅"]},
+ {id:"q26",skill:"abs",prompt:"المعادلة التي تتضمن القيمة المطلقة الممثلة على خط الأعداد:",eq:NL([-3,5]),opts:[`${AB("س + ٤")} = ١`,`${AB("س − ٤")} = ١`,`${AB("س − ١")} = ٤`,`${AB("س + ١")} = ٤`],ans:2,steps:["منتصف النقطتين −٣ و٥ هو ١","البعد من المنتصف إلى كل نقطة ٤",`المعادلة: ${AB("س − ١")} = ٤`]},
+ {id:"q41",skill:"abs",prompt:"إذا كانت س = −١، ص = ٣ فاحسبي قيمة العبارة:",eq:`${AB("س − ص")} + ٤`,opts:["٠","٢","٤","٨"],ans:3,steps:["س − ص = −١ − ٣ = −٤",`${AB("−٤")} = ٤`,"٤ + ٤ = ٨"]},
+ {id:"q42",skill:"abs",prompt:"ما حل المعادلة؟",eq:`${AB("ب − ١")} = −٣`,opts:["−١","∅","−٢","−٣"],ans:1,steps:["القيمة المطلقة لا تكون سالبة أبداً","إذن لا يوجد حل ∅"]},
+ {id:"q49",skill:"abs",prompt:"إذا كانت هـ = ٥، فإن قيمة العبارة:",eq:`${AB("٣ − هـ")} + ١٣`,opts:["١٤","١٥","١٦","١٧"],ans:1,steps:["٣ − ٥ = −٢",`${AB("−٢")} = ٢`,"٢ + ١٣ = ١٥"]},
+ {id:"q50",skill:"abs",prompt:"حل المعادلة:",eq:`${AB("٤ن − ١")} = −٦`,opts:["١","٢","٣","∅"],ans:3,steps:["القيمة المطلقة لا تكون سالبة أبداً","إذن لا يوجد حل ∅"]},
+ {id:"q55",skill:"abs",prompt:"المعادلة التي تتضمن القيمة المطلقة للتمثيل المجاور هي:",eq:NL([-2,4]),opts:[`${AB("س + ١")} = ٤`,`${AB("س − ١")} = ٣`,`${AB("س − ١")} = ٤`,`${AB("س + ١")} = ٣`],ans:1,steps:["منتصف النقطتين −٢ و٤ هو ١","البعد من المنتصف إلى كل نقطة ٣",`المعادلة: ${AB("س − ١")} = ٣`]}
+];
+const BYID={};BANK.forEach(q=>{BYID[q.id]=q;});
+
+/* ---------- generated practice ---------- */
+const G={
+ eq(r){
+  const a=ri(r,2,6),x=ri(r,2,15),b=nz(r,-12,12),c=a*x+b;
+  const set=[x];while(set.length<4){const v=ri(r,Math.max(1,x-4),x+4);if(!set.includes(v))set.push(v);}set.sort((p,q)=>p-q);
+  return {skill:"eq",prompt:`مجموعة حل المعادلة إذا كانت مجموعة التعويض ${setOf(...set)} هي:`,eq:`${term(a)} ${opS(b)} = ${N(c)}`,opts:set.map(v=>setOf(v)),ans:set.indexOf(x),
+   steps:[`عوّضي س = ${N(x)}: ${N(a)} × ${N(x)} ${opS(b)} = ${N(c)} ✓`,"القيم الأخرى لا تجعل الطرفين متساويين"]};
+ },
+ write(r){
+  if(r()<0.4){const odd=r()<0.5,n=ri(r,1,30)*(odd?2:1)-(odd?1:0),inc=odd?6:3,S=3*n+inc;
+   const correct=`${N(3)}ن + ${N(inc)} = ${N(S)}`;
+   const wrongs=[`${N(3)}ن + ${N(odd?3:6)} = ${N(S)}`,`${N(3)}ن = ${N(S)}`,`ن + ${N(inc)} = ${N(S)}`];
+   return Object.assign({skill:"write",prompt:"أي معادلة تمثل المسألة؟ (العدد الأول ن)",eq:`ثلاثة أعداد صحيحة ${odd?"فردية ":""}متتالية مجموعها ${N(S)}`,eqText:true,
+    steps:[odd?"الأعداد: ن، ن + ٢، ن + ٤":"الأعداد: ن، ن + ١، ن + ٢",`مجموعها: ٣ن + ${N(inc)}`,`المعادلة: ${correct}`]},pack(r,correct,wrongs));}
+  const plus=r()<0.5,k=ri(r,2,6);let a;do{a=ri(r,1,9);}while(a===k);
+  let n,c;if(plus){n=ri(r,1,9);c=k*n+a;}else{n=ri(r,Math.ceil((a+1)/k),9);c=k*n-a;}
+  const kw=k===2?"مِثلا":`${N(k)} أمثال`;
+  const sentence=`${kw} عدد ${plus?"مضافاً إليه":"مطروحاً منه"} ${N(a)} يساوي ${N(c)}`;
+  const correct=plus?`${N(k)}ن + ${N(a)} = ${N(c)}`:`${N(k)}ن − ${N(a)} = ${N(c)}`;
+  const wrongs=plus?[`${N(k)}(ن + ${N(a)}) = ${N(c)}`,`${N(a)}ن + ${N(k)} = ${N(c)}`,`${N(k)}ن − ${N(a)} = ${N(c)}`]
+                   :[`${N(a)} − ${N(k)}ن = ${N(c)}`,`${N(k)}(ن − ${N(a)}) = ${N(c)}`,`${N(k)}ن + ${N(a)} = ${N(c)}`];
+  const steps=["نرمز للعدد المجهول بالرمز ن",`«${kw}» تعني الضرب: ${N(k)}ن`,`«${plus?"مضافاً إليه":"مطروحاً منه"}» تعني ${plus?"الجمع":"الطرح"}، و«يساوي» تعني =`,`المعادلة: ${correct}`];
+  return Object.assign({skill:"write",prompt:"أي معادلة تمثل الجملة الآتية؟",eq:sentence,eqText:true,steps},pack(r,correct,wrongs));
+ },
+ onestep(r){
+  const t=ri(r,0,3);let x=nz(r,-9,15),eq,cands,steps;
+  if(t===0){const a=ri(r,2,15),b=x+a;eq=`س + ${N(a)} = ${N(b)}`;cands=[b+a,a-b,b];steps=[`اطرحي ${N(a)} من الطرفين`,`س = ${N(b)} − ${N(a)} = ${N(x)}`];}
+  else if(t===1){const a=ri(r,2,15),b=x-a;eq=`س − ${N(a)} = ${N(b)}`;cands=[b-a,a-b,b];steps=[`أضيفي ${N(a)} إلى الطرفين`,`س = ${N(b)} + ${N(a)} = ${N(x)}`];}
+  else if(t===2){const a=nz(r,-9,9);if(a===1||a===-1)return G.onestep(r);x=nz(r,-9,12);const b=a*x;eq=`${N(a)}س = ${N(b)}`;cands=[b-a,-x,b+a,a];steps=[`اقسمي الطرفين على ${N(a)}`,`س = ${N(b)} ÷ ${a<0?`(${N(a)})`:N(a)} = ${N(x)}`];}
+  else{const a=ri(r,2,5),b=ri(r,a+1,9),k=ri(r,1,6),c=a*k;x=b*k;eq=`${frac(N(a),N(b))} س = ${N(c)}`;cands=[c*a,-x,c+b,x+a];steps=[`اضربي الطرفين في مقلوب الكسر ${frac(N(b),N(a))}`,`س = ${N(c)} × ${frac(N(b),N(a))} = ${N(x)}`];}
+  return Object.assign({skill:"onestep",prompt:"حلّي المعادلة:",eq,steps},pack(r,sx(x),fillNums(x,cands).map(sx)));
+ },
+ multi(r){
+  if(r()<0.4){const a=ri(r,2,6),x=nz(r,-9,9),b=nz(r,-9,9),c=a*(x+b);
+   const eq=`${N(a)}(س ${opS(b)}) = ${N(c)}`;
+   const steps=[`اقسمي الطرفين على ${N(a)}: س ${opS(b)} = ${N(x+b)}`,`${b>0?"اطرحي":"أضيفي"} ${N(Math.abs(b))} ${b>0?"من":"إلى"} الطرفين: س = ${N(x)}`];
+   return Object.assign({skill:"multi",prompt:"حلّي المعادلة:",eq,steps},pack(r,sx(x),fillNums(x,[c/a+b,(c-b)/a,c-a*b,-x]).map(sx)));}
+  const a=ri(r,2,9),x=nz(r,-9,9),b=nz(r,-15,15),c=a*x+b;
+  const eq=`${term(a)} ${opS(b)} = ${N(c)}`;
+  const steps=[`${b>0?"اطرحي":"أضيفي"} ${N(Math.abs(b))} ${b>0?"من":"إلى"} الطرفين: ${term(a)} = ${N(c-b)}`,`اقسمي الطرفين على ${N(a)}: س = ${N(x)}`];
+  return Object.assign({skill:"multi",prompt:"حلّي المعادلة:",eq,steps},pack(r,sx(x),fillNums(x,[(c+b)/a,c-b,c/a-b,-x]).map(sx)));
+ },
+ both(r){
+  const t=r(),ALL="جميع الأعداد الحقيقية",NONE="∅ (لا يوجد حل)";
+  if(t<0.2){const a=ri(r,2,6),k=nz(r,-9,9);
+   return Object.assign({skill:"both",prompt:"حلّي المعادلة:",eq:`${N(a)}(س ${opS(k)}) = ${term(a)} ${opS(a*k)}`,
+    steps:[`وزّعي: ${term(a)} ${opS(a*k)} = ${term(a)} ${opS(a*k)}`,"الطرفان متطابقان لكل قيم س، فهي متطابقة وحلها جميع الأعداد الحقيقية"]},pack(r,ALL,[NONE,sx(0),sx(k)]));}
+  if(t<0.4){const a=ri(r,2,9),b=nz(r,-12,12);let d;do{d=nz(r,-12,12);}while(d===b);
+   return Object.assign({skill:"both",prompt:"حلّي المعادلة:",eq:`${term(a)} ${opS(b)} = ${term(a)} ${opS(d)}`,
+    steps:[`اطرحي ${term(a)} من الطرفين: ${N(b)} = ${N(d)}`,"جملة خاطئة، إذن لا يوجد حل ∅"]},pack(r,NONE,[ALL,sx(d-b),sx(0)]));}
+  const a=ri(r,3,9),c=ri(r,1,a-1),k=a-c,x=nz(r,-9,9),b=nz(r,-12,12),d=k*x+b;
+  const eq=`${term(a)} ${opS(b)} = ${term(c)}${d!==0?" "+opS(d):""}`;
+  const steps=[`اطرحي ${term(c)} من الطرفين: ${term(k)} ${opS(b)} = ${N(d)}`,`${b>0?"اطرحي":"أضيفي"} ${N(Math.abs(b))} ${b>0?"من":"إلى"} الطرفين: ${term(k)} = ${N(d-b)}`,k===1?`إذن س = ${N(x)}`:`اقسمي الطرفين على ${N(k)}: س = ${N(x)}`];
+  return Object.assign({skill:"both",prompt:"حلّي المعادلة:",eq,steps},pack(r,sx(x),fillNums(x,[(d-b)/(a+c),(d+b)/k,-x,d-b]).map(sx)));
+ },
+ abs(r){
+  const t=r();
+  if(t<0.25){let m,d;do{m=ri(r,-2,2);d=ri(r,2,4);}while(m===0||m-d<-5||m+d>6);
+   const inner=v=>`س ${opS(-v)}`;
+   const correct=`${AB(inner(m))} = ${N(d)}`;
+   const wrongs=[`${AB(inner(-m))} = ${N(d)}`,`${AB(inner(m))} = ${N(2*d)}`,`${AB(inner(-m))} = ${N(2*d)}`];
+   return Object.assign({skill:"abs",prompt:"المعادلة التي يمثلها خط الأعداد:",eq:NL([m-d,m+d]),
+    steps:[`منتصف النقطتين ${N(m-d)} و${N(m+d)} هو ${N(m)}`,`البعد من المنتصف إلى كل نقطة ${N(d)}`,`المعادلة: ${correct}`]},pack(r,correct,wrongs));}
+  const a=nz(r,-9,9),b=ri(r,2,12),p=b-a,q=-b-a;
+  const pair=(u,v)=>setOf(Math.max(u,v),Math.min(u,v));
+  if(t<0.45){
+   return Object.assign({skill:"abs",prompt:"مجموعة حل المعادلة:",eq:`${AB(`س ${opS(a)}`)} = ${N(-b)}`,
+    steps:["القيمة المطلقة لا تكون سالبة أبداً","إذن لا يوجد حل ∅"]},pack(r,"∅",uniqStrings("∅",[pair(p,q),pair(a+b,a-b),pair(b,-b)])));}
+  const correct=pair(p,q);
+  const wrongs=uniqStrings(correct,[pair(a+b,a-b),pair(b,-b),setOf(p)],["∅",setOf(q)]);
+  return Object.assign({skill:"abs",prompt:"مجموعة حل المعادلة:",eq:`${AB(`س ${opS(a)}`)} = ${N(b)}`,
+   steps:[`الحالة الأولى: س ${opS(a)} = ${N(b)}، إذن س = ${N(p)}`,`الحالة الثانية: س ${opS(a)} = ${N(-b)}، إذن س = ${N(q)}`]},pack(r,correct,wrongs));
+ }
+};
+function makeTest(kind){return (kind==="pre"?PRE:POST).map(id=>BYID[id]);}
+
+/* ---------- Google Sheets (اختياري) ---------- */
+const CFG={scriptUrl:""}; /* ← ضعي هنا رابط تطبيق الويب من Google Apps Script */
+const TRIP="المعادلات الخطية";
+const remote=()=>/^https:\/\/script\.google(usercontent)?\.com\//.test(CFG.scriptUrl);
+function post(body){if(!remote())return;try{fetch(CFG.scriptUrl,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({trip:TRIP},body))}).catch(()=>{});}catch(e){}}
+const trTimers={};
+function pushTr(name){if(!remote())return;clearTimeout(trTimers[name]);trTimers[name]=setTimeout(()=>post({action:"save",record:{id:"tr_"+name,type:"tr",name,stats:DB.tr[name]}}),2500);}
+async function pullAll(code){const r=await fetch(CFG.scriptUrl+"?action=all&trip="+encodeURIComponent(TRIP)+"&code="+encodeURIComponent(code)+"&t="+Date.now());const j=await r.json();if(!j.ok)throw new Error(j.error||"read");
+ const rec=[],tr={};(j.records||[]).forEach(x=>{if(x.type==="tr"&&x.name)tr[x.name]=x.stats||{};else if(x.type==="res")rec.push(x);});rec.sort((a,b)=>a.date<b.date?-1:1);DB.rec=rec;DB.tr=tr;return j.role||"teacher";}
+
+/* ---------- storage ---------- */
+const KEY="remedial-linear-eq-v1";
+let canStore=true;
+function load(){try{const v=JSON.parse(localStorage.getItem(KEY));return v&&v.rec?v:{rec:[],tr:{}};}catch(e){canStore=false;return{rec:[],tr:{}};}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){canStore=false;}}
+let DB=load();
+
+/* ---------- state ---------- */
+const S={tcodePlain:"",tab:"over",qk:"pre",cls:"",tAuth:false,err:"",view:"home",student:"",cls:"",other:false,quiz:null,result:null,train:null,status:"",confirmClear:false,copyText:""};
+const app=document.getElementById("app");
+const clsOf=n=>{const s=STUDENTS.find(x=>x.n===n);return s?s.c:"";};
+const latest=(name,kind)=>{for(let i=DB.rec.length-1;i>=0;i--){const x=DB.rec[i];if(x.name===name&&x.kind===kind)return x;}return null;};
+const weakOf=rec=>rec?ORDER.filter(s=>rec.skills[s]&&rec.skills[s][0]<rec.skills[s][1]):[];
+function fmtDate(iso){try{return new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura",{day:"numeric",month:"numeric",year:"numeric"}).format(new Date(iso));}catch(e){return iso.slice(0,10);}}
+
+function go(view){S.view=view;S.status="";S.confirmClear=false;render();window.scrollTo(0,0);}
+
+/* ---------- views ---------- */
+function vHome(){
+ const groups=["ثالث/١","ثالث/٢"].map(c=>`<optgroup label="${c}">${STUDENTS.filter(s=>s.c===c).map(s=>`<option value="${esc(s.n)}" ${S.student===s.n&&!S.other?"selected":""}>${esc(s.n)}</option>`).join("")}</optgroup>`).join("");
+ const has=!!S.student.trim();
+ const pre=has?latest(S.student,"pre"):null;
+ return `<div class="hero"><h1>المعادلات الخطية</h1><span class="formula">${N(2)}س + ${N(3)} = ${N(7)}</span></div>
+ <p class="sub">الاختبار القبلي والتدريب العلاجي والاختبار البعدي من تجميعات فصل المعادلات الخطية، رياضيات الثالث المتوسط</p>
+ <div class="panel">
+  <label for="stu">اسم الطالبة</label>
+  <select id="stu"><option value="" ${!S.student&&!S.other?"selected":""}>اختاري الاسم</option>${groups}<option value="__other" ${S.other?"selected":""}>طالبة أخرى</option></select>
+  ${S.other?`<input id="otherName" placeholder="اكتبي اسم الطالبة" value="${esc(S.student)}">`:""}
+  ${has?"":`<p class="hint">اختاري اسم الطالبة حتى تُحفظ نتيجتها.</p>`}
+ </div>
+ <div class="actions">
+  <button class="act ${pre?"":"primary"}" data-act="start" data-kind="pre" ${has?"":"disabled"}><span class="ico">؟</span><span class="lbl">الاختبار القبلي</span><small>${pre?`آخر نتيجة ${ar(pre.score)} من ${ar(pre.total)}`:"١٠ أسئلة"}</small></button>
+  <button class="act" data-act="trainlist"><span class="ico">±</span><span class="lbl">التدريب العلاجي</span><small>تمارين بحلول مشروحة</small></button>
+  <button class="act ${pre?"primary":""}" data-act="start" data-kind="post" ${has?"":"disabled"}><span class="ico">✓</span><span class="lbl">الاختبار البعدي</span><small>١٠ أسئلة مختلفة</small></button>
+ </div>
+ <div class="row"><button class="link" data-act="teacher">لوحة المعلمة</button></div>`;
+}
+function qBlock(q,cls){
+ return `<p>${q.prompt}</p>${q.eq?`<div class="eq ${q.eqText?"text":""}">${q.eq}</div>`:"<div style=\"height:10px\"></div>"}
+ <div class="opts">${q.opts.map((o,j)=>`<button class="opt ${cls(j)}" data-act="pick" data-j="${j}">${o}</button>`).join("")}</div>`;
+}
+function vQuiz(){
+ const Q=S.quiz,q=Q.qs[Q.i],n=Q.qs.length,last=Q.i===n-1;
+ return `<div class="top"><span>${esc(S.student)}</span><span>سؤال ${ar(Q.i+1)} من ${ar(n)}</span></div>
+ <div class="bar"><i style="width:${(Q.i+1)/n*100}%"></i></div>
+ <div class="panel">
+  <h2>${Q.kind==="pre"?"الاختبار القبلي":"الاختبار البعدي"}</h2>
+  ${qBlock(q,j=>Q.ans[Q.i]===j?"sel":"")}
+  <div class="row">
+   ${Q.i>0?`<button class="btn ghost" data-act="prev">السابق</button>`:"<span></span>"}
+   <button class="btn" data-act="${last?"finish":"next"}" ${Q.ans[Q.i]===null?"disabled":""}>${last?"إنهاء الاختبار":"التالي"}</button>
+  </div>
+ </div>
+ <div class="row"><button class="link" data-act="home">إلغاء الاختبار</button></div>`;
+}
+function vResult(){
+ const R=S.result,rec=R.rec,weak=weakOf(rec);
+ let cmp="";
+ if(rec.kind==="post"){const pre=latest(rec.name,"pre");if(pre){const d=rec.score-pre.score;cmp=`<p class="cmp">الاختبار القبلي: ${ar(pre.score)} من ${ar(pre.total)}، والتغير ${d>0?"تحسّن بـ ":d<0?"تراجع بـ ":""}${d===0?"لا تغير":ar(Math.abs(d))+" درجات"}</p>`;}}
+ return `<div class="panel">
+  <h2>${rec.kind==="pre"?"نتيجة الاختبار القبلي":"نتيجة الاختبار البعدي"}</h2>
+  <p>${esc(rec.name)}</p>
+  <div class="score">${ar(rec.score)} من ${ar(rec.total)}</div>${cmp}${remote()?`<p class="cmp">أُرسلت النتيجة إلى المعلمة.</p>`:""}
+  <ul class="skills">${ORDER.map(s=>{const v=rec.skills[s];if(!v)return"";const ok=v[0]===v[1];return `<li><span>${SKILLS[s].name}</span><span class="tag ${ok?"ok":"bad"}">${ok?"متقنة":"تحتاج تدريباً"}</span></li>`;}).join("")}</ul>
+  <details><summary>مراجعة الإجابات</summary>
+   ${R.qs.map((q,i)=>{const ok=R.ans[i]===q.ans;return `<div class="rev"><p class="q">${ar(i+1)}. ${q.prompt} <span>${q.eq}</span></p><p class="mine ${ok?"ok":"bad"}">إجابة الطالبة: ${q.opts[R.ans[i]]}</p>${ok?"":`<p>الإجابة الصحيحة: ${q.opts[q.ans]}</p>`}</div>`;}).join("")}
+  </details>
+  <div class="row">
+   ${weak.length?`<button class="btn" data-act="trainlist">تدرّبي على المهارات غير المتقنة</button>`:"<span></span>"}
+   <button class="btn ghost" data-act="home">الصفحة الرئيسية</button>
+  </div>
+ </div>`;
+}
+function vTrainList(){
+ const name=S.student.trim(),weak=weakOf(name?latest(name,"pre"):null),st=(name&&DB.tr[name])||{};
+ return `<h1>التدريب العلاجي</h1>
+ <p class="sub">${name?esc(name)+"، ":""}اختاري المهارة. كل سؤال جديد بأرقام مختلفة، ومع الخطأ يظهر تلميح وطريقة الحل.</p>
+ <div class="actions">${ORDER.map(s=>{const t=st[s];const isWeak=weak.includes(s);return `<button class="act ${isWeak?"primary":""}" data-act="train" data-skill="${s}"><span class="ico">${SYM[s]}</span><span class="lbl">${SKILLS[s].name}</span><small>${isWeak?"من مهارات الضعف":""}${isWeak&&t?"، ":""}${t?`صحيحة ${ar(t.c)} من ${ar(t.t)}`:""}</small></button>`;}).join("")}</div>
+ <div class="row"><button class="link" data-act="home">الصفحة الرئيسية</button></div>`;
+}
+function vTrain(){
+ const T=S.train,q=T.q,p=T.picked;
+ const cls=j=>p===null?"":(j===q.ans?"ok":(j===p?"bad":""));
+ let fb="";
+ if(p!==null){
+  const ok=p===q.ans;
+  fb=`<div class="fb ${ok?"ok":"bad"}">${ok?`<strong>إجابة صحيحة.</strong><details><summary>طريقة الحل</summary><ol>${q.steps.map(s=>`<li>${s}</li>`).join("")}</ol></details>`
+   :`<strong>ليست الإجابة الصحيحة.</strong><p>تلميح: ${SKILLS[q.skill].hint}</p><p>طريقة الحل:</p><ol>${q.steps.map(s=>`<li>${s}</li>`).join("")}</ol>`}
+   ${ok&&T.streak>=5?`<p class="master">أتقنتِ هذه المهارة: ${ar(T.streak)} إجابات صحيحة متتالية.</p>`:""}</div>`;
+ }
+ return `<div class="top"><span>${SKILLS[q.skill].name}</span><span>صحيحة متتالية: ${ar(T.streak)}</span></div>
+ <div class="panel">${qBlock(q,cls)}${fb}
+  <div class="row"><button class="btn ghost" data-act="trainlist">مهارة أخرى</button><button class="btn" data-act="newq" ${p===null?"disabled":""}>سؤال جديد</button></div>
+ </div>`;
+}
+/* ---------- teacher dashboard ---------- */
+const CLASSES=["ثالث/١","ثالث/٢"];
+const P=x=>x==null||isNaN(x)?"—":`${ar(Math.round(x))}٪`;
+const NUM=(x,d)=>x==null||!isFinite(x)?"—":`<bdi dir="rtl">${x<0?"−":""}${ar(Math.abs(x).toFixed(d==null?2:d)).replace(".","٫")}</bdi>`;
+const pctOf=rec=>rec?rec.score/rec.total*100:null;
+function grade(p){return p==null?"—":p>=90?"ممتاز":p>=80?"جيد جداً":p>=65?"جيد":p>=50?"مقبول":"ضعيف";}
+function inCls(n){if(!S.cls)return true;return (clsOf(n)||"")===S.cls;}
+function allNames(){const names=[];STUDENTS.forEach(s=>names.push(s.n));DB.rec.forEach(x=>{if(!names.includes(x.name))names.push(x.name);});Object.keys(DB.tr).forEach(n=>{if(!names.includes(n))names.push(n);});return names.filter(inCls);}
+function rowsAll(){
+ return allNames().map(n=>{const pre=latest(n,"pre"),post=latest(n,"post"),t=DB.tr[n]||{};let c=0,tt=0;Object.values(t).forEach(v=>{c+=v.c;tt+=v.t;});
+  const pp=pctOf(pre),po=pctOf(post);
+  return{n,cls:clsOf(n)||"—",pre,post,pp,po,imp:pp!=null&&po!=null?po-pp:null,weakPre:weakOf(pre),weakPost:weakOf(post),c,tt};});
+}
+function summaryRows(){return rowsAll().filter(r=>r.pre||r.post||r.tt).map(r=>({n:r.n,cls:r.cls,pre:r.pre,post:r.post,diff:r.pre&&r.post?r.post.score-r.pre.score:null,weak:r.weakPre.map(s=>SKILLS[s].name),c:r.c,tt:r.tt}));}
+/* statistics: paired t-test (same method as the numbers-and-operations dashboard) */
+function lgamma(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];let y=x,t=x+5.5;t-=(x+.5)*Math.log(t);let s=1.000000000190015;for(const k of c)s+=k/++y;return -t+Math.log(2.5066282746310005*s/x);}
+function betacf(a,b,x){let qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<1e-30)d=1e-30;d=1/d;let h=d;for(let m=1;m<=200;m++){const m2=2*m;let aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<1e-30)d=1e-30;c=1+aa/c;if(Math.abs(c)<1e-30)c=1e-30;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<1e-30)d=1e-30;c=1+aa/c;if(Math.abs(c)<1e-30)c=1e-30;d=1/d;const del=d*c;h*=del;if(Math.abs(del-1)<3e-7)break;}return h;}
+function ibeta(x,a,b){if(x<=0)return 0;if(x>=1)return 1;const bt=Math.exp(lgamma(a+b)-lgamma(a)-lgamma(b)+a*Math.log(x)+b*Math.log(1-x));return x<(a+1)/(a+b+2)?bt*betacf(a,b,x)/a:1-bt*betacf(b,a,1-x)/b;}
+function impact(pairs){const n=pairs.length;if(n<2)return{n};
+ const mPre=pairs.reduce((s,p)=>s+p[0],0)/n,mPost=pairs.reduce((s,p)=>s+p[1],0)/n,d=pairs.map(p=>p[1]-p[0]),md=mPost-mPre;
+ const sd=Math.sqrt(d.reduce((s,x)=>s+(x-md)**2,0)/(n-1)),df=n-1;let t=sd>0?md/(sd/Math.sqrt(n)):(md===0?0:Infinity);
+ const p=isFinite(t)?ibeta(df/(df+t*t),df/2,.5):0,eta=isFinite(t)?t*t/(t*t+df):1,cd=sd>0?md/sd:null,blake=mPre<100?(mPost-mPre)/(100-mPre)+(mPost-mPre)/100:null;
+ return{n,mPre,mPost,md,sd,t,df,p,eta,cd,blake};}
+const etaTxt=e=>e==null?"":e>=0.14?"أثر كبير":e>=0.06?"أثر متوسط":e>=0.01?"أثر صغير":"أثر ضعيف جداً";
+const dTxt=d=>{if(d==null)return"";const a=Math.abs(d);return a>=0.8?"كبير":a>=0.5?"متوسط":a>=0.2?"صغير":"ضعيف";};
+function skillRates(kind){const out={};ORDER.forEach(s=>out[s]={c:0,t:0});
+ rowsAll().forEach(r=>{const rec=r[kind];if(!rec)return;ORDER.forEach(s=>{const v=rec.skills[s];if(v){out[s].c+=v[0];out[s].t+=v[1];}});});
+ ORDER.forEach(s=>{out[s].p=out[s].t?out[s].c/out[s].t*100:null;});return out;}
+function hbar(label,vals){return `<div class="hb"><span class="hb-l">${label}</span><div class="hb-bars">${vals.map(v=>`<div class="hb-t"><i class="${v.cls}" style="width:${v.p==null?0:Math.max(2,v.p)}%"></i><b>${P(v.p)}</b></div>`).join("")}</div></div>`;}
+const legend=`<div class="legend"><span><i class="pre"></i>القبلي</span><span><i class="post"></i>البعدي</span></div>`;
+function tOver(){
+ const rows=rowsAll(),pr=impact(rows.filter(r=>r.pp!=null&&r.po!=null).map(r=>[r.pp,r.po]));
+ const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+ const mPre=avg(rows.filter(r=>r.pp!=null).map(r=>r.pp)),mPost=avg(rows.filter(r=>r.po!=null).map(r=>r.po));
+ const pre=skillRates("pre"),post=skillRates("post");
+ const G=["ممتاز","جيد جداً","جيد","مقبول","ضعيف"],gc={};G.forEach(g=>gc[g]=0);let gn=0;
+ rows.forEach(r=>{const p=r.po!=null?r.po:r.pp;if(p!=null){gc[grade(p)]++;gn++;}});
+ return `<div class="kpis">
+  <div class="kpi"><b>${ar(rows.filter(r=>r.pre).length)} من ${ar(rows.length)}</b><span>أنهين القبلي</span></div>
+  <div class="kpi"><b>${ar(rows.filter(r=>r.post).length)} من ${ar(rows.length)}</b><span>أنهين البعدي</span></div>
+  <div class="kpi"><b>${P(mPre)}</b><span>متوسط القبلي</span></div>
+  <div class="kpi"><b>${P(mPost)}</b><span>متوسط البعدي</span></div>
+  <div class="kpi"><b>${pr.md!=null?(pr.md>=0?"+":"−")+P(Math.abs(pr.md)):"—"}</b><span>التحسن (للطالبات اللاتي أنهين الاختبارين)</span></div>
+ </div>
+ <h3>إتقان المهارات: القبلي والبعدي</h3>${legend}
+ ${ORDER.map(s=>hbar(SKILLS[s].name,[{cls:"pre",p:pre[s].p},{cls:"post",p:post[s].p}])).join("")}
+ <h3>توزيع التقديرات ${rows.some(r=>r.po!=null)?"(حسب آخر اختبار)":""}</h3>
+ ${gn?G.map(g=>hbar(`${g} (${ar(gc[g])})`,[{cls:g==="ضعيف"?"bad":"post",p:gc[g]/gn*100}])).join(""):`<p class="note">لا توجد نتائج بعد.</p>`}`;
+}
+function tStudents(){
+ const rows=rowsAll();
+ const st=r=>!r.pre?`<span class="tag">لم تبدأ</span>`:!r.post?`<span class="tag warn">بانتظار البعدي</span>`:(r.imp<=0||r.po<50)?`<span class="tag bad">تحتاج متابعة</span>`:`<span class="tag ok">تحسّنت</span>`;
+ return `<div class="table-wrap"><table><thead><tr><th>الطالبة</th><th>الفصل</th><th>القبلي</th><th>البعدي</th><th>التحسن</th><th>التقدير</th><th>التدريب</th><th>مهارات الضعف (القبلي)</th><th>الحالة</th></tr></thead><tbody>
+ ${rows.map(r=>`<tr><td><b>${esc(r.n)}</b></td><td>${r.cls}</td><td>${P(r.pp)}</td><td>${P(r.po)}</td><td>${r.imp==null?"—":(r.imp>0?"+":r.imp<0?"−":"")+P(Math.abs(r.imp))}</td><td>${grade(r.po!=null?r.po:r.pp)}</td><td>${r.tt?`${ar(r.c)} من ${ar(r.tt)}`:"—"}</td><td class="wrap">${r.weakPre.map(s=>SKILLS[s].name).join("، ")||"—"}</td><td>${st(r)}</td></tr>`).join("")}
+ </tbody></table></div><p class="note">النسب من ١٠٠٪، والتقدير حسب آخر اختبار أدّته الطالبة.</p>`;
+}
+function tImpact(){
+ const rows=rowsAll(),pr=impact(rows.filter(r=>r.pp!=null&&r.po!=null).map(r=>[r.pp,r.po]));
+ const pre=skillRates("pre"),post=skillRates("post");
+ let t;
+ if(!pr.n||pr.n<2)t=`<p class="note">يلزم طالبتان على الأقل أنهتا القبلي والبعدي لحساب الأثر.</p>`;
+ else{const sig=pr.p<0.05;
+  t=`<div class="table-wrap"><table class="kv"><tbody>
+  <tr><th>عدد الطالبات (أزواج قبلي/بعدي)</th><td>${ar(pr.n)}</td></tr>
+  <tr><th>متوسط القبلي</th><td>${NUM(pr.mPre)}٪</td></tr><tr><th>متوسط البعدي</th><td>${NUM(pr.mPost)}٪</td></tr>
+  <tr><th>متوسط الفرق</th><td>${NUM(pr.md)}</td></tr><tr><th>الانحراف المعياري للفروق</th><td>${NUM(pr.sd)}</td></tr>
+  <tr><th>قيمة «ت» (درجات الحرية ${ar(pr.df)})</th><td>${isFinite(pr.t)?NUM(pr.t):"∞"}</td></tr>
+  <tr><th>مستوى الدلالة</th><td>${NUM(pr.p,4)}، ${sig?"دالة إحصائياً عند ٠٫٠٥":"غير دالة إحصائياً"}</td></tr>
+  <tr><th>مربع إيتا (η²)</th><td>${NUM(pr.eta,3)}، ${etaTxt(pr.eta)}</td></tr>
+  <tr><th>حجم الأثر كوهين d</th><td>${pr.cd==null?"—":NUM(pr.cd)+"، "+dTxt(pr.cd)}</td></tr>
+  <tr><th>نسبة الكسب المعدّل لبليك</th><td>${pr.blake==null?"—":NUM(pr.blake)+"، "+(pr.blake>=1.2?"فعّالة (١٫٢ فأكثر)":"أقل من حد الفاعلية ١٫٢")}</td></tr>
+  </tbody></table></div>
+  <p class="note">اختبار «ت» للعينات المترابطة على نسب الطالبات في القبلي والبعدي.${pr.n<10?" العدد صغير، فاقرئي الدلالة بحذر.":""}</p>`;}
+ return `<h3>قياس أثر الخطة العلاجية</h3>${t}
+ <h3>الإتقان لكل مهارة</h3><div class="table-wrap"><table><thead><tr><th>المهارة</th><th>القبلي</th><th>البعدي</th><th>التغير</th></tr></thead><tbody>
+ ${ORDER.map(s=>{const a=pre[s].p,b=post[s].p,d=a!=null&&b!=null?b-a:null;return `<tr><td>${SKILLS[s].name}</td><td>${P(a)}</td><td>${P(b)}</td><td>${d==null?"—":(d>0?"+":d<0?"−":"")+P(Math.abs(d))}</td></tr>`;}).join("")}
+ </tbody></table></div>`;
+}
+function qAnalysis(kind){
+ const ids=kind==="pre"?PRE:POST,stat=ids.map(()=>({t:0,c:0,w:{}}));
+ rowsAll().forEach(r=>{const rec=r[kind];if(!rec||!rec.answers||!rec.qids)return;rec.qids.forEach((id,i)=>{const k=ids.indexOf(id);if(k<0)return;const s=stat[k],a=rec.answers[i];s.t++;if(a===BYID[id].ans)s.c++;else if(a!=null)s.w[a]=(s.w[a]||0)+1;});});
+ const n=Math.max(0,...stat.map(s=>s.t));
+ if(!n)return `<p class="note">لا توجد إجابات ${kind==="pre"?"قبلي":"بعدي"} بعد.</p>`;
+ return `<p class="note">عدد الطالبات: ${ar(n)}. الأسئلة التي نسبتها أقل من ٥٠٪ مميزة بالأحمر.</p>
+ ${ids.map((id,k)=>{const q=BYID[id],s=stat[k],p=s.t?s.c/s.t*100:null;const ww=Object.entries(s.w).sort((a,b)=>b[1]-a[1])[0];
+  return `<div class="qa ${p!=null&&p<50?"low":""}"><div class="qa-h"><span>${ar(k+1)}. ${q.prompt}</span><span class="tag">${SKILLS[q.skill].name}</span></div>
+  ${q.eq?`<div class="qa-eq">${q.eq}</div>`:""}
+  ${hbar("الإجابة الصحيحة",[{cls:p!=null&&p<50?"bad":"post",p}])}
+  <p class="note">الإجابة الصحيحة: ${q.opts[q.ans]}${ww?`، وأكثر خيار خاطئ: ${q.opts[ww[0]]} (${ar(ww[1])} ${ww[1]===1?"طالبة":"طالبات"})`:""}</p></div>`;}).join("")}`;
+}
+function tQuestions(){return `<div class="seg"><button class="${S.qk==="pre"?"on":""}" data-act="qk" data-k="pre">القبلي</button><button class="${S.qk==="post"?"on":""}" data-act="qk" data-k="post">البعدي</button></div>${qAnalysis(S.qk)}`;}
+function tFollow(){
+ const rows=rowsAll(),kind=rows.some(r=>r.post)?"post":"pre",rates=skillRates(kind);
+ const fails=ORDER.filter(s=>rates[s].t).map(s=>({s,f:100-rates[s].p})).sort((a,b)=>b.f-a.f);
+ const need=rows.filter(r=>r.post&&(r.imp<=0||r.po<50)),wait=rows.filter(r=>r.pre&&!r.post),none=rows.filter(r=>!r.pre);
+ return `<h3>أين أخفقت الطالبات؟ (${kind==="post"?"الاختبار البعدي":"الاختبار القبلي"})</h3>
+ ${fails.length?fails.map(x=>hbar(SKILLS[x.s].name,[{cls:x.f>=50?"bad":"pre",p:x.f}])).join(""):`<p class="note">لا توجد نتائج بعد.</p>`}
+ <p class="note">النسبة = الإجابات الخاطئة في المهارة من مجموع إجاباتها.</p>
+ <h3>تحتاج متابعة بعد البعدي (لم تتحسن أو أقل من ٥٠٪)</h3>
+ ${need.length?`<div class="table-wrap"><table><thead><tr><th>الطالبة</th><th>القبلي</th><th>البعدي</th><th>مهارات الضعف (البعدي)</th></tr></thead><tbody>${need.map(r=>`<tr><td>${esc(r.n)}</td><td>${P(r.pp)}</td><td>${P(r.po)}</td><td class="wrap">${r.weakPost.map(s=>SKILLS[s].name).join("، ")||"—"}</td></tr>`).join("")}</tbody></table></div>`:`<p class="note">لا توجد حالات.</p>`}
+ <h3>لم يكتمل</h3>
+ <p>بانتظار البعدي: ${wait.length?wait.map(r=>esc(r.n)).join("، "):"لا أحد"}</p>
+ <p>لم تبدأ القبلي: ${none.length?none.map(r=>esc(r.n)).join("، "):"لا أحد"}</p>`;
+}
+function tData(){
+ const store=canStore?"":`<p class="note">المتصفح لا يسمح بالحفظ هنا، فالنتائج تبقى حتى إغلاق الصفحة فقط.</p>`;
+ return `<h3>نسخ الملخص</h3><p class="note">ينسخ جدول الطالبات لتلصقيه في ملف الخطة العلاجية أو في Excel.</p>
+ <div class="row" style="justify-content:flex-start"><button class="btn" data-act="copy">نسخ الملخص</button>${S.status?`<span class="status">${S.status}</span>`:""}</div>
+ ${S.copyText?`<textarea rows="6" readonly id="copyBox">${esc(S.copyText)}</textarea><p class="note">حدّدي النص وانسخيه يدوياً.</p>`:""}
+ <h3>كل المحاولات</h3>
+ <div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>الطالبة</th><th>الاختبار</th><th>الدرجة</th></tr></thead><tbody>
+ ${DB.rec.length?DB.rec.slice().reverse().map(x=>`<tr><td>${fmtDate(x.date)}</td><td>${esc(x.name)}</td><td>${x.kind==="pre"?"قبلي":"بعدي"}</td><td>${ar(x.score)} من ${ar(x.total)}</td></tr>`).join(""):`<tr><td colspan="4">لا توجد محاولات بعد.</td></tr>`}
+ </tbody></table></div>
+ <p class="note">${remote()?"النتائج محفوظة في Google Sheets، والحذف يمسحها من الجدول أيضاً.":"تُحفظ النتائج على هذا الجهاز وهذا المتصفح فقط."}</p>${store}
+ <div class="row" style="justify-content:flex-start"><button class="btn danger" data-act="clear" ${S.role==="viewer"?"hidden":""}>${S.confirmClear?"اضغطي مرة أخرى لتأكيد الحذف":"حذف كل النتائج"}</button></div>`;
+}
+const TABS=[["over","نظرة عامة"],["students","الطالبات"],["impact","قياس الأثر"],["questions","تحليل الأسئلة"],["follow","المتابعة العلاجية"],["data","البيانات"]];
+async function hashCode(s){try{const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("eq-teacher|"+s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("");}catch(e){return "p:"+s;}}
+function vTeacher(){
+ if(!S.tAuth){const first=!DB.tcode&&!remote();
+  return `<h1>لوحة المعلمة</h1><div class="panel narrow">
+  ${first?`<p>أول دخول: اختاري رمزاً من ٤ أرقام أو أكثر، حتى لا تفتح الطالبات اللوحة من الجهاز نفسه.</p>
+   <label for="c1">رمز المعلمة</label><input id="c1" type="password" inputmode="numeric" autocomplete="new-password">
+   <label for="c2" style="margin-top:10px">أعيدي كتابة الرمز</label><input id="c2" type="password" inputmode="numeric" autocomplete="new-password">`
+  :`<label for="c1">${remote()?"رمز الدخول (المعلمة أو الإدارة)":"رمز المعلمة"}</label><input id="c1" type="password" inputmode="numeric" autocomplete="current-password">`}
+  <p class="err" id="er">${S.err||""}</p>
+  <div class="row"><button class="link" data-act="home">الصفحة الرئيسية</button><button class="btn" data-act="tlogin">${first?"حفظ ودخول":"دخول"}</button></div></div>`;}
+ const body={over:tOver,students:tStudents,impact:tImpact,questions:tQuestions,follow:tFollow,data:tData}[S.tab]();
+ return `<div class="dash-top"><h1>${S.role==="viewer"?"نتائج الطالبات":"لوحة المعلمة"}</h1><div class="row" style="margin:0"><select id="fcls" aria-label="الفصل"><option value="">كل الفصول</option>${CLASSES.map(c=>`<option ${S.cls===c?"selected":""}>${c}</option>`).join("")}</select>${remote()?`<button class="btn ghost" data-act="refresh">تحديث</button>`:""}<button class="btn ghost" data-act="tout">خروج</button></div></div>
+ <p class="note">${remote()?("متصلة بـ Google Sheets: تظهر نتائج كل الطالبات من أي جهاز."+(S.role==="viewer"?" أنتِ في وضع الاطلاع فقط.":"")):"بيانات هذا الجهاز فقط. لتجميع نتائج الطالبات من جوالاتهن اربطي الأداة بـ Google Sheets."}${S.status&&S.tab!=="data"?` <span class="status">${S.status}</span>`:""}</p>
+ <div class="tabs">${TABS.map(([k,t])=>`<button class="${S.tab===k?"on":""}" data-act="tab" data-k="${k}">${t}</button>`).join("")}</div>
+ <div class="panel">${body}</div>`;
+}
+
+function render(){
+ const v={home:vHome,quiz:vQuiz,result:vResult,trainlist:vTrainList,train:vTrain,teacher:vTeacher}[S.view];
+ document.body.classList.toggle("wide",S.view==="teacher"&&S.tAuth);
+ app.innerHTML=v();
+ const fc=document.getElementById("fcls");if(fc)fc.addEventListener("change",()=>{S.cls=fc.value;render();});
+ const c1=document.getElementById("c1");if(c1){c1.focus();app.querySelectorAll("#c1,#c2").forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter")A.tlogin();}));}
+ const sel=document.getElementById("stu");
+ if(sel)sel.addEventListener("change",()=>{if(sel.value==="__other"){S.other=true;S.student="";S.cls="";}else{S.other=false;S.student=sel.value;S.cls=clsOf(sel.value);}render();const o=document.getElementById("otherName");if(o)o.focus();});
+ const o=document.getElementById("otherName");
+ if(o)o.addEventListener("input",()=>{S.student=o.value;const has=!!o.value.trim();document.querySelectorAll('[data-act="start"]').forEach(b=>b.disabled=!has);});
+}
+
+/* ---------- motion ---------- */
+const SYMS=["+","−","×","÷","=","س","π","√","∞","٪","≠","ن","( )","| |","٣","٧"];
+(function(){const bg=document.getElementById("bg");if(!bg)return;let out="";for(let i=0;i<20;i++){const s=SYMS[i%SYMS.length],c=`var(--c${1+i%4})`,left=Math.round(Math.random()*96),size=1.2+Math.random()*2.6,dur=22+Math.random()*26,delay=-Math.random()*dur,top=Math.round(Math.random()*90);out+=`<span style="left:${left}%;top:${top}%;color:${c};font-size:${size.toFixed(1)}rem;animation-duration:${dur.toFixed(0)}s;animation-delay:${delay.toFixed(0)}s">${s}</span>`;}bg.innerHTML=out;bg.querySelectorAll("span").forEach(sp=>{sp.style.top="auto";});})();
+function burst(el){try{if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;const b=el.getBoundingClientRect(),x=b.left+b.width/2,y=b.top+b.height/2;for(let i=0;i<12;i++){const s=document.createElement("span");s.className="burst";s.textContent=SYMS[i%SYMS.length];const ang=Math.PI*2*i/12,d=60+Math.random()*50;s.style.cssText=`left:${x}px;top:${y}px;color:var(--c${1+i%4});--dx:${Math.cos(ang)*d}px;--dy:${Math.sin(ang)*d}px;--rot:${Math.round(Math.random()*180)}deg`;document.body.appendChild(s);setTimeout(()=>s.remove(),950);}}catch(e){}}
+
+/* ---------- actions ---------- */
+const SEEN=new Set();
+function pickTrain(skill){const pool=BANK.filter(q=>q.skill===skill&&!POST.includes(q.id)&&!SEEN.has(q.id));if(pool.length&&Math.random()<0.5){const q=pool[Math.floor(Math.random()*pool.length)];SEEN.add(q.id);return q;}return G[skill](rng((Math.random()*4294967296)>>>0));}
+function newTrainQ(skill){S.train={skill,q:pickTrain(skill),picked:null,streak:S.train&&S.train.skill===skill?S.train.streak:0};}
+const A={
+ home(){go("home");},
+ teacher(){S.copyText="";S.err="";go("teacher");},
+ async tlogin(){const c1=document.getElementById("c1"),c2=document.getElementById("c2"),a=c1?c1.value:"";
+  if(remote()){if(!a){S.err="اكتبي الرمز.";render();return;}S.err="جارٍ تحميل النتائج…";render();
+   try{S.role=await pullAll(a);S.tcodePlain=a;S.err="";S.tAuth=true;S.tab=S.tab||"over";render();}catch(e){S.err=String(e.message)==="code"?"الرمز لا يطابق الرمز المكتوب في Google Apps Script.":"تعذّر الاتصال بـ Google Sheets. تأكدي من الإنترنت ومن رابط Apps Script.";render();}
+   return;}
+  if(!DB.tcode){if(a.length<4){S.err="الرمز ٤ أرقام على الأقل.";render();return;}if(!c2||a!==c2.value){S.err="الرمزان غير متطابقين.";render();return;}DB.tcode=await hashCode(a);save();}
+  else if((await hashCode(a))!==DB.tcode){S.err="الرمز غير صحيح.";render();return;}
+  S.err="";S.tAuth=true;S.tab=S.tab||"over";render();},
+ tout(){S.tAuth=false;S.tcodePlain="";if(remote())DB=load();go("home");},
+ async refresh(){if(!remote())return;S.status="";try{await pullAll(S.tcodePlain);S.status="تم التحديث";}catch(e){S.status="تعذّر التحديث";}render();},
+ tab(b){S.tab=b.dataset.k;S.status="";S.copyText="";S.confirmClear=false;render();},
+ qk(b){S.qk=b.dataset.k;render();},
+ trainlist(){go("trainlist");},
+ start(b){if(!S.student.trim())return;S.quiz={kind:b.dataset.kind,qs:makeTest(b.dataset.kind),i:0,ans:Array(PRE.length).fill(null)};go("quiz");},
+ pick(b){const j=+b.dataset.j;
+  if(S.view==="quiz"){S.quiz.ans[S.quiz.i]=j;render();return;}
+  if(S.view==="train"){const T=S.train;if(T.picked!==null)return;T.picked=j;const ok=j===T.q.ans;T.streak=ok?T.streak+1:0;
+   const name=S.student.trim();if(name){const tr=DB.tr[name]||(DB.tr[name]={});const s=tr[T.skill]||(tr[T.skill]={c:0,t:0});s.t++;if(ok)s.c++;save();pushTr(name);}
+   render();if(ok){const c=document.querySelector(".opt.ok");if(c)burst(c);}}
+ },
+ next(){S.quiz.i++;render();window.scrollTo(0,0);},
+ prev(){S.quiz.i--;render();window.scrollTo(0,0);},
+ finish(){const Q=S.quiz,skills={};let score=0;
+  Q.qs.forEach((q,i)=>{const ok=Q.ans[i]===q.ans;if(ok)score++;const v=skills[q.skill]||(skills[q.skill]=[0,0]);v[1]++;if(ok)v[0]++;});
+  const rec={name:S.student.trim(),cls:clsOf(S.student.trim()),kind:Q.kind,score,total:Q.qs.length,skills,qids:Q.qs.map(q=>q.id),answers:Q.ans.slice(),date:new Date().toISOString(),type:"res",id:"r_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)};
+  DB.rec.push(rec);save();post({action:"save",record:rec});S.result={rec,qs:Q.qs,ans:Q.ans};S.quiz=null;go("result");if(score>=7){const sc=document.querySelector(".score");if(sc)burst(sc);}
+ },
+ train(b){S.train=null;newTrainQ(b.dataset.skill);go("train");},
+ newq(){newTrainQ(S.train.skill);render();window.scrollTo(0,0);},
+ copy(){const lines=["الطالبة\tالفصل\tالقبلي\tالبعدي\tالتغير\tمهارات الضعف"].concat(summaryRows().map(r=>[r.n,r.cls,r.pre?r.pre.score:"",r.post?r.post.score:"",r.diff===null?"":r.diff,r.weak.join("، ")].join("\t")));
+  const text=lines.join("\n");
+  const fallback=()=>{S.copyText=text;S.status="";render();const t=document.getElementById("copyBox");if(t)t.select();};
+  try{navigator.clipboard.writeText(text).then(()=>{S.copyText="";S.status="نُسخ الملخص";render();},fallback);}catch(e){fallback();}
+ },
+ clear(){if(S.role==="viewer")return;if(!S.confirmClear){S.confirmClear=true;render();return;}if(remote())post({action:"clear",code:S.tcodePlain});DB={rec:[],tr:{},tcode:DB.tcode};save();S.confirmClear=false;render();}
+};
+app.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b||b.disabled)return;const f=A[b.dataset.act];if(f)f(b);});
+render();
+})();
+</script>
+</body>
+</html>
