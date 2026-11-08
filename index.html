@@ -137,6 +137,20 @@ body.wide main{max-width:1040px}
 .prow .ph{flex:1;min-width:160px;margin:0}
 .btn.wa{background:#25D366;border-color:#25D366;color:#0B2E1A;text-decoration:none}
 .pmsg{font-size:14px;line-height:1.7;background:var(--paper);border-radius:8px;padding:8px 10px}
+.sq{display:inline-flex;align-items:flex-start;direction:rtl;vertical-align:middle}
+.sq .rad{display:inline-block;transform:scaleX(-1);line-height:1.1}
+.sq .rin{border-top:2px solid currentColor;padding:0 .18em;margin-top:.14em;line-height:1.15}
+.grd{display:block;margin:0 auto;max-width:100%;height:auto;color:var(--ink)}
+.fb .grd{margin:8px auto}
+.eq .grd{max-width:380px}
+.mtab{border-collapse:collapse;margin:0 auto;font-size:1.05rem;white-space:nowrap}
+.mtab th,.mtab td{border:1.5px solid var(--line);padding:4px 12px;text-align:center}
+.mtab th{background:var(--grid)}
+.gh{margin:18px 0 0;color:var(--muted);font-size:1rem}
+.ng{display:inline-flex;direction:ltr;align-items:center;gap:.06em;unicode-bidi:isolate;vertical-align:middle;white-space:nowrap}
+.ng>.frac{margin:0 .12em}
+.ex{display:inline-flex;direction:ltr;align-items:flex-start;unicode-bidi:isolate;white-space:nowrap}
+.ex>sup{font-size:.62em;line-height:1;margin-top:-.1em;margin-right:.04em;position:static}
 .okpin{color:var(--ok);font-weight:600;margin:10px 0 0}
 .dash-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .dash-top select{width:auto}
@@ -179,11 +193,11 @@ table.kv th{width:55%}
 (function(){
 "use strict";
 let STUDENTS=[
- {n:"فاطمه سطام القثامي",c:"ثالث/١",h:"0ee82afca59cbbd7edb9cb2d"},{n:"سبأ قاسم داود",c:"ثالث/١",h:"7d208c45c4a78baa25a8313f"},{n:"لانا همام العتيبي",c:"ثالث/١",h:"f7c739d74b0e4a0107f7340c"},
- {n:"ريمان نواف الجعيد",c:"ثالث/١",h:"945fa1c21c1ba259c6a8d8ea"},{n:"وسن عبدالله القثامي",c:"ثالث/١",h:"3af3c84d526bc4789e6bf8b8"},
- {n:"أميرة بدر المطيري",c:"ثالث/١",h:"e965d5a77f534632e0e3c7fe"},{n:"هوازن ماجد القثامي",c:"ثالث/١",h:"b51cea5ba0603fe15590f53c"},
- {n:"ألماس منصور العتيبي",c:"ثالث/٢",h:"d103d0b01c68d8512c2a42db"},{n:"ريوف بدر المقاطي",c:"ثالث/٢",h:"6f57b50ba66aac9bf4016554"},{n:"عائشة غازي العتيبي",c:"ثالث/٢",h:"46aa39db2b1fc63b6d35230d"},
- {n:"رتيل حميد المطيري",c:"ثالث/٢",h:"bcb8415aa366ce40122f7369"}
+ {n:"فاطمه سطام القثامي",c:"ثالث/١",h:"0ee82afca59cbbd7edb9cb2d",e:"vkxVw967KzxFNVSHNPHmo88PZiQkv6TX+GSHW2rBITg="},{n:"سبأ قاسم داود",c:"ثالث/١",h:"7d208c45c4a78baa25a8313f",e:"S2l1/Or2827/SCoVvuxNIcjcbQpRmgZh/6/tkgP7I5o="},{n:"لانا همام العتيبي",c:"ثالث/١",h:"f7c739d74b0e4a0107f7340c",e:"UxeXoXGPBvVTUqAuBvLf3WQFrRFFgFltvW5jtcEFUhQ="},
+ {n:"ريمان نواف الجعيد",c:"ثالث/١",h:"945fa1c21c1ba259c6a8d8ea",e:"deat4UnS3RO54+XSY+QCoJ/cwNCg6AcICBHAd/akrrI="},{n:"وسن عبدالله القثامي",c:"ثالث/١",h:"3af3c84d526bc4789e6bf8b8",e:"a90ovHFIykpL7h92omAXa1SScnLOViRdtSZvnZqqZCs="},
+ {n:"أميرة بدر المطيري",c:"ثالث/١",h:"e965d5a77f534632e0e3c7fe",e:"hKb+saV5bJHtL1i/+esA4qQvxwFT/Rj7b6YuhEDgkqY="},{n:"هوازن ماجد القثامي",c:"ثالث/١",h:"b51cea5ba0603fe15590f53c",e:"9RKMBFMyztX1Fqp99DZSBjwsXjn8IphSKqCoVuWKakk="},
+ {n:"ألماس منصور العتيبي",c:"ثالث/٢",h:"d103d0b01c68d8512c2a42db",e:"GG+G6zDww2f+TYvIdAXZHFzLanmzfp8wHK2gapLdNmo="},{n:"ريوف بدر المقاطي",c:"ثالث/٢",h:"6f57b50ba66aac9bf4016554",e:"cAh2XKmnf3i0CJEUL1jGzzryi5mELEnzn0bDTgwbW5k="},{n:"عائشة غازي العتيبي",c:"ثالث/٢",h:"46aa39db2b1fc63b6d35230d",e:"+lpcI+Uc6MvnBwK/8m1K2V2kl3PgxH7iIGXixEZLniU="},
+ {n:"رتيل حميد المطيري",c:"ثالث/٢",h:"bcb8415aa366ce40122f7369",e:"OmZKGtpDBKe/gSPLyURTdxysgN/UP9yajyxlcGgV4v8="}
 ];
 let SKILLS={
  eq:{name:"المعادلات ومجموعة التعويض",hint:"عوّضي كل قيمة من مجموعة التعويض في المعادلة، والقيمة التي تجعلها صحيحة هي الحل. وطبّقي ترتيب العمليات: الأقواس، ثم الأسس، ثم الضرب والقسمة، ثم الجمع والطرح."},
@@ -201,8 +215,8 @@ let POST=["q24","q57","q38","q54","q48","q60","q56","q53","q20","q26"];
 /* ---------- helpers ---------- */
 const AR="٠١٢٣٤٥٦٧٨٩";
 const ar=n=>String(n).replace(/\d/g,d=>AR[d]);
-const N=n=>`<bdi dir="ltr">${ar(Math.abs(n))}${n<0?"−":""}</bdi>`;
-const term=(k,v)=>k===1?(v||"س"):`${N(k)}${v||"س"}`;
+const N=n=>n<0?`<span class="ng"><span>${ar(-n)}</span><span>−</span></span>`:`<bdi dir="ltr">${ar(n)}</bdi>`;
+const term=(k,v)=>k===1?(v||"س"):k===-1?`<span class="ng"><span>${v||"س"}</span><span>−</span></span>`:`${N(k)}${v||"س"}`;
 const opS=b=>b>=0?`+ ${N(b)}`:`− ${N(-b)}`;
 const frac=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
 const AB=s=>`<span class="abs">${s}</span>`;
@@ -228,7 +242,7 @@ function NL(pts){
 /* ---------- questions from the chapter collection ---------- */
 let BANK=[
  {id:"q1",skill:"eq",prompt:"مجموعة الحل للمعادلة في مجموعة التعويض { ٠ ، ١ ، ٣ ، ٥ } هي:",eq:"٨م + ٧ = ٧",opts:["{ ٢ }","{ ٠ }","{ ١ }","{ ٣ }"],ans:1,steps:["عوّضي م = ٠: ٨ × ٠ + ٧ = ٧ ✓","القيم ١ و٣ و٥ تعطي ناتجاً أكبر من ٧، إذن مجموعة الحل { ٠ }"]},
- {id:"q5",skill:"eq",prompt:"حل المعادلة هو ص =",eq:"ص = ٧ + (<bdi dir=ltr><sup>٢</sup>٩</bdi> − ٩) ÷ ٢",opts:["٨","١١٫٥","٣٩٫٥","٤٣"],ans:3,steps:["داخل القوس أولاً: <bdi dir=ltr><sup>٢</sup>٩</bdi> − ٩ = ٨١ − ٩ = ٧٢","ثم القسمة: ٧٢ ÷ ٢ = ٣٦","ثم الجمع: ٧ + ٣٦ = ٤٣"]},
+ {id:"q5",skill:"eq",prompt:"حل المعادلة هو ص =",eq:"ص = ٧ + (<span class=ex><sup>٢</sup><span>٩</span></span> − ٩) ÷ ٢",opts:["٨","١١٫٥","٣٩٫٥","٤٣"],ans:3,steps:["داخل القوس أولاً: <span class=ex><sup>٢</sup><span>٩</span></span> − ٩ = ٨١ − ٩ = ٧٢","ثم القسمة: ٧٢ ÷ ٢ = ٣٦","ثم الجمع: ٧ + ٣٦ = ٤٣"]},
  {id:"q16",skill:"eq",prompt:"ما حل المعادلة إذا كانت مجموعة التعويض { ٣٦ ، ٣٧ ، ٣٨ ، ٣٩ }؟",eq:"٧٤ = ٢ق",opts:["٣٦","٣٧","٣٨","٣٩"],ans:1,steps:["عوّضي ق = ٣٧: ٢ × ٣٧ = ٧٤ ✓"]},
  {id:"q24",skill:"eq",prompt:"حل المعادلة إذا كانت مجموعة التعويض { ١٢ ، ١٥ ، ١٦ ، ١٨ } هو:",eq:"٢س − ٥ = ٢٧",opts:["{ ١٢ }","{ ١٥ }","{ ١٦ }","{ ١٨ }"],ans:2,steps:["عوّضي س = ١٦: ٢ × ١٦ − ٥ = ٣٢ − ٥ = ٢٧ ✓"]},
  {id:"q52",skill:"eq",prompt:"مجموعة الحل إذا كانت مجموعة التعويض { ١١ ، ١٢ ، ١٣ ، ١٤ ، ١٥ } هي:",eq:"٣س − ٧ = ٢٩",opts:["{ ١١ }","{ ١٢ }","{ ١٣ }","{ ١٤ }"],ans:1,steps:["عوّضي س = ١٢: ٣ × ١٢ − ٧ = ٣٦ − ٧ = ٢٩ ✓"]},
@@ -359,17 +373,17 @@ let G={
 function makeTest(kind){return (kind==="pre"?PRE:POST).map(id=>BYID[id]);}
 /* ===================== الصف الثاني المتوسط: الأعداد النسبية ===================== */
 const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a||1;};
-function FR(n,d){if(d<0){n=-n;d=-d;}const g=gcd(n,d);n/=g;d/=g;if(d===1)return N(n);return `<bdi dir="ltr">${frac(ar(Math.abs(n)),ar(d))}${n<0?"−":""}</bdi>`;}
-function MX(n,d){if(d<0){n=-n;d=-d;}const g=gcd(n,d);n/=g;d/=g;const s=n<0?"−":"";n=Math.abs(n);if(d===1)return N(s?-n:n);const w=Math.floor(n/d),r=n%d;return `<bdi dir="ltr">${w?ar(w)+" ":""}${frac(ar(r),ar(d))}${s}</bdi>`;}
+function FR(n,d){if(d<0){n=-n;d=-d;}const g=gcd(n,d);n/=g;d/=g;if(d===1)return N(n);return n<0?`<span class="ng">${frac(ar(-n),ar(d))}<span>−</span></span>`:frac(ar(n),ar(d));}
+function MX(n,d){if(d<0){n=-n;d=-d;}const g=gcd(n,d);n/=g;d/=g;const s=n<0?"−":"";n=Math.abs(n);if(d===1)return N(s?-n:n);const w=Math.floor(n/d),r=n%d;return `<span class="ng">${w?`<span>${ar(w)}</span>`:""}${frac(ar(r),ar(d))}${s?"<span>−</span>":""}</span>`;}
 const FV=(n,d)=>Math.abs(n)>Math.abs(d)?MX(n,d):FR(n,d);
-function DC(x){let s=String(+(+x).toFixed(8));const neg=s.startsWith("-");if(neg)s=s.slice(1);return `<bdi dir="ltr">${ar(s).replace(".","٫")}${neg?"−":""}</bdi>`;}
-const SC=(a,k)=>`${DC(a)} × <bdi dir="ltr"><sup>${ar(Math.abs(k))}${k<0?"−":""}</sup>${ar(10)}</bdi>`;
-const PW=(b,e)=>`<bdi dir="ltr"><sup>${ar(e)}</sup>${ar(b)}</bdi>`;
-const PP=(inner,e)=>`<bdi dir="ltr"><sup>${ar(e)}</sup>(${inner})</bdi>`;
+function DC(x){let s=String(+(+x).toFixed(8));const neg=s.startsWith("-");if(neg)s=s.slice(1);return neg?`<span class="ng"><span>${ar(s).replace(".","٫")}</span><span>−</span></span>`:`<bdi dir="ltr">${ar(s).replace(".","٫")}</bdi>`;}
+const SC=(a,k)=>`${DC(a)} × <span class="ex"><sup>${k<0?`<span class="ng"><span>${ar(-k)}</span><span>−</span></span>`:ar(k)}</sup><span>${ar(10)}</span></span>`;
+const PW=(b,e)=>`<span class="ex"><sup>${ar(e)}</sup><span>${ar(b)}</span></span>`;
+const PP=(inner,e)=>`<span class="ex"><sup>${ar(e)}</sup><span>(${inner})</span></span>`;
 /* candidates by value: [[value, html], ...] -> 3 wrong htmls, distinct and != correct */
 function byVal(cv,cands,fill){const out=[],seen=[cv];for(const [v,hh] of cands){if(v==null||!isFinite(v))continue;if(seen.some(x=>Math.abs(x-v)<1e-9))continue;seen.push(v);out.push(hh);if(out.length===3)break;}let k=1;while(out.length<3&&fill){const [v,hh]=fill(k++);if(!seen.some(x=>Math.abs(x-v)<1e-9)){seen.push(v);out.push(hh);}}return out;}
 
-const STUDENTS2=[{n:"تالا عبدالكريم الحارثي",c:"ثاني/٤",h:"424b54b3fc8f397f4ba4c517"},{n:"جمانه عبدالله البقمي",c:"ثاني/٤",h:"1a6da7e624ded49500b289da"},{n:"ديما عبدالمجيد المطيري",c:"ثاني/٤",h:"8a7c4dc77454120165c3d312"}];
+const STUDENTS2=[{n:"تالا عبدالكريم الحارثي",c:"ثاني/٤",h:"424b54b3fc8f397f4ba4c517",e:"woeoj7JYBftGTJwXjLOE1JD1/kUqWZiz+2aw3Q54jaM="},{n:"جمانه عبدالله البقمي",c:"ثاني/٤",h:"1a6da7e624ded49500b289da",e:"EOkXjfFMWXNJ47UDN9RWZOpqOCAmtMS+wqhwvRUhuBg="},{n:"ديما عبدالمجيد المطيري",c:"ثاني/٤",h:"8a7c4dc77454120165c3d312",e:"K2aquBStX52mv7SDCoGqxSW0ppZYMKgB0BGL2QScjvc="}];
 const SKILLS2={
  dec:{name:"الكسور الاعتيادية والعشرية",hint:"لتحويل الكسر الاعتيادي إلى عشري اقسمي البسط على المقام، أو اجعلي المقام ١٠ أو ١٠٠ أو ١٠٠٠. وللمقارنة حوّلي العددين إلى الصورة نفسها."},
  muldiv:{name:"ضرب الأعداد النسبية وقسمتها",hint:"حوّلي العدد الكسري إلى كسر غير فعلي، واضربي البسط في البسط والمقام في المقام. والقسمة على كسر = الضرب في مقلوبه. وسالب × سالب = موجب."},
@@ -405,7 +419,7 @@ const BANK2=[
  {id:"t2",skill:"addsub",prompt:`يخطط أحمد لإحاطة حديقة مستطيلة بسياج طوله ${MX(183,4)} متراً. إذا كان عرضها ${MX(21,2)} أمتار، فما طولها؟`,opts:[MX(99,8),MX(35,2),MX(99,4),MX(141,4)],ans:0,steps:[`العرضان معاً: ٢ × ${MX(21,2)} = ٢١ متراً`,`الطولان معاً: ${MX(183,4)} − ٢١ = ${MX(99,4)}`,`الطول = ${MX(99,4)} ÷ ٢ = ${MX(99,8)} متراً`]},
  {id:"t3",skill:"muldiv",prompt:"عند ضرب عدد كلي أكبر من ١ في كسر اعتيادي موجب أقل من ١، فإن الناتج يكون دائماً:",opts:["أكبر من العدد الكلي","يقع بين الكسر والعدد الكلي","أقل من الكسر","جميع ما ذُكر"],ans:1,steps:[`مثال: ٤ × ${f("١","٢")} = ٢`,`٢ أصغر من ٤ وأكبر من ${f("١","٢")}، فهو بينهما`]},
  {id:"t4",skill:"muldiv",prompt:"ما النظير الضربي للعدد الآتي؟",eq:f("١١","٧"),opts:[FR(7,11),FR(-11,7),FR(-7,11),N(1)],ans:0,steps:["النظير الضربي هو مقلوب العدد",`${f("١١","٧")} × ${f("٧","١١")} = ١`]},
- {id:"t5",skill:"dec",prompt:"اكتبي الكسر العشري الدوري على صورة كسر اعتيادي في أبسط صورة:",eq:`<bdi dir="ltr">٠٫٧٧٧…−</bdi>`,opts:[FR(-7,9),FR(-7,10),FR(-77,100),FR(-9,7)],ans:0,steps:["افرضي س = ٠٫٧٧٧…، فإن ١٠س = ٧٫٧٧٧…",`بالطرح: ٩س = ٧، إذن س = ${f("٧","٩")}`,`العدد سالب: ${FR(-7,9)}`]},
+ {id:"t5",skill:"dec",prompt:"اكتبي الكسر العشري الدوري على صورة كسر اعتيادي في أبسط صورة:",eq:`<span class="ng"><span>٠٫٧٧٧…</span><span>−</span></span>`,opts:[FR(-7,9),FR(-7,10),FR(-77,100),FR(-9,7)],ans:0,steps:["افرضي س = ٠٫٧٧٧…، فإن ١٠س = ٧٫٧٧٧…",`بالطرح: ٩س = ٧، إذن س = ${f("٧","٩")}`,`العدد سالب: ${FR(-7,9)}`]},
  {id:"t6",skill:"sci",prompt:"اكتبي العدد بالصيغة القياسية:",eq:SC(1.07042,5),opts:[DC(107042),DC(1070420),DC(10704.2),DC(10704200)],ans:0,steps:["الأس موجب ٥: حرّكي الفاصلة ٥ منازل لليمين","١٫٠٧٠٤٢ ← ١٠٧٠٤٢"]},
  {id:"t7",skill:"muldiv",prompt:"ناتج ضرب عددين نسبيين سالبين يكون:",opts:["عدداً موجباً","عدداً سالباً","صفراً دائماً","لا يمكن تحديده"],ans:0,steps:["سالب × سالب = موجب"]}
 ];
@@ -493,8 +507,8 @@ function go(view){S.view=view;S.status="";S.confirmClear=false;render();window.s
 /* ---------- views ---------- */
 function vGrade(){
  return `<div class="hero"><h1>الخطة العلاجية في الرياضيات</h1></div>
- <p class="sub">اختاري صفّك الدراسي للبدء</p>
- <div class="actions">${Object.keys(GR).map(k=>`<button class="act primary" data-act="grade" data-k="${k}"><span class="ico">${GR[k].icon}</span><span class="lbl">${GR[k].label}</span><small>${GR[k].title}</small></button>`).join("")}</div>
+ <p class="sub">اختاري صفّك ثم الفصل للبدء</p>
+ ${["2","3"].map(g=>`<h3 class="gh">${g==="2"?"الثاني المتوسط":"الثالث المتوسط"}</h3><div class="actions" style="margin-top:6px">${Object.keys(GR).filter(k=>GR[k].gk===g).map(k=>`<button class="act primary" data-act="grade" data-k="${k}"><span class="ico">${GR[k].icon}</span><span class="lbl">${GR[k].title}</span><small>${GR[k].label}</small></button>`).join("")}</div>`).join("")}
  <div class="row"><button class="link" data-act="teacher">لوحة المعلمة</button></div>`;
 }
 function vHome(){
@@ -503,7 +517,7 @@ function vHome(){
  const has=!!S.student.trim();
  const pre=has?latest(S.student,"pre"):null;
  return `<div class="hero"><h1>${GR[S.grade].title}</h1><span class="formula">${GR[S.grade].formula}</span></div>
- <p class="sub">${GR[S.grade].label}، الاختبار القبلي والتدريب العلاجي والاختبار البعدي. <button class="link" data-act="chgrade">تغيير الصف</button></p>
+ <p class="sub">${GR[S.grade].label}، الاختبار القبلي والتدريب العلاجي والاختبار البعدي. <button class="link" data-act="chgrade">تغيير الفصل</button></p>
  <div class="panel">
   <label for="stu">اسم الطالبة</label>
   <select id="stu"><option value="" ${!S.student&&!S.other?"selected":""}>اختاري الاسم</option>${groups}</select>
@@ -700,12 +714,12 @@ function pSave(P){try{localStorage.setItem(PKEY,JSON.stringify(P));}catch(e){}}
 function waNum(s){let d=toEnDigits(s).replace(/\D/g,"");if(d.startsWith("00"))d=d.slice(2);if(d.length===10&&d.startsWith("05"))d="966"+d.slice(1);else if(d.length===9&&d.startsWith("5"))d="966"+d;return d.length>=11?d:"";}
 const toolUrl=()=>{try{return location.href.split("#")[0].split("?")[0];}catch(e){return"";}};
 function pMsg(r){
- const first=r.n.split(" ")[0],t=GR[S.grade].title,url=toolUrl(),sig="معلمة المادة: لطفيه الطلحي";
+ const pin=S.pins&&S.pins[r.n],first=r.n.split(" ")[0],t=GR[S.grade].title,url=toolUrl(),sig="معلمة المادة: لطفيه الطلحي";
  const hi=`السلام عليكم ورحمة الله وبركاته،\nولي أمر الطالبة ${first} المحترم.`;
  const tr=r.tt?`\nوفي التدريب العلاجي أجابت إجابة صحيحة في ${ar(r.c)} من أصل ${ar(r.tt)} تمارين.`:"";
- if(!r.pre)return `${hi}\nنفيدكم بأن ابنتكم ضمن الخطة العلاجية لمادة الرياضيات (${t}). نأمل حثّها على أداء الاختبار القبلي عبر الرابط:\n${url}\nباستخدام رمزها السري الذي سلّمته لها المعلمة.\nشاكرين تعاونكم.\n${sig}`;
+ if(!r.pre)return `${hi}\nنفيدكم بأن ابنتكم ضمن الخطة العلاجية لمادة الرياضيات (${t}). نأمل حثّها على أداء الاختبار القبلي عبر الرابط:\n${url}\nباستخدام رمزها السري${pin?`: ${ar(pin)}`:" الذي سلّمته لها المعلمة"}.\nشاكرين تعاونكم.\n${sig}`;
  const weak=r.weakPre.map(s=>SKILLS[s].name).join("، ");
- if(!r.post)return `${hi}\nنفيدكم بأن ابنتكم أدّت الاختبار القبلي في الرياضيات (${t}) وحصلت على ${ar(r.pre.score)} من ${ar(r.pre.total)}.\n${weak?`المهارات التي تحتاج متابعة: ${weak}.`:"أتقنت جميع المهارات، بارك الله فيها."}${tr}\nنأمل متابعتها في التدريب العلاجي على الرابط:\n${url}\nشاكرين تعاونكم.\n${sig}`;
+ if(!r.post)return `${hi}\nنفيدكم بأن ابنتكم أدّت الاختبار القبلي في الرياضيات (${t}) وحصلت على ${ar(r.pre.score)} من ${ar(r.pre.total)}.\n${weak?`المهارات التي تحتاج متابعة: ${weak}.`:"أتقنت جميع المهارات، بارك الله فيها."}${tr}\nنأمل متابعتها في التدريب العلاجي على الرابط:\n${url}${pin?`\nالرمز السري للدخول: ${ar(pin)}`:""}\nشاكرين تعاونكم.\n${sig}`;
  const d=r.post.score-r.pre.score,ch=d>0?`تحسّنت بمقدار ${ar(d)} درجات`:d<0?`انخفضت بمقدار ${ar(-d)} درجات`:"بقيت درجتها كما هي";
  const good=d>0&&r.po>=50;
  const weakP=r.weakPost.map(s=>SKILLS[s].name).join("، ");
@@ -714,9 +728,9 @@ function pMsg(r){
 function tParents(){
  const P=pLoad(),rows=rowsAll();
  const stage=r=>!r.pre?"لم تبدأ":!r.post?"بعد القبلي":"بعد البعدي";
- return `<p class="note" style="margin-top:0">اكتبي رقم جوال ولي الأمر (مثل 0551234567)، ثم اضغطي «واتساب» فتُفتح المحادثة والرسالة جاهزة حسب نتيجة الطالبة، وتضغطين إرسال. الأرقام تُحفظ على هذا الجهاز فقط ولا تُرفع على الإنترنت.</p>
+ return `<p class="note" style="margin-top:0">اكتبي رقم جوال ولي الأمر (مثل 0551234567)، ثم اضغطي «واتساب» فتُفتح المحادثة والرسالة جاهزة حسب نتيجة الطالبة، وتضغطين إرسال. الأرقام تُحفظ على هذا الجهاز فقط ولا تُرفع على الإنترنت. ويُضاف الرمز السري للطالبة في رسالتي التذكير ونتيجة القبلي حتى يساعد ولي الأمر ابنته في الدخول.</p>
  ${rows.map(r=>{const num=P.phones[r.n]||"",w=waNum(num),sent=P.sent[r.n],msg=pMsg(r);
-  return `<div class="qa"><div class="qa-h"><span><b>${esc(r.n)}</b> <span class="note">${r.cls}</span></span><span class="tag">${stage(r)}</span></div>
+  return `<div class="qa"><div class="qa-h"><span><b>${esc(r.n)}</b> <span class="note">${r.cls}${S.pins&&S.pins[r.n]?` · الرمز السري: ${ar(S.pins[r.n])}`:""}</span></span><span class="tag">${stage(r)}</span></div>
   <div class="prow"><input class="ph" type="tel" inputmode="tel" dir="ltr" data-n="${esc(r.n)}" value="${esc(num)}" placeholder="05xxxxxxxx">
   ${w?`<a class="btn wa" href="https://wa.me/${w}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener" data-act="pmark" data-n="${esc(r.n)}">واتساب</a>`:`<span class="note">${num?"الرقم غير صحيح":"أضيفي الرقم"}</span>`}</div>
   ${sent?`<p class="note">آخر إرسال: ${fmtDate(sent.date)} (${sent.stage})</p>`:""}
@@ -735,7 +749,7 @@ function vTeacher(){
  const body={over:tOver,students:tStudents,impact:tImpact,questions:tQuestions,follow:tFollow,parents:tParents,data:tData}[(S.role==="viewer"&&S.tab==="parents")?"over":S.tab]();
  return `<div class="dash-top"><h1>${S.role==="viewer"?"نتائج الطالبات":"لوحة المعلمة"}</h1><div class="row" style="margin:0"><select id="fcls" aria-label="الفصل"><option value="">كل الفصول</option>${CLASSES.map(c=>`<option ${S.cls===c?"selected":""}>${c}</option>`).join("")}</select>${remote()?`<button class="btn ghost" data-act="refresh">تحديث</button>`:""}<button class="btn ghost" data-act="tout">خروج</button></div></div>
  <p class="note">${remote()?("متصلة بـ Google Sheets: تظهر نتائج كل الطالبات من أي جهاز."+(S.role==="viewer"?" أنتِ في وضع الاطلاع فقط.":"")):"بيانات هذا الجهاز فقط. لتجميع نتائج الطالبات من جوالاتهن اربطي الأداة بـ Google Sheets."}${S.status&&S.tab!=="data"?` <span class="status">${S.status}</span>`:""}</p>
- <div class="seg gsel">${Object.keys(GR).map(k=>`<button class="${S.grade===k?"on":""}" data-act="tgrade" data-k="${k}">${GR[k].label}</button>`).join("")}</div>
+ <div class="seg gsel">${Object.keys(GR).map(k=>`<button class="${S.grade===k?"on":""}" data-act="tgrade" data-k="${k}">${GR[k].label.replace(" المتوسط","")}: ${GR[k].title}</button>`).join("")}</div>
  <div class="tabs">${TABS.filter(t=>!(t[0]==="parents"&&S.role==="viewer")).map(([k,t])=>`<button class="${S.tab===k?"on":""}" data-act="tab" data-k="${k}">${t}</button>`).join("")}</div>
  <div class="panel">${body}</div>`;
 }
@@ -773,6 +787,9 @@ async function checkPin(){
 }
 
 /* ---------- actions ---------- */
+async function decPins(code){S.pins={};try{const kb=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("pinkey|"+code));const key=await crypto.subtle.importKey("raw",kb,"AES-GCM",false,["decrypt"]);
+ const all=[];Object.values(GR).forEach(g=>g.STUDENTS.forEach(s=>{if(s.e&&!all.includes(s))all.push(s);}));
+ for(const s of all){try{const b=Uint8Array.from(atob(s.e),c=>c.charCodeAt(0));const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(0,12)},key,b.slice(12));S.pins[s.n]=new TextDecoder().decode(pt);}catch(e){}}}catch(e){}}
 function pMark(n){const P=pLoad();const r=rowsAll().find(x=>x.n===n);P.sent[n]={date:new Date().toISOString(),stage:r?(!r.pre?"تذكير بالقبلي":!r.post?"نتيجة القبلي":"نتيجة البعدي"):""};pSave(P);setTimeout(render,300);}
 const SEEN=new Set();
 function pickTrain(skill){const pool=BANK.filter(q=>q.skill===skill&&!POST.includes(q.id)&&!SEEN.has(q.id));if(pool.length&&Math.random()<0.5){const q=pool[Math.floor(Math.random()*pool.length)];SEEN.add(q.id);return q;}return G[skill](rng((Math.random()*4294967296)>>>0));}
@@ -782,11 +799,11 @@ const A={
  teacher(){S.copyText="";S.err="";go("teacher");},
  async tlogin(){const c1=document.getElementById("c1"),c2=document.getElementById("c2"),a=c1?c1.value:"";
   if(remote()){if(!a){S.err="اكتبي الرمز.";render();return;}S.err="جارٍ تحميل النتائج…";render();
-   try{S.role=await pullAll(a);S.tcodePlain=a;S.err="";S.tAuth=true;S.tab=S.tab||"over";render();}catch(e){S.err=String(e.message)==="code"?"الرمز لا يطابق الرمز المكتوب في Google Apps Script.":"تعذّر الاتصال بـ Google Sheets. تأكدي من الإنترنت ومن رابط Apps Script.";render();}
+   try{S.role=await pullAll(a);S.tcodePlain=a;await decPins(a);S.err="";S.tAuth=true;S.tab=S.tab||"over";render();}catch(e){S.err=String(e.message)==="code"?"الرمز لا يطابق الرمز المكتوب في Google Apps Script.":"تعذّر الاتصال بـ Google Sheets. تأكدي من الإنترنت ومن رابط Apps Script.";render();}
    return;}
   if(!DB.tcode){if(a.length<4){S.err="الرمز ٤ أرقام على الأقل.";render();return;}if(!c2||a!==c2.value){S.err="الرمزان غير متطابقين.";render();return;}DB.tcode=await hashCode(a);save();}
   else if((await hashCode(a))!==DB.tcode){S.err="الرمز غير صحيح.";render();return;}
-  S.err="";S.tAuth=true;S.tab=S.tab||"over";render();},
+  S.err="";S.tAuth=true;S.tab=S.tab||"over";S.tcodePlain=a;await decPins(a);render();},
  tout(){S.tAuth=false;S.tcodePlain="";if(remote())DB=load();go("home");},
  async refresh(){if(!remote())return;S.status="";try{await pullAll(S.tcodePlain);S.status="تم التحديث";}catch(e){S.status="تعذّر التحديث";}render();},
  tab(b){S.tab=b.dataset.k;S.status="";S.copyText="";S.confirmClear=false;render();},
@@ -815,9 +832,229 @@ const A={
  },
  clear(){if(S.role==="viewer")return;if(!S.confirmClear){S.confirmClear=true;render();return;}if(remote())post({action:"clear",code:S.tcodePlain});DB={rec:[],tr:{},tcode:DB.tcode};save();S.confirmClear=false;render();}
 };
+/*UNITS*/
+/* ===================== وحدات إضافية: العلاقات والدوال الخطية (ثالث) + الأعداد الحقيقية ونظرية فيثاغورس (ثاني) ===================== */
+const PV=(v,e)=>`<span class="ex"><sup>${ar(e)}</sup><span>${v}</span></span>`;           /* س² : الأس فوق المتغير على اليسار */
+const AN=`أ<sub>ن</sub>`;
+const PT=(x,y)=>`(${N(x)} ، ${N(y)})`;
+const SET=a=>`{ ${a.map(v=>typeof v==="number"?N(v):v).join(" ، ")} }`;
+const SQ=x=>`<span class="sq" dir="rtl"><span class="rad">√</span><span class="rin">${x}</span></span>`;
+const NSQ=x=>`<span class="ng">${SQ(x)}<span>−</span></span>`;
+const PM=n=>`<span class="ng"><span>${ar(n)}</span><span>±</span></span>`;
+const TB=(hx,hy,xs,ys)=>`<table class="mtab"><tr><th>${hx}</th>${xs.map(v=>`<td>${typeof v==="number"?N(v):v}</td>`).join("")}</tr><tr><th>${hy}</th>${ys.map(v=>`<td>${typeof v==="number"?N(v):v}</td>`).join("")}</tr></table>`;
+const LIN=(a,b,v)=>{v=v||"س";if(a===0)return N(b);return `${term(a,v)}${b?" "+opS(b):""}`;};   /* aس + b */
+const FX=(a,b)=>`د(س) = ${LIN(a,b)}`;
+const STD=(A,B,C)=>{const p=[];if(A)p.push(term(A,"س"));if(B){p.push(p.length?(B>0?`+ ${B===1?"ص":term(B,"ص")}`:`− ${B===-1?"ص":term(-B,"ص")}`):term(B,"ص"));}return `${p.join(" ")} = ${N(C)}`;};
+const GW=(hx,hy)=>`<table class="mtab"><tr><th>${hx}</th><th>${hy}</th></tr>`;
+
+/* ---------- ثالث: العلاقات والدوال الخطية ---------- */
+const SKILLS3F={
+ rel:{name:"العلاقات والدوال",hint:"المجال = مجموعة الإحداثيات الأولى (س)، والمدى = مجموعة الإحداثيات الثانية (ص). وتكون العلاقة دالة إذا ارتبط كل عنصر في المجال بعنصر واحد فقط من المدى."},
+ fval:{name:"قيم الدوال",hint:"عوّضي قيمة س في قاعدة الدالة، واحسبي بترتيب العمليات: الأسس، ثم الضرب، ثم الجمع والطرح."},
+ seq:{name:"المتتابعات الحسابية",hint:`الأساس = الحد − الحد الذي قبله. والحد النوني: ${AN} = أ<sub>١</sub> + (ن − ١) × الأساس.`},
+ slope:{name:"الميل ومعدل التغير",hint:"الميل = (ص٢ − ص١) ÷ (س٢ − س١) = التغير في ص ÷ التغير في س. وإذا كان التغير في س صفراً فالميل غير معرّف."},
+ intc:{name:"المقطعان السيني والصادي",hint:"المقطع السيني: عوّضي ص = ٠ وأوجدي س. والمقطع الصادي: عوّضي س = ٠ وأوجدي ص."},
+ form:{name:"الصورة القياسية والمعادلات الخطية",hint:"الصورة القياسية: أس + ب ص = جـ، حيث أ ≥ ٠ ولا توجد كسور. انقلي حدود المتغيرين لطرف والعدد للطرف الآخر."}
+};
+const SYM3F={rel:"{ }",fval:"د",seq:"…",slope:"م",intc:"✕",form:"="};
+const ORDER3F=["rel","fval","seq","slope","intc","form"];
+const BANK3F=[
+ {id:"f1",skill:"fval",prompt:"أوجدي د(١):",eq:FX(2,3),opts:[N(5),N(-5),N(6),N(-6)],ans:0,steps:["عوّضي س = ١: د(١) = ٢ × ١ + ٣","= ٢ + ٣ = ٥"]},
+ {id:"f2",skill:"rel",prompt:"ما مدى العلاقة الآتية؟",eq:SET([PT(2,2),PT(-1,5),PT(5,2),PT(-2,4)]),opts:[SET([2,4,5]),SET([-2,-1,2,5]),SET([2,5]),SET([-1,4,5])],ans:0,steps:["المدى = مجموعة الإحداثيات الثانية (ص): ٢، ٥، ٢، ٤","بدون تكرار: { ٢ ، ٤ ، ٥ }"]},
+ {id:"f3",skill:"slope",prompt:"معدل التغير للدالة الممثلة بالجدول:",eq:TB("س","ص",[5,10,15,20],[2,3,4,5]),opts:[FR(1,5),FR(-1,5),N(-5),N(5)],ans:0,steps:["التغير في ص = ٣ − ٢ = ١","التغير في س = ١٠ − ٥ = ٥",`معدل التغير = ${FR(1,5)}`]},
+ {id:"f4",skill:"seq",prompt:`معادلة الحد النوني للمتتابعة الحسابية: ${N(-7)} ، ${N(-4)} ، ${N(-1)} ، ${N(2)} ، …`,opts:[`${AN} = ${LIN(3,-4,"ن")}`,`${AN} = ${LIN(-7,1,"ن")}`,`${AN} = ${LIN(3,-10,"ن")}`,`${AN} = ${LIN(-7,-4,"ن")}`],ans:2,steps:[`الحد الأول = ${N(-7)}، والأساس = ${N(-4)} − (${N(-7)}) = ٣`,`${AN} = ${N(-7)} + (ن − ١) × ٣`,`= ${N(-7)} + ٣ن − ٣ = ${LIN(3,-10,"ن")}`]},
+ {id:"f5",skill:"fval",prompt:`أوجدي قيمة الدالة عندما س = ${N(-1)}:`,eq:`د(س) = ${N(3)}${PV("س",2)} − ١`,opts:[N(1),N(-2),N(2),N(4)],ans:2,steps:[`د(${N(-1)}) = ٣ × (${N(-1)})<sup>٢</sup> − ١`,`(${N(-1)})<sup>٢</sup> = ١، إذن ٣ × ١ − ١ = ٢`]},
+ {id:"f7",skill:"fval",prompt:"إذا كانت الدالة كما يلي، فما قيمة د(٣) + ١؟",eq:FX(4,6),opts:[N(17),N(18),N(19),N(20)],ans:2,steps:["د(٣) = ٤ × ٣ + ٦ = ١٨","د(٣) + ١ = ١٩"]},
+ {id:"f8",skill:"intc",prompt:"المقطع الصادي للمعادلة الخطية:",eq:`ص = ٤ + ${term(2)}`,opts:[N(2),N(-2),N(4),N(-4)],ans:2,steps:["عوّضي س = ٠: ص = ٤ + ٠ = ٤","المقطع الصادي = ٤"]},
+ {id:"f9",skill:"seq",prompt:"الحد العاشر لمتتابعة حسابية حدها النوني:",eq:`${AN} = ${LIN(4,-16,"ن")}`,opts:[N(24),N(34),N(44),N(54)],ans:0,steps:["عوّضي ن = ١٠: ٤ × ١٠ − ١٦","= ٤٠ − ١٦ = ٢٤"]},
+ {id:"f10",skill:"slope",prompt:"معدل التغير من الجدول:",eq:TB("س","ص",[1,3,5,7],[15,9,3,-3]),opts:[N(1),N(-1),N(6),N(-3)],ans:3,steps:["التغير في ص = ٩ − ١٥ = −٦".replace("−٦",N(-6)),"التغير في س = ٣ − ١ = ٢",`معدل التغير = ${N(-6)} ÷ ٢ = ${N(-3)}`]},
+ {id:"f11",skill:"seq",prompt:"لعب حمد وأصدقاؤه لعبتين خلال الساعة الأولى، وبعد ساعتين ٤ ألعاب، وبعد ثلاث ساعات ٦ ألعاب. ما الدالة التي تعبّر عن المتتابعة؟",opts:[`ق(ن) = ${LIN(2,2,"ن")}`,`ق(ن) = ${LIN(2,-2,"ن")}`,`ق(ن) = ${term(2,"ن")}`,`ق(ن) = ${term(4,"ن")}`],ans:2,steps:["الحدود: ٢، ٤، ٦، والأساس ٢، والحد الأول ٢","ق(ن) = ٢ + (ن − ١) × ٢ = ٢ن"]},
+ {id:"f12",skill:"form",prompt:"أي المعادلات الآتية خطية؟",opts:[`ص = ${N(2)}${PV("س",2)} − ٣`,`ص = ${N(2)}${PV("س",3)} − ٣`,`ص = ${N(2)}${PV("س",2)}`,`ص = ${LIN(2,3)}`],ans:3,steps:["المعادلة الخطية: أس المتغير س يساوي ١","ص = ٢س + ٣ أس س فيها ١، والبقية فيها أس ٢ أو ٣"]},
+ {id:"f13",skill:"rel",prompt:`ما اسم مجموعة القيم ${SET([2,4,5])} في العلاقة ${SET([PT(2,4),PT(4,2),PT(5,-1)])}؟`,opts:["المدى","المجال","الدالة","العلاقة"],ans:1,steps:["القيم ٢، ٤، ٥ هي الإحداثيات الأولى (س)","مجموعة الإحداثيات الأولى = المجال"]},
+ {id:"f14",skill:"slope",prompt:`ما ميل المستقيم المار بالنقطتين ${PT(-3,-1)} و${PT(2,-1)}؟`,opts:[N(2),N(1),N(0),N(-1)],ans:2,steps:[`التغير في ص = ${N(-1)} − (${N(-1)}) = ٠`,"التغير في س = ٢ − (−٣) = ٥".replace("−٣",N(-3)),"الميل = ٠ ÷ ٥ = ٠ (مستقيم أفقي)"]},
+ {id:"f16",skill:"slope",prompt:`ميل المستقيم المار بالنقطتين ${PT(-4,3)} و${PT(-2,1)} يساوي:`,opts:[N(1),N(-1),N(2),N(-3)],ans:1,steps:[`التغير في ص = ١ − ٣ = ${N(-2)}`,`التغير في س = ${N(-2)} − (${N(-4)}) = ٢`,`الميل = ${N(-2)} ÷ ٢ = ${N(-1)}`]},
+ {id:"f17",skill:"form",prompt:"اكتبي المعادلة بالصورة القياسية:",eq:`ص + ٧ = ${N(-5)}(س + ٣)`,opts:[STD(5,1,22),STD(1,5,-22),STD(5,1,-22),STD(1,5,22)],ans:2,steps:[`وزّعي: ص + ٧ = ${term(-5)} − ١٥`,`انقلي ${term(-5)} للطرف الأيسر و٧ للطرف الأيمن: ٥س + ص = ${N(-15)} − ٧`,`الصورة القياسية: ${STD(5,1,-22)}`]},
+ {id:"f18",skill:"seq",prompt:"في المتتابعة الحسابية يُسمّى الفرق بين الحدين المتتاليين:",opts:["الأساس","الأس","المجال","المدى"],ans:0,steps:["الفرق الثابت بين كل حدين متتاليين هو أساس المتتابعة"]},
+ {id:"f19",skill:"rel",prompt:"في المستوى الإحداثي، نقطة الأصل هي:",opts:[PT(0,0),PT(1,0),PT(0,1),PT(1,1)],ans:0,steps:["نقطة الأصل هي تقاطع المحورين: س = ٠ و ص = ٠"]},
+ {id:"f20",skill:"fval",prompt:"إذا كانت الدالة كما يلي، فإن د(٤) =",eq:`د(ت) = ${N(2)}${PV("ت",3)}`,opts:[N(128),N(129),N(130),N(131)],ans:0,steps:[`${PW(4,3)} = ٤ × ٤ × ٤ = ٦٤`,"د(٤) = ٢ × ٦٤ = ١٢٨"]},
+ {id:"f21",skill:"intc",prompt:"المقطع السيني للمعادلة:",eq:STD(4,-1,4),opts:[N(0),N(1),N(2),N(3)],ans:1,steps:["عوّضي ص = ٠: ٤س − ٠ = ٤","س = ١"]},
+ {id:"f22",skill:"rel",prompt:"علاقة تربط كل عنصر في مجالها بعنصر واحد فقط من المدى تُسمّى:",opts:["معادلة","متباينة","غير دالة","دالة"],ans:3,steps:["هذا هو تعريف الدالة"]},
+ {id:"f23",skill:"form",prompt:"استعمال المعادلة الخطية لإجراء تنبؤات حول قيم تتجاوز مدى البيانات يُسمّى:",opts:["المدى","المجال المقابل","المجال","التنبؤ الخطي"],ans:3,steps:["التنبؤ بقيم خارج البيانات باستعمال المعادلة الخطية = التنبؤ الخطي"]},
+ {id:"f24",skill:"seq",prompt:"أساس المتتابعة الحسابية: ٤ ، ٩ ، ١٤ ، ١٩ ، …",opts:[N(3),N(4),N(5),N(6)],ans:2,steps:["٩ − ٤ = ٥","الأساس = ٥"]},
+ {id:"f25",skill:"seq",prompt:`الحد التاسع في المتتابعة الحسابية: ${N(-12)} ، ${N(-8)} ، ${N(-4)} ، ٠ ، …`,opts:[N(19),N(20),N(21),N(22)],ans:1,steps:["الأساس = ٤، والحد الأول = −١٢".replace("−١٢",N(-12)),`أ<sub>٩</sub> = ${N(-12)} + (٩ − ١) × ٤`,`= ${N(-12)} + ٣٢ = ٢٠`]},
+ {id:"f26",skill:"slope",prompt:"معدل التغير في الجدول (عدد ألعاب الحاسوب والتكلفة بالريال):",eq:`${GW("عدد الألعاب (س)","التكلفة (ص)")}<tr><td>${N(2)}</td><td>${N(78)}</td></tr><tr><td>${N(4)}</td><td>${N(156)}</td></tr></table>`,opts:[N(37),N(38),N(39),N(40)],ans:2,steps:["التغير في التكلفة = ١٥٦ − ٧٨ = ٧٨","التغير في عدد الألعاب = ٤ − ٢ = ٢","معدل التغير = ٧٨ ÷ ٢ = ٣٩ ريالاً لكل لعبة"]},
+ {id:"f27",skill:"fval",prompt:`أوجدي د(${N(-3)}):`,eq:FX(6,7),opts:[N(-11),N(-13),N(-15),N(-17)],ans:0,steps:[`د(${N(-3)}) = ٦ × (${N(-3)}) + ٧`,`= ${N(-18)} + ٧ = ${N(-11)}`]},
+ {id:"f28",skill:"intc",prompt:"أوجدي المقطعين السيني والصادي للمعادلة:",eq:STD(5,3,15),opts:["السيني ٣ ، الصادي ٥","السيني ٥ ، الصادي ٣","السيني ١٥ ، الصادي ١٥","السيني ٥ ، الصادي ١٥"],ans:0,steps:["المقطع السيني: ص = ٠ ← ٥س = ١٥ ← س = ٣","المقطع الصادي: س = ٠ ← ٣ص = ١٥ ← ص = ٥"]},
+ {id:"f29",skill:"rel",prompt:"يُطلق على الإحداثي الأول في الزوج المرتب:",opts:["المدى","الدالة","المعادلة","المجال"],ans:3,steps:["الإحداثيات الأولى تكوّن المجال، والثانية تكوّن المدى"]},
+ {id:"f31",skill:"form",prompt:"الدالة غير الخطية هي الدالة التي يختلف أس متغيرها عن العدد:",opts:[N(1),N(2),N(3),N(4)],ans:0,steps:["في الدالة الخطية أس المتغير ١، فإذا اختلف عن ١ كانت غير خطية"]},
+ {id:"f32",skill:"seq",prompt:"ما أساس المتتابعة الحسابية: ٩ ، ١٦ ، ٢٣ ، ٣٠ ، …؟",opts:[N(7),N(8),N(9),N(10)],ans:0,steps:["١٦ − ٩ = ٧"]},
+ {id:"f33",skill:"seq",prompt:"ما الحد الثاني عشر في المتتابعة الحسابية: ١ ، ١٠ ، ١٩ ، ٢٨ ، …؟",opts:[N(91),N(100),N(109),N(118)],ans:1,steps:["الأساس = ٩",`أ<sub>١٢</sub> = ١ + (١٢ − ١) × ٩ = ١ + ٩٩ = ١٠٠`]},
+ {id:"f34",skill:"slope",prompt:"عدد سكان المدينة المنورة ٦٠٨٠٠٠ عام ١٤١٤هـ، و٩٢٠٠٠٠ عام ١٤٢٦هـ. ما معدل التغير السنوي؟",opts:[N(23000),N(24000),N(25000),N(26000)],ans:3,steps:["التغير في السكان = ٩٢٠٠٠٠ − ٦٠٨٠٠٠ = ٣١٢٠٠٠","التغير في السنوات = ١٤٢٦ − ١٤١٤ = ١٢","معدل التغير = ٣١٢٠٠٠ ÷ ١٢ = ٢٦٠٠٠ نسمة كل سنة"]},
+ {id:"f35",skill:"fval",prompt:"إذا كانت الدالة كما يلي، فإن د(٣) =",eq:`د(س) = ${PV("س",2)} + ١١`,opts:[N(-2),N(9),N(14),N(20)],ans:3,steps:[`${PW(3,2)} = ٩`,"٩ + ١١ = ٢٠"]},
+ {id:"f36",skill:"slope",prompt:`ميل المستقيم المار بالنقطتين ${PT(-2,1)} و${PT(4,7)} يساوي:`,opts:[N(-3),N(-1),N(1),N(3)],ans:2,steps:["التغير في ص = ٧ − ١ = ٦",`التغير في س = ٤ − (${N(-2)}) = ٦`,"الميل = ٦ ÷ ٦ = ١"]},
+ {id:"f37",skill:"seq",prompt:"أي المتتابعات الآتية ليست حسابية؟",opts:[`${N(-3)} ، ${N(-2)} ، ${N(-1)} ، …`,"٢ ، ٤ ، ٨ ، ١٦ ، …",`١٠ ، ٦ ، ٢ ، ${N(-2)} ، …`,`${N(-7)} ، ٠ ، ٧ ، ١٤ ، …`],ans:1,steps:["٤ − ٢ = ٢ لكن ٨ − ٤ = ٤","الفرق غير ثابت، فهي ليست حسابية"]},
+ {id:"f38",skill:"form",prompt:"الصورة القياسية للمعادلة:",eq:`٥ − ${term(4,"ص")} = ${term(13)}`,opts:[`${term(13)} − ${term(4,"ص")} + ٥ = ٠`,STD(13,4,5),STD(13,-4,5),STD(4,13,5)],ans:1,steps:["انقلي ١٣س للطرف الأيسر و٥ للطرف الأيمن",`${N(-13)}س − ٤ص = ${N(-5)}`,`اضربي في ${N(-1)} حتى يكون معامل س موجباً: ${STD(13,4,5)}`]},
+ {id:"f39",skill:"rel",prompt:`المجال في العلاقة ${SET([PT(3,7),PT(5,7),PT(4,7),PT(6,8)])}:`,opts:[SET([3,4,5,6]),SET([7,8]),SET([3,4,5]),SET([3,6])],ans:0,steps:["المجال = مجموعة الإحداثيات الأولى: ٣، ٥، ٤، ٦","{ ٣ ، ٤ ، ٥ ، ٦ }"]},
+ {id:"f41",skill:"intc",prompt:"نقطة تقاطع التمثيل البياني للمعادلة مع محور السينات:",eq:`ص = ${LIN(-3,-18)}`,opts:[PT(0,6),PT(0,-6),PT(6,0),PT(-6,0)],ans:3,steps:[`عوّضي ص = ٠: ٠ = ${LIN(-3,-18)}`,`${term(3)} = ${N(-18)} ← س = ${N(-6)}`,`النقطة ${PT(-6,0)}`]},
+ {id:"f42",skill:"form",prompt:"الصورة القياسية للمعادلة الخطية هي:",opts:["أس = ب ص + جـ","أس = ب ص − جـ","أس + ب ص = جـ","أس + ب ص + جـ = ٠"],ans:2,steps:["الصورة القياسية: أس + ب ص = جـ"]},
+ {id:"f43",skill:"slope",prompt:`ميل المستقيم المار بالنقطتين ${PT(1,9)} و${PT(-2,3)} هو:`,opts:[N(6),N(-6),N(2),N(-2)],ans:2,steps:[`التغير في ص = ٣ − ٩ = ${N(-6)}`,`التغير في س = ${N(-2)} − ١ = ${N(-3)}`,`الميل = ${N(-6)} ÷ ${N(-3)} = ٢`]},
+ {id:"f44",skill:"seq",prompt:"الحدود الثلاثة التالية للمتتابعة الحسابية ٥ ، ٩ ، ١٣ ، ١٧ ، … هي:",opts:["٢١ ، ٢٣ ، ٢٥","٢١ ، ٢٥ ، ٢٩","١٩ ، ٢١ ، ٢٣","١٩ ، ٢٣ ، ٢٧"],ans:1,steps:["الأساس = ٤","١٧ + ٤ = ٢١، ٢١ + ٤ = ٢٥، ٢٥ + ٤ = ٢٩"]},
+ {id:"f45",skill:"slope",prompt:"معدل التغير من الجدول:",eq:TB("س","ص",[3,5,7,9],[2,6,10,14]),opts:[N(2),FR(-1,2),N(-2),FR(1,2)],ans:0,steps:["التغير في ص = ٦ − ٢ = ٤","التغير في س = ٥ − ٣ = ٢","معدل التغير = ٤ ÷ ٢ = ٢"]},
+ {id:"f46",skill:"rel",prompt:"المتغير المستقل في العلاقة: «يزداد ضغط الهواء داخل إطار السيارة مع ازدياد درجة الحرارة» هو:",opts:["درجة الحرارة","ضغط الهواء","إطار السيارة","حركة السيارة"],ans:0,steps:["المتغير المستقل هو الذي يتغير أولاً ويؤثر في الآخر","ضغط الهواء يعتمد على درجة الحرارة، فدرجة الحرارة هي المستقل"]},
+ {id:"f47",skill:"intc",prompt:"المقطع السيني للمعادلة:",eq:STD(2,-4,16),opts:[N(16),N(8),N(-4),N(2)],ans:1,steps:["عوّضي ص = ٠: ٢س = ١٦","س = ٨"]},
+ {id:"f48",skill:"slope",prompt:`ميل المستقيم المار بالنقطتين ${PT(-3,-1)} و${PT(-3,1)} يساوي:`,opts:[N(-3),N(-1),"غير معرّف",N(2)],ans:2,steps:[`التغير في س = ${N(-3)} − (${N(-3)}) = ٠`,"القسمة على صفر غير ممكنة، فالميل غير معرّف (مستقيم رأسي)"]},
+ {id:"f49",skill:"seq",prompt:`أساس المتتابعة الحسابية: ${N(-2)} ، ٢ ، ٦ ، ١٠ ، …`,opts:[`د = ${N(-2)}`,"د = ٢","د = ٤",`د = ${N(-4)}`],ans:2,steps:[`٢ − (${N(-2)}) = ٤`]},
+ {id:"f50",skill:"form",prompt:"الصورة القياسية للمعادلة الخطية:",eq:`ص = ٧(س + ٥)`,opts:[`ص = ${LIN(7,35)}`,`ص − ٣٥ = ${term(7)}`,`ص = ${term(7)} + ٥`,STD(7,-1,-35)],ans:3,steps:[`وزّعي: ص = ${LIN(7,35)}`,`انقلي ص للطرف الأيمن و٣٥ للطرف الأيسر: ${STD(7,-1,-35)}`]},
+ {id:"f51",skill:"slope",prompt:"اشترت روان حاسوباً بـ ٤٠٠٠ ريال، وينخفض سعره بصورة ثابتة، وكانت قيمته بعد سنتين ٢٥٠٠ ريال. ما معدل الانخفاض السنوي؟",opts:["٧٥٠ ريالاً","١٥٠٠ ريال","٣٧٥ ريالاً","١٢٥٠ ريالاً"],ans:0,steps:["مقدار الانخفاض = ٤٠٠٠ − ٢٥٠٠ = ١٥٠٠ ريال","خلال سنتين: ١٥٠٠ ÷ ٢ = ٧٥٠ ريالاً كل سنة"]},
+ {id:"f52",skill:"seq",prompt:"في المتتابعة ٥ ، ٧ ، ٩ ، … ما الحد رقم ١٠٠؟",opts:[N(203),N(205),N(200),N(198)],ans:0,steps:["الأساس = ٢، والحد الأول = ٥",`${AN} = ٥ + (ن − ١) × ٢ = ${LIN(2,3,"ن")}`,"أ<sub>١٠٠</sub> = ٢ × ١٠٠ + ٣ = ٢٠٣"]},
+ {id:"f53",skill:"seq",prompt:`في المتتابعة الحسابية ١٥ ، ٩ ، ٣ ، ${N(-3)} ، … ما رتبة الحد الذي قيمته ${N(-39)}؟`,opts:[N(10),N(9),N(11),N(8)],ans:0,steps:[`الأساس = ${N(-6)}، و${AN} = ١٥ + (ن − ١)(${N(-6)}) = ${LIN(-6,21,"ن")}`,`${LIN(-6,21,"ن")} = ${N(-39)} ← ${term(-6,"ن")} = ${N(-60)}`,"ن = ١٠"]},
+ {id:"f54",skill:"intc",prompt:"تمثل الدالة ل = ٦٠ − ٣ن وزن التفاح المتبقي بالكيلوجرام بعد بيع ن كيساً. ما صفر الدالة؟",opts:["٢٠ كيساً","٦٠ كيساً","٣ أكياس","٥٧ كيساً"],ans:0,steps:["صفر الدالة: ل = ٠ ← ٦٠ − ٣ن = ٠","ن = ٢٠، أي ينفد التفاح بعد بيع ٢٠ كيساً"]},
+ {id:"f55",skill:"form",prompt:"اكتبي المعادلة بالصورة القياسية:",eq:"س = ص − ٥",opts:[STD(1,-1,-5),STD(1,1,5),STD(1,-1,5),STD(1,1,-5)],ans:0,steps:["انقلي ص للطرف الأيمن: س − ص = −٥".replace("−٥",N(-5))]},
+ {id:"f56",skill:"seq",prompt:"الحدود الثلاثة التالية للمتتابعة الحسابية: ١٢ ، ٩ ، ٦ ، ٣ ، …",opts:[`٠ ، ${N(-3)} ، ${N(-6)}`,"٠ ، ٣ ، ٦","١ ، ٠ ، ١−".replace("١−",N(-1)),`${N(-3)} ، ${N(-6)} ، ${N(-9)}`],ans:0,steps:[`الأساس = ${N(-3)}`,`٣ − ٣ = ٠، ٠ − ٣ = ${N(-3)}، ${N(-3)} − ٣ = ${N(-6)}`]}
+];
+const BYID3F={};BANK3F.forEach(q=>{BYID3F[q.id]=q;});
+const PRE3F=["f1","f2","f3","f4","f9","f8","f14","f17","f21","f12"];
+const POST3F=["f7","f39","f43","f10","f25","f24","f28","f41","f38","f50"];
+const G3F={
+ fval(r){const t=r()<0.7;
+  if(t){const a=nz(r,-6,6),b=nz(r,-9,9),x=nz(r,-5,6),v=a*x+b;
+   const wrongs=byVal(v,[[a*x-b,N(a*x-b)],[a+x+b,N(a+x+b)],[-v,N(-v)],[a*(-x)+b,N(a*(-x)+b)]],k=>[v+k,N(v+k)]);
+   return Object.assign({skill:"fval",prompt:`أوجدي د(${N(x)}):`,eq:FX(a,b),steps:[`عوّضي س = ${N(x)}: د(${N(x)}) = ${N(a)} × ${x<0?`(${N(x)})`:N(x)} ${opS(b)}`,`= ${N(a*x)} ${opS(b)} = ${N(v)}`]},pack(r,N(v),wrongs));}
+  const a=ri(r,1,4),b=nz(r,-9,9),x=nz(r,-4,4),v=a*x*x+b;
+  const wrongs=byVal(v,[[a*2*x+b,N(a*2*x+b)],[-a*x*x+b,N(-a*x*x+b)],[a*x+b,N(a*x+b)],[a*x*x-b,N(a*x*x-b)]],k=>[v+k,N(v+k)]);
+  return Object.assign({skill:"fval",prompt:`أوجدي د(${N(x)}):`,eq:`د(س) = ${a===1?"":N(a)}${PV("س",2)} ${opS(b)}`,steps:[`(${N(x)})<sup>٢</sup> = ${N(x*x)}`,`${a===1?"":`${N(a)} × ${N(x*x)} = ${N(a*x*x)}، `}ثم ${N(a*x*x)} ${opS(b)} = ${N(v)}`]},pack(r,N(v),wrongs));
+ },
+ seq(r){const a1=nz(r,-12,15),d=nz(r,-6,8),t=ri(r,0,2),terms=[0,1,2,3].map(i=>a1+i*d),show=terms.map(N).join(" ، ")+" ، …";
+  if(t===0){const wrongs=byVal(d,[[-d,N(-d)],[d+1,N(d+1)],[terms[1]+terms[0],N(terms[1]+terms[0])],[d*2,N(d*2)]],k=>[d+k+1,N(d+k+1)]);
+   return Object.assign({skill:"seq",prompt:"ما أساس المتتابعة الحسابية؟",eq:show,steps:[`الأساس = ${N(terms[1])} − ${terms[0]<0?`(${N(terms[0])})`:N(terms[0])} = ${N(d)}`]},pack(r,N(d),wrongs));}
+  if(t===1){const n=ri(r,8,20),v=a1+(n-1)*d;
+   const wrongs=byVal(v,[[a1+n*d,N(a1+n*d)],[n*d,N(n*d)],[a1+(n-2)*d,N(a1+(n-2)*d)],[v+1,N(v+1)]],k=>[v+k*d+1,N(v+k*d+1)]);
+   return Object.assign({skill:"seq",prompt:`ما الحد رقم ${N(n)} في المتتابعة الحسابية؟`,eq:show,steps:[`الحد الأول = ${N(a1)}، والأساس = ${N(d)}`,`أ<sub>${ar(n)}</sub> = ${N(a1)} + (${N(n)} − ١) × ${d<0?`(${N(d)})`:N(d)} = ${N(v)}`]},pack(r,N(v),wrongs));}
+  const c=a1-d,correct=`${AN} = ${LIN(d,c,"ن")}`;
+  const wrongs=[`${AN} = ${LIN(a1,d,"ن")}`,`${AN} = ${LIN(d,a1,"ن")}`,`${AN} = ${LIN(d,c+2*d===c?c+1:c+2*d,"ن")}`];
+  return Object.assign({skill:"seq",prompt:"ما معادلة الحد النوني للمتتابعة الحسابية؟",eq:show,steps:[`الحد الأول = ${N(a1)}، والأساس = ${N(d)}`,`${AN} = ${N(a1)} + (ن − ١) × ${d<0?`(${N(d)})`:N(d)}`,`= ${correct.split("= ")[1]}`]},pack(r,correct,uniqStrings(correct,wrongs,[`${AN} = ${LIN(-d,c,"ن")}`,`${AN} = ${LIN(d,-c,"ن")}`])));
+ },
+ slope(r){const x1=nz(r,-6,6),y1=nz(r,-6,6);let dx=nz(r,-5,5);const m=nz(r,-4,4),k=r();let dy=m*dx;
+  if(k<0.12){dy=0;}const x2=x1+dx,y2=y1+dy;
+  if(k>0.88){const xv=x1,ya=y1,yb=y1+nz(r,-5,5);const correct="غير معرّف";
+   return Object.assign({skill:"slope",prompt:`ميل المستقيم المار بالنقطتين ${PT(xv,ya)} و${PT(xv,yb)}:`,steps:[`التغير في س = ${N(xv)} − ${xv<0?`(${N(xv)})`:N(xv)} = ٠`,"لا يمكن القسمة على صفر، فالميل غير معرّف (مستقيم رأسي)"]},pack(r,correct,[N(0),N(yb-ya),N(ya-yb)]));}
+  const v=dy/dx;const wrongs=byVal(v,[[-v,FV(-dy,dx)],[dy===0?null:dx/dy,dy===0?"":FV(dx,dy)],[(y2+y1)/(x2+x1||1),FV(y2+y1,x2+x1||1)],[v+1,FV(dy+dx,dx)]],j=>[v+j+1,FV(dy+(j+1)*dx,dx)]);
+  return Object.assign({skill:"slope",prompt:`ميل المستقيم المار بالنقطتين ${PT(x1,y1)} و${PT(x2,y2)}:`,steps:[`التغير في ص = ${N(y2)} − ${y1<0?`(${N(y1)})`:N(y1)} = ${N(dy)}`,`التغير في س = ${N(x2)} − ${x1<0?`(${N(x1)})`:N(x1)} = ${N(dx)}`,`الميل = ${N(dy)} ÷ ${dx<0?`(${N(dx)})`:N(dx)} = ${FV(dy,dx)}`]},pack(r,FV(dy,dx),wrongs));
+ },
+ intc(r){const xi=nz(r,-6,6),yi=nz(r,-6,6),L=Math.abs(xi*yi)/gcd(xi,yi);let A=L/xi,B=L/yi,C=L;if(A<0){A=-A;B=-B;C=-C;}
+  const sx_=r()<0.5,v=sx_?C/A:C/B;
+  const wrongs=byVal(v,[[sx_?C/B:C/A,N(sx_?C/B:C/A)],[-v,N(-v)],[C,N(C)],[v+1,N(v+1)]],k=>[v+k+1,N(v+k+1)]);
+  return Object.assign({skill:"intc",prompt:sx_?"المقطع السيني للمعادلة:":"المقطع الصادي للمعادلة:",eq:STD(A,B,C),steps:[sx_?`عوّضي ص = ٠: ${term(A)} = ${N(C)}`:`عوّضي س = ٠: ${term(B,"ص")} = ${N(C)}`,`${sx_?"س":"ص"} = ${N(C)} ÷ ${(sx_?A:B)<0?`(${N(sx_?A:B)})`:N(sx_?A:B)} = ${N(v)}`]},pack(r,N(v),wrongs));
+ },
+ form(r){const m=nz(r,-5,5),x1=nz(r,-6,6),y1=nz(r,-8,8);
+  /* ص − y1 = m(س − x1) → mس − ص = m*x1 − y1 */
+  let A=m,B=-1,C=m*x1-y1;if(A<0){A=-A;B=-B;C=-C;}
+  const correct=STD(A,B,C);
+  const wrongs=uniqStrings(correct,[STD(A,B,-C),STD(A,-B,C),STD(A,B,C+2*y1===C?C+1:C+2*y1)],[STD(A,-B,-C),STD(A,B,C+1)]);
+  const eq=`ص ${opS(-y1)} = ${N(m)}(س ${opS(-x1)})`;
+  return Object.assign({skill:"form",prompt:"اكتبي المعادلة بالصورة القياسية:",eq,steps:[`وزّعي الطرف الأيسر: ص ${opS(-y1)} = ${LIN(m,-m*x1)}`,`اجمعي حدود س وص في الطرف الأيمن والأعداد في الطرف الأيسر`,`${m<0?`واضربي في ${N(-1)} حتى يكون معامل س موجباً: `:""}${correct}`]},pack(r,correct,wrongs));
+ },
+ rel(r){const xs=shuffle(r,[-3,-2,-1,1,2,3,4,5,6]).slice(0,4),ys=xs.map(()=>ri(r,-4,7));const pts=xs.map((x,i)=>PT(x,ys[i]));
+  const uniq=a=>[...new Set(a)].sort((p,q)=>p-q);const dom=uniq(xs),rng_=uniq(ys);
+  const askD=r()<0.5,correct=SET(askD?dom:rng_);
+  const wrongs=uniqStrings(correct,[SET(askD?rng_:dom),SET((askD?dom:rng_).slice(1)),SET(uniq((askD?dom:rng_).map(v=>-v)))],[SET(uniq(xs.concat(ys))),SET(uniq((askD?dom:rng_).concat([Math.max(...(askD?dom:rng_))+1]))),SET(uniq((askD?dom:rng_).map(v=>v+1))),SET(uniq((askD?dom:rng_).map(v=>v+2)))]);
+  return Object.assign({skill:"rel",prompt:askD?"ما مجال العلاقة الآتية؟":"ما مدى العلاقة الآتية؟",eq:SET(pts),steps:[askD?"المجال = مجموعة الإحداثيات الأولى (س)":"المدى = مجموعة الإحداثيات الثانية (ص)",`بدون تكرار ومرتبة: ${correct}`]},pack(r,correct,wrongs));
+ }
+};
+
+
+/* شبكة تربيع (المستوى الإحداثي) مع نقطتين، واختيارياً المثلث القائم */
+function GRD(p1,p2,tri){
+ const xs=[p1[0],p2[0],0],ys=[p1[1],p2[1],0];
+ const x0=Math.min(...xs)-1,x1=Math.max(...xs)+1,y0=Math.min(...ys)-1,y1=Math.max(...ys)+1,c=42,W=(x1-x0)*c,H=(y1-y0)*c;
+ const X=x=>(x-x0)*c,Y=y=>(y1-y)*c;let s=`<svg class="grd" viewBox="-14 -14 ${W+28} ${H+28}" width="${Math.min(W+28,380)}" role="img" aria-label="مستوى إحداثي"><g stroke="var(--line)" stroke-width="1">`;
+ for(let x=x0;x<=x1;x++)s+=`<line x1="${X(x)}" y1="0" x2="${X(x)}" y2="${H}"/>`;
+ for(let y=y0;y<=y1;y++)s+=`<line x1="0" y1="${Y(y)}" x2="${W}" y2="${Y(y)}"/>`;
+ s+=`</g><g stroke="currentColor" stroke-width="2"><line x1="0" y1="${Y(0)}" x2="${W}" y2="${Y(0)}"/><line x1="${X(0)}" y1="0" x2="${X(0)}" y2="${H}"/></g>`;
+ s+=`<g fill="currentColor" font-size="15" font-family="inherit"><text x="${W-4}" y="${Y(0)-6}" text-anchor="end">س</text><text x="${X(0)+6}" y="14">ص</text></g>`;
+ if(tri){s+=`<g stroke="var(--c2)" stroke-width="2.5" stroke-dasharray="6 4" fill="none"><line x1="${X(p1[0])}" y1="${Y(p1[1])}" x2="${X(p2[0])}" y2="${Y(p1[1])}"/><line x1="${X(p2[0])}" y1="${Y(p1[1])}" x2="${X(p2[0])}" y2="${Y(p2[1])}"/></g><line x1="${X(p1[0])}" y1="${Y(p1[1])}" x2="${X(p2[0])}" y2="${Y(p2[1])}" stroke="var(--c1)" stroke-width="2.5"/>`;}
+ for(const p of [p1,p2])s+=`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="6" fill="var(--c1)"/>`;
+ return s+`</svg>`;
+}
+/* ---------- ثاني: الأعداد الحقيقية ونظرية فيثاغورس ---------- */
+const SKILLS2R={
+ sqrt:{name:"الجذور التربيعية",hint:"الجذر التربيعي لعدد هو العدد الذي إذا ضُرب في نفسه أعطى العدد. وحل س² = ك له إجابتان: س = ±√ك."},
+ est:{name:"تقدير الجذور والمقارنة",hint:"حدّدي المربعين الكاملين اللذين يقع العدد بينهما، فيقع الجذر بين جذريهما. وللمقارنة حوّلي الأعداد إلى كسور عشرية تقريبية."},
+ real:{name:"الأعداد الحقيقية",hint:"العدد النسبي يمكن كتابته على صورة كسر (منتهٍ أو دوري). وجذر العدد الذي ليس مربعاً كاملاً عدد غير نسبي."},
+ pyth:{name:"نظرية فيثاغورس",hint:"في المثلث القائم: (الوتر)² = (الساق الأولى)² + (الساق الثانية)². والوتر هو أطول الأضلاع ويقابل الزاوية القائمة."},
+ dist:{name:"المسافة ونقطة المنتصف",hint:"المسافة = √((س٢ − س١)² + (ص٢ − ص١)²). ونقطة المنتصف = (مجموع السينات ÷ ٢ ، مجموع الصادات ÷ ٢)."}
+};
+const SYM2R={sqrt:"√",est:"≈",real:"ℝ",pyth:"⊿",dist:"↔"};
+const ORDER2R=["sqrt","est","real","pyth","dist"];
+const BANK2R=[
+ {id:"p1",skill:"sqrt",prompt:"أوجدي القيمة:",eq:SQ(DC(0.64)),opts:[N(8),DC(0.08),DC(0.8),DC(6.4)],ans:2,steps:["٠٫٨ × ٠٫٨ = ٠٫٦٤",`إذن ${SQ(DC(0.64))} = ٠٫٨`]},
+ {id:"p2",skill:"sqrt",prompt:"حل المعادلة:",eq:`${PV("س",2)} = ١٤٤`,opts:[`س = ${PM(12)}`,"س = ١٢ فقط",`س = ${PM(72)}`,"س = ٢٤"],ans:0,steps:["١٢ × ١٢ = ١٤٤ و (−١٢) × (−١٢) = ١٤٤".replace("(−١٢) × (−١٢)",`(${N(-12)}) × (${N(-12)})`),`إذن س = ${PM(12)}`]},
+ {id:"p3",skill:"sqrt",prompt:"رُتِّب ٢٢٥ طالباً في عرض رياضي على شكل مربع. كم طالباً في كل صف؟",opts:["١٠ طلاب","٢١ طالباً","١٥ طالباً","٥ طلاب"],ans:2,steps:[`عدد الطلاب في الصف = ${SQ("٢٢٥")}`,"١٥ × ١٥ = ٢٢٥، إذن ١٥ طالباً"]},
+ {id:"p4",skill:"est",prompt:"رتّبي الأعداد من الأصغر إلى الأكبر:",eq:`٧ ، ٩ ، ${SQ("٥٠")} ، ${SQ("٨٥")}`,opts:[`٧ ، ${SQ("٨٥")} ، ${SQ("٥٠")} ، ٩`,`٧ ، ٩ ، ${SQ("٥٠")} ، ${SQ("٨٥")}`,`٧ ، ${SQ("٥٠")} ، ٩ ، ${SQ("٨٥")}`,`٧ ، ${SQ("٥٠")} ، ${SQ("٨٥")} ، ٩`],ans:2,steps:[`${SQ("٥٠")} ≈ ٧٫١ لأن ٧ × ٧ = ٤٩`,`${SQ("٨٥")} ≈ ٩٫٢ لأن ٩ × ٩ = ٨١`,`الترتيب: ٧ ، ${SQ("٥٠")} ، ٩ ، ${SQ("٨٥")}`]},
+ {id:"p5",skill:"est",prompt:"أفضل تقدير للعدد الآتي إلى أقرب عدد كلي:",eq:SQ(DC(44.8)),opts:[N(7),N(6),N(8),N(5)],ans:0,steps:["٦ × ٦ = ٣٦ و ٧ × ٧ = ٤٩","٤٤٫٨ أقرب إلى ٤٩، إذن الجذر ≈ ٧"]},
+ {id:"p6",skill:"est",prompt:"دون استعمال الآلة الحاسبة، قارني بين العددين:",eq:`١٠ ○ ${SQ("٩٤")}`,opts:[`${SQ("٩٤")} أكبر`,"متساويان","لا يمكن تحديد ذلك","١٠ أكبر"],ans:3,steps:[`١٠ = ${SQ("١٠٠")}`,`١٠٠ > ٩٤، إذن ١٠ أكبر من ${SQ("٩٤")}`]},
+ {id:"p8",skill:"real",prompt:"أي الأعداد الآتية غير نسبي؟",opts:[SQ("٣٦"),DC(4.83),NSQ("٢٠"),SQ(DC(0.25))],ans:2,steps:[`${SQ("٣٦")} = ٦ و${SQ(DC(0.25))} = ٠٫٥ و٤٫٨٣ كلها نسبية`,`٢٠ ليس مربعاً كاملاً، فـ ${NSQ("٢٠")} غير نسبي`]},
+ {id:"p9",skill:"est",prompt:"ما العلاقة الصحيحة بين العددين؟",eq:`${SQ("١٥")} ○ ${DC(3.5)}`,opts:[`${SQ("١٥")} أكبر`,`${SQ("١٥")} أصغر`,"متساويان","لا يمكن المقارنة"],ans:0,steps:[`${DC(3.5)} = ${SQ(DC(12.25))}`,`١٥ > ١٢٫٢٥، إذن ${SQ("١٥")} أكبر`]},
+ {id:"p10",skill:"sqrt",prompt:"أوجدي القيمة:",eq:NSQ("١٦٩"),opts:[DC(1.3),DC(-1.3),N(13),N(-13)],ans:3,steps:["١٣ × ١٣ = ١٦٩",`الإشارة السالبة خارج الجذر، إذن ${NSQ("١٦٩")} = ${N(-13)}`]},
+ {id:"p11",skill:"est",prompt:"يقع العدد الآتي بين العددين الكليين:",eq:SQ("١٢٥"),opts:["٩ و١٠","١٠ و١١","١١ و١٢","١٢ و١٣"],ans:2,steps:["١١ × ١١ = ١٢١ و ١٢ × ١٢ = ١٤٤","١٢١ < ١٢٥ < ١٤٤، إذن الجذر بين ١١ و١٢"]},
+ {id:"p12",skill:"est",prompt:"ما العلاقة الصحيحة بين العددين؟",eq:`${DC(2.21)} ○ ${SQ(DC(5.2))}`,opts:[`${DC(2.21)} أكبر`,`${DC(2.21)} أصغر`,"متساويان","لا يمكن المقارنة"],ans:1,steps:[`${DC(2.21)} × ${DC(2.21)} ≈ ٤٫٨٨`,`٤٫٨٨ < ٥٫٢، إذن ${DC(2.21)} أصغر من ${SQ(DC(5.2))}`]},
+ {id:"p13",skill:"pyth",prompt:"مثلث قائم الزاوية طول وتره ١٣ سم، وطول إحدى ساقيه ٥ سم. فما طول الساق الأخرى؟",opts:["٨ سم","١٠ سم","١٢ سم","١٨ سم"],ans:2,steps:[`${PW(13,2)} = ${PW(5,2)} + ب<sup>٢</sup> ← ١٦٩ = ٢٥ + ب<sup>٢</sup>`,"ب<sup>٢</sup> = ١٤٤، إذن ب = ١٢ سم"]},
+ {id:"p14",skill:"dist",prompt:`أوجدي المسافة بين النقطتين ${PT(1,1)} و${PT(5,4)} الممثلتين على شبكة التربيع:`,eq:GRD([1,1],[5,4]),opts:["٤ وحدات","٥ وحدات","٦ وحدات","٧ وحدات"],ans:1,steps:[`صِلي بين النقطتين، وارسمي مثلثاً قائماً ضلعاه على خطوط الشبكة:<br>${GRD([1,1],[5,4],true)}`,"عُدّي المربعات: الضلع الأفقي ٤ وحدات (٥ − ١)، والضلع الرأسي ٣ وحدات (٤ − ١)",`المسافة = ${SQ(`${PW(4,2)} + ${PW(3,2)}`)} = ${SQ("٢٥")} = ٥ وحدات`]},
+ {id:"p15",skill:"sqrt",prompt:"مربع مساحته ١٢١ سم²، فما محيطه؟",opts:["٤٤ سم","١١ سم","٢٢ سم","٤٨٤ سم"],ans:0,steps:[`طول الضلع = ${SQ("١٢١")} = ١١ سم`,"المحيط = ٤ × ١١ = ٤٤ سم"]},
+ {id:"p16",skill:"pyth",prompt:"هل المثلث الذي أطوال أضلاعه ٤ م ، ٥ م ، ٧ م قائم الزاوية؟",opts:["نعم، لأن ٤ + ٥ > ٧","لا، لأن ٤² + ٥² ≠ ٧²".replace("٤²",PW(4,2)).replace("٥²",PW(5,2)).replace("٧²",PW(7,2)),"نعم، لأن ٧ أطول ضلع","لا يمكن التحديد"],ans:1,steps:[`${PW(4,2)} + ${PW(5,2)} = ١٦ + ٢٥ = ٤١`,`${PW(7,2)} = ٤٩، و٤١ ≠ ٤٩، فالمثلث ليس قائماً`]},
+ {id:"p17",skill:"sqrt",prompt:"تُسمّى الأعداد ١ ، ٤ ، ٩ ، ١٦ ، ٢٥ ، …",opts:["مربعات كاملة","أعداداً أولية","أعداداً فردية","أعداداً غير نسبية"],ans:0,steps:["١ = ١ × ١، ٤ = ٢ × ٢، ٩ = ٣ × ٣ …","كل منها مربع عدد صحيح، فهي مربعات كاملة"]},
+ {id:"p18",skill:"pyth",prompt:"تصف نظرية فيثاغورس العلاقة بين أطوال الأضلاع في:",opts:["أي مثلث","المثلث القائم الزاوية","المثلث المتطابق الأضلاع","المربع"],ans:1,steps:["نظرية فيثاغورس خاصة بالمثلث القائم الزاوية فقط"]},
+ {id:"p19",skill:"pyth",prompt:"أي الأطوال الآتية تشكل أضلاع مثلث قائم الزاوية؟",opts:["٦ ، ٨ ، ١٠","٤ ، ٥ ، ٦","٥ ، ٧ ، ٩","٢ ، ٣ ، ٤"],ans:0,steps:[`${PW(6,2)} + ${PW(8,2)} = ٣٦ + ٦٤ = ١٠٠ = ${PW(10,2)}`,"وهي مضاعفات المثلث ٣ ، ٤ ، ٥"]},
+ {id:"p20",skill:"dist",prompt:`نقطة المنتصف للقطعة الواصلة بين ${PT(2,4)} و${PT(6,8)} هي:`,opts:[PT(4,6),PT(8,12),PT(2,2),PT(3,4)],ans:0,steps:["السيني: (٢ + ٦) ÷ ٢ = ٤","الصادي: (٤ + ٨) ÷ ٢ = ٦",`نقطة المنتصف ${PT(4,6)}`]},
+ {id:"p21",skill:"real",prompt:"أي الأمثلة الآتية يبيّن أن العبارة «كل الجذور التربيعية أعداد غير نسبية» خاطئة؟",opts:[`${SQ("٩")} = ٣`,`${SQ("٢")} ≈ ١٫٤١`,`${SQ("٥")} ≈ ٢٫٢٤`,`${SQ("٧")} ≈ ٢٫٦٥`],ans:0,steps:[`${SQ("٩")} = ٣، و٣ عدد نسبي`,"فليست كل الجذور التربيعية غير نسبية"]},
+ {id:"p22",skill:"real",prompt:"أي الأعداد الآتية عدد نسبي؟",opts:[SQ("٤٩"),SQ("٥٠"),SQ("٢"),SQ("١٢")],ans:0,steps:[`${SQ("٤٩")} = ٧، وهو عدد نسبي`,"٥٠ و٢ و١٢ ليست مربعات كاملة، فجذورها غير نسبية"]},
+ {id:"p23",skill:"sqrt",prompt:"حل المعادلة:",eq:`${PV("س",2)} = ٨١`,opts:[`س = ${PM(9)}`,"س = ٩ فقط",`س = ${PM(81)}`,"س = ٤٠٫٥"],ans:0,steps:["٩ × ٩ = ٨١ و (−٩) × (−٩) = ٨١".replace("(−٩) × (−٩)",`(${N(-9)}) × (${N(-9)})`),`إذن س = ${PM(9)}`]}
+];
+const BYID2R={};BANK2R.forEach(q=>{BYID2R[q.id]=q;});
+const PRE2R=["p1","p2","p4","p6","p8","p21","p13","p16","p14","p17"];
+const POST2R=["p10","p3","p11","p5","p22","p12","p19","p18","p20","p15"];
+const TRIPLES=[[3,4,5],[5,12,13],[8,15,17],[7,24,25],[6,8,10],[9,12,15],[12,16,20]];
+const G2R={
+ sqrt(r){const t=r();
+  if(t<0.45){const n=ri(r,2,20),neg=r()<0.3,v=neg?-n:n;
+   const wrongs=byVal(v,[[-v,N(-v)],[neg?-n*n:n*n,N(neg?-n*n:n*n)],[neg?-(n+1):n+1,N(neg?-(n+1):n+1)],[neg?-2*n:2*n,N(neg?-2*n:2*n)]],k=>[v+k+1,N(v+k+1)]);
+   return Object.assign({skill:"sqrt",prompt:"أوجدي القيمة:",eq:neg?NSQ(ar(n*n)):SQ(ar(n*n)),steps:[`${ar(n)} × ${ar(n)} = ${ar(n*n)}`,neg?`الإشارة السالبة خارج الجذر، فالناتج ${N(-n)}`:`إذن الجذر = ${ar(n)}`]},pack(r,N(v),wrongs));}
+  if(t<0.7){const n=ri(r,2,9),v=n/10;
+   return Object.assign({skill:"sqrt",prompt:"أوجدي القيمة:",eq:SQ(DC(+(v*v).toFixed(2))),steps:[`${DC(v)} × ${DC(v)} = ${DC(+(v*v).toFixed(2))}`]},pack(r,DC(v),[DC(n),DC(n/100),DC(+(v*v).toFixed(2))]));}
+  const n=ri(r,2,15);
+  return Object.assign({skill:"sqrt",prompt:"حلّي المعادلة:",eq:`${PV("س",2)} = ${ar(n*n)}`,steps:[`${ar(n)} × ${ar(n)} = ${ar(n*n)} و (${N(-n)}) × (${N(-n)}) = ${ar(n*n)}`,`إذن س = ${PM(n)}`]},pack(r,`س = ${PM(n)}`,[`س = ${ar(n)} فقط`,`س = ${PM(n+1)}`,`س = ${ar(n*2)}`]));
+ },
+ est(r){let k;do{k=ri(r,3,200);}while(Number.isInteger(Math.sqrt(k)));const lo=Math.floor(Math.sqrt(k)),hi=lo+1;
+  if(r()<0.55){const correct=`${ar(lo)} و${ar(hi)}`;
+   return Object.assign({skill:"est",prompt:"يقع العدد الآتي بين العددين الكليين:",eq:SQ(ar(k)),steps:[`${ar(lo)} × ${ar(lo)} = ${ar(lo*lo)} و ${ar(hi)} × ${ar(hi)} = ${ar(hi*hi)}`,`${ar(lo*lo)} < ${ar(k)} < ${ar(hi*hi)}، إذن الجذر بين ${ar(lo)} و${ar(hi)}`]},pack(r,correct,[`${ar(lo-1)} و${ar(lo)}`,`${ar(hi)} و${ar(hi+1)}`,`${ar(lo*lo)} و${ar(hi*hi)}`]));}
+  const near=(k-lo*lo)<(hi*hi-k)?lo:hi;
+  return Object.assign({skill:"est",prompt:"قدّري العدد الآتي إلى أقرب عدد كلي:",eq:SQ(ar(k)),steps:[`${ar(lo)} × ${ar(lo)} = ${ar(lo*lo)} و ${ar(hi)} × ${ar(hi)} = ${ar(hi*hi)}`,`${ar(k)} أقرب إلى ${ar(near*near)}، إذن الجذر ≈ ${ar(near)}`]},pack(r,N(near),fillNums(near,[near===lo?hi:lo,near+2,near-2,Math.round(k/2)]).map(N)));
+ },
+ real(r){const sq=[4,9,16,25,36,49,64,81,100,144],nsq=[2,3,5,6,7,8,10,11,12,15,20,50];
+  const askIr=r()<0.6;
+  if(askIr){const s=shuffle(r,sq).slice(0,2),ir=nsq[ri(r,0,nsq.length-1)];const correct=SQ(ar(ir));
+   return Object.assign({skill:"real",prompt:"أي الأعداد الآتية غير نسبي؟",steps:[`${ar(ir)} ليس مربعاً كاملاً، فجذره عدد عشري غير منتهٍ وغير دوري`,"والبقية أعداد يمكن كتابتها على صورة كسر"]},pack(r,correct,[SQ(ar(s[0])),SQ(ar(s[1])),FR(ri(r,1,8),ri(r,9,12))]));}
+  const s=sq[ri(r,0,sq.length-1)],ir=shuffle(r,nsq).slice(0,3);
+  return Object.assign({skill:"real",prompt:"أي الأعداد الآتية عدد نسبي؟",steps:[`${SQ(ar(s))} = ${ar(Math.sqrt(s))}، وهو عدد نسبي`,"والبقية جذور لأعداد ليست مربعات كاملة"]},pack(r,SQ(ar(s)),ir.map(v=>SQ(ar(v)))));
+ },
+ pyth(r){const [a,b,c]=TRIPLES[ri(r,0,TRIPLES.length-1)],t=r()<0.5;
+  if(t){return Object.assign({skill:"pyth",prompt:`مثلث قائم الزاوية طولا ساقيه ${ar(a)} سم و${ar(b)} سم. ما طول الوتر؟`,steps:[`الوتر<sup>٢</sup> = ${PW(a,2)} + ${PW(b,2)} = ${ar(a*a)} + ${ar(b*b)} = ${ar(c*c)}`,`الوتر = ${SQ(ar(c*c))} = ${ar(c)} سم`]},pack(r,`${ar(c)} سم`,[`${ar(a+b)} سم`,`${ar(c+1)} سم`,`${ar(c*c)} سم`]));}
+  return Object.assign({skill:"pyth",prompt:`مثلث قائم الزاوية طول وتره ${ar(c)} سم، وطول إحدى ساقيه ${ar(a)} سم. ما طول الساق الأخرى؟`,steps:[`${PW(c,2)} = ${PW(a,2)} + ب<sup>٢</sup> ← ${ar(c*c)} = ${ar(a*a)} + ب<sup>٢</sup>`,`ب<sup>٢</sup> = ${ar(b*b)}، إذن ب = ${ar(b)} سم`]},pack(r,`${ar(b)} سم`,[`${ar(c-a)} سم`,`${ar(c+a)} سم`,`${ar(b+1)} سم`]));
+ },
+ dist(r){if(r()<0.55){const [a,b,c]=TRIPLES[ri(r,0,4)],x1=ri(r,-4,4),y1=ri(r,-4,4),sx1=r()<0.5?1:-1,sy1=r()<0.5?1:-1,x2=x1+sx1*a,y2=y1+sy1*b;
+   const small=Math.max(Math.abs(x1),Math.abs(x2),Math.abs(y1),Math.abs(y2))<=7;
+   return Object.assign({skill:"dist",prompt:`أوجدي المسافة بين النقطتين ${PT(x1,y1)} و${PT(x2,y2)}${small?" الممثلتين على شبكة التربيع":""}:`,eq:small?GRD([x1,y1],[x2,y2]):undefined,steps:[...(small?[`صِلي بين النقطتين وارسمي مثلثاً قائماً على خطوط الشبكة:<br>${GRD([x1,y1],[x2,y2],true)}`]:[]),`الفرق في س = ${ar(a)}، والفرق في ص = ${ar(b)}`,`المسافة = ${SQ(`${PW(a,2)} + ${PW(b,2)}`)} = ${SQ(ar(c*c))} = ${ar(c)} وحدات`]},pack(r,`${ar(c)} وحدات`,[`${ar(a+b)} وحدات`,`${ar(c*c)} وحدات`,`${ar(c+1)} وحدات`]));}
+  const x1=ri(r,-6,6),y1=ri(r,-6,6),x2=x1+2*nz(r,-4,4),y2=y1+2*nz(r,-4,4),mx=(x1+x2)/2,my=(y1+y2)/2;
+  const correct=PT(mx,my);
+  return Object.assign({skill:"dist",prompt:`نقطة المنتصف للقطعة الواصلة بين ${PT(x1,y1)} و${PT(x2,y2)}:`,steps:[`السيني: (${N(x1)} + ${x2<0?`(${N(x2)})`:N(x2)}) ÷ ٢ = ${N(mx)}`,`الصادي: (${N(y1)} + ${y2<0?`(${N(y2)})`:N(y2)}) ÷ ٢ = ${N(my)}`]},pack(r,correct,uniqStrings(correct,[PT(x1+x2,y1+y2),PT(my,mx),PT((x2-x1)/2,(y2-y1)/2)],[PT(mx+1,my),PT(mx,my+1)])));
+ }
+};
+
 const GR={
- g2:{label:"الثاني المتوسط",title:"الأعداد النسبية",icon:"٢",formula:`${f("١","٢")} + ${f("١","٤")} = ${f("٣","٤")}`,trip:"الأعداد النسبية",key:"remedial-rational-v1",STUDENTS:STUDENTS2,SKILLS:SKILLS2,SYM:SYM2,ORDER:ORDER2,PRE:PRE2,POST:POST2,BANK:BANK2,BYID:BYID2,G:G2},
- g3:{label:"الثالث المتوسط",title:"المعادلات الخطية",icon:"٣",formula:`${N(2)}س + ${N(3)} = ${N(7)}`,trip:TRIP,key:KEY,STUDENTS,SKILLS,SYM,ORDER,PRE,POST,BANK,BYID,G}
+ g2:{gk:"2",label:"الثاني المتوسط",title:"الأعداد النسبية",icon:"٢",formula:`${f("١","٢")} + ${f("١","٤")} = ${f("٣","٤")}`,trip:"الأعداد النسبية",key:"remedial-rational-v1",STUDENTS:STUDENTS2,SKILLS:SKILLS2,SYM:SYM2,ORDER:ORDER2,PRE:PRE2,POST:POST2,BANK:BANK2,BYID:BYID2,G:G2},
+ g3:{gk:"3",label:"الثالث المتوسط",title:"المعادلات الخطية",icon:"٣",formula:`${N(2)}س + ${N(3)} = ${N(7)}`,trip:TRIP,key:KEY,STUDENTS,SKILLS,SYM,ORDER,PRE,POST,BANK,BYID,G},
+ g2r:{gk:"2",label:"الثاني المتوسط",title:"الأعداد الحقيقية ونظرية فيثاغورس",icon:"√",formula:`${PW(3,2)} + ${PW(4,2)} = ${PW(5,2)}`,trip:"الأعداد الحقيقية ونظرية فيثاغورس",key:"remedial-real-v1",STUDENTS:STUDENTS2,SKILLS:SKILLS2R,SYM:SYM2R,ORDER:ORDER2R,PRE:PRE2R,POST:POST2R,BANK:BANK2R,BYID:BYID2R,G:G2R},
+ g3f:{gk:"3",label:"الثالث المتوسط",title:"العلاقات والدوال الخطية",icon:"د",formula:`د(س) = ${LIN(2,3)}`,trip:"العلاقات والدوال الخطية",key:"remedial-functions-v1",STUDENTS,SKILLS:SKILLS3F,SYM:SYM3F,ORDER:ORDER3F,PRE:PRE3F,POST:POST3F,BANK:BANK3F,BYID:BYID3F,G:G3F}
 };
 function setGrade(k){const g=GR[k];if(!g)return;S.grade=k;STUDENTS=g.STUDENTS;SKILLS=g.SKILLS;SYM=g.SYM;ORDER=g.ORDER;PRE=g.PRE;POST=g.POST;BANK=g.BANK;BYID=g.BYID;G=g.G;TRIP=g.trip;KEY=g.key;
  const cs=[];STUDENTS.forEach(s=>{if(!cs.includes(s.c))cs.push(s.c);});CLASSES=cs;S.cls="";DB=load();try{localStorage.setItem("remedial-grade",k);}catch(e){}}
