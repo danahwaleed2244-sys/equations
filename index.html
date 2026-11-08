@@ -133,6 +133,10 @@ main{position:relative;z-index:1}
 body.wide main{max-width:1040px}
 .narrow{max-width:460px}
 .err{color:var(--bad);min-height:1.2em;margin:8px 0 0}
+.prow{display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap}
+.prow .ph{flex:1;min-width:160px;margin:0}
+.btn.wa{background:#25D366;border-color:#25D366;color:#0B2E1A;text-decoration:none}
+.pmsg{font-size:14px;line-height:1.7;background:var(--paper);border-radius:8px;padding:8px 10px}
 .okpin{color:var(--ok);font-weight:600;margin:10px 0 0}
 .dash-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .dash-top select{width:auto}
@@ -688,7 +692,36 @@ function tData(){
  <p class="note">${remote()?"النتائج محفوظة في Google Sheets، والحذف يمسحها من الجدول أيضاً.":"تُحفظ النتائج على هذا الجهاز وهذا المتصفح فقط."}</p>${store}
  <div class="row" style="justify-content:flex-start"><button class="btn danger" data-act="clear" ${S.role==="viewer"?"hidden":""}>${S.confirmClear?"اضغطي مرة أخرى لتأكيد الحذف":"حذف كل النتائج"}</button></div>`;
 }
-const TABS=[["over","نظرة عامة"],["students","الطالبات"],["impact","قياس الأثر"],["questions","تحليل الأسئلة"],["follow","المتابعة العلاجية"],["data","البيانات"]];
+const TABS=[["over","نظرة عامة"],["students","الطالبات"],["impact","قياس الأثر"],["questions","تحليل الأسئلة"],["follow","المتابعة العلاجية"],["parents","أولياء الأمور"],["data","البيانات"]];
+/* ---------- parents (numbers stay on this device only) ---------- */
+const PKEY="remedial-parents-v1";
+function pLoad(){try{return JSON.parse(localStorage.getItem(PKEY))||{phones:{},sent:{}};}catch(e){return{phones:{},sent:{}};}}
+function pSave(P){try{localStorage.setItem(PKEY,JSON.stringify(P));}catch(e){}}
+function waNum(s){let d=toEnDigits(s).replace(/\D/g,"");if(d.startsWith("00"))d=d.slice(2);if(d.length===10&&d.startsWith("05"))d="966"+d.slice(1);else if(d.length===9&&d.startsWith("5"))d="966"+d;return d.length>=11?d:"";}
+const toolUrl=()=>{try{return location.href.split("#")[0].split("?")[0];}catch(e){return"";}};
+function pMsg(r){
+ const first=r.n.split(" ")[0],t=GR[S.grade].title,url=toolUrl(),sig="معلمة المادة: لطفيه الطلحي";
+ const hi=`السلام عليكم ورحمة الله وبركاته،\nولي أمر الطالبة ${first} المحترم.`;
+ const tr=r.tt?`\nوفي التدريب العلاجي أجابت إجابة صحيحة في ${ar(r.c)} من أصل ${ar(r.tt)} تمارين.`:"";
+ if(!r.pre)return `${hi}\nنفيدكم بأن ابنتكم ضمن الخطة العلاجية لمادة الرياضيات (${t}). نأمل حثّها على أداء الاختبار القبلي عبر الرابط:\n${url}\nباستخدام رمزها السري الذي سلّمته لها المعلمة.\nشاكرين تعاونكم.\n${sig}`;
+ const weak=r.weakPre.map(s=>SKILLS[s].name).join("، ");
+ if(!r.post)return `${hi}\nنفيدكم بأن ابنتكم أدّت الاختبار القبلي في الرياضيات (${t}) وحصلت على ${ar(r.pre.score)} من ${ar(r.pre.total)}.\n${weak?`المهارات التي تحتاج متابعة: ${weak}.`:"أتقنت جميع المهارات، بارك الله فيها."}${tr}\nنأمل متابعتها في التدريب العلاجي على الرابط:\n${url}\nشاكرين تعاونكم.\n${sig}`;
+ const d=r.post.score-r.pre.score,ch=d>0?`تحسّنت بمقدار ${ar(d)} درجات`:d<0?`انخفضت بمقدار ${ar(-d)} درجات`:"بقيت درجتها كما هي";
+ const good=d>0&&r.po>=50;
+ const weakP=r.weakPost.map(s=>SKILLS[s].name).join("، ");
+ return `${hi}\nنفيدكم بأن ابنتكم أنهت الخطة العلاجية في الرياضيات (${t}):\nالاختبار القبلي: ${ar(r.pre.score)} من ${ar(r.pre.total)}\nالاختبار البعدي: ${ar(r.post.score)} من ${ar(r.post.total)}\nوقد ${ch}.${tr}\n${good?"نشكر لكم متابعتكم، ونرجو الاستمرار في تشجيعها.":`${weakP?`ما زالت تحتاج متابعة في: ${weakP}. `:""}وسنستمر معها في الخطة العلاجية، ونأمل متابعتكم لها في المنزل.`}\n${sig}`;
+}
+function tParents(){
+ const P=pLoad(),rows=rowsAll();
+ const stage=r=>!r.pre?"لم تبدأ":!r.post?"بعد القبلي":"بعد البعدي";
+ return `<p class="note" style="margin-top:0">اكتبي رقم جوال ولي الأمر (مثل 0551234567)، ثم اضغطي «واتساب» فتُفتح المحادثة والرسالة جاهزة حسب نتيجة الطالبة، وتضغطين إرسال. الأرقام تُحفظ على هذا الجهاز فقط ولا تُرفع على الإنترنت.</p>
+ ${rows.map(r=>{const num=P.phones[r.n]||"",w=waNum(num),sent=P.sent[r.n],msg=pMsg(r);
+  return `<div class="qa"><div class="qa-h"><span><b>${esc(r.n)}</b> <span class="note">${r.cls}</span></span><span class="tag">${stage(r)}</span></div>
+  <div class="prow"><input class="ph" type="tel" inputmode="tel" dir="ltr" data-n="${esc(r.n)}" value="${esc(num)}" placeholder="05xxxxxxxx">
+  ${w?`<a class="btn wa" href="https://wa.me/${w}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener" data-act="pmark" data-n="${esc(r.n)}">واتساب</a>`:`<span class="note">${num?"الرقم غير صحيح":"أضيفي الرقم"}</span>`}</div>
+  ${sent?`<p class="note">آخر إرسال: ${fmtDate(sent.date)} (${sent.stage})</p>`:""}
+  <details><summary class="note">معاينة الرسالة</summary><p class="pmsg">${esc(msg).replace(/\n/g,"<br>")}</p></details></div>`;}).join("")}`;
+}
 async function hashCode(s){try{const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("eq-teacher|"+s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("");}catch(e){return "p:"+s;}}
 function vTeacher(){
  if(!S.tAuth){const first=!DB.tcode&&!remote();
@@ -699,11 +732,11 @@ function vTeacher(){
   :`<label for="c1">${remote()?"رمز الدخول (المعلمة أو الإدارة)":"رمز المعلمة"}</label><input id="c1" type="password" inputmode="numeric" autocomplete="current-password">`}
   <p class="err" id="er">${S.err||""}</p>
   <div class="row"><button class="link" data-act="home">الصفحة الرئيسية</button><button class="btn" data-act="tlogin">${first?"حفظ ودخول":"دخول"}</button></div></div>`;}
- const body={over:tOver,students:tStudents,impact:tImpact,questions:tQuestions,follow:tFollow,data:tData}[S.tab]();
+ const body={over:tOver,students:tStudents,impact:tImpact,questions:tQuestions,follow:tFollow,parents:tParents,data:tData}[(S.role==="viewer"&&S.tab==="parents")?"over":S.tab]();
  return `<div class="dash-top"><h1>${S.role==="viewer"?"نتائج الطالبات":"لوحة المعلمة"}</h1><div class="row" style="margin:0"><select id="fcls" aria-label="الفصل"><option value="">كل الفصول</option>${CLASSES.map(c=>`<option ${S.cls===c?"selected":""}>${c}</option>`).join("")}</select>${remote()?`<button class="btn ghost" data-act="refresh">تحديث</button>`:""}<button class="btn ghost" data-act="tout">خروج</button></div></div>
  <p class="note">${remote()?("متصلة بـ Google Sheets: تظهر نتائج كل الطالبات من أي جهاز."+(S.role==="viewer"?" أنتِ في وضع الاطلاع فقط.":"")):"بيانات هذا الجهاز فقط. لتجميع نتائج الطالبات من جوالاتهن اربطي الأداة بـ Google Sheets."}${S.status&&S.tab!=="data"?` <span class="status">${S.status}</span>`:""}</p>
  <div class="seg gsel">${Object.keys(GR).map(k=>`<button class="${S.grade===k?"on":""}" data-act="tgrade" data-k="${k}">${GR[k].label}</button>`).join("")}</div>
- <div class="tabs">${TABS.map(([k,t])=>`<button class="${S.tab===k?"on":""}" data-act="tab" data-k="${k}">${t}</button>`).join("")}</div>
+ <div class="tabs">${TABS.filter(t=>!(t[0]==="parents"&&S.role==="viewer")).map(([k,t])=>`<button class="${S.tab===k?"on":""}" data-act="tab" data-k="${k}">${t}</button>`).join("")}</div>
  <div class="panel">${body}</div>`;
 }
 
@@ -711,6 +744,7 @@ function render(){
  const v={home:vHome,quiz:vQuiz,result:vResult,trainlist:vTrainList,train:vTrain,teacher:vTeacher}[S.view];
  document.body.classList.toggle("wide",S.view==="teacher"&&S.tAuth);
  app.innerHTML=v();
+ app.querySelectorAll(".ph").forEach(i=>i.addEventListener("change",()=>{const P=pLoad();const v=i.value.trim();if(v)P.phones[i.dataset.n]=v;else delete P.phones[i.dataset.n];pSave(P);render();}));
  const fc=document.getElementById("fcls");if(fc)fc.addEventListener("change",()=>{S.cls=fc.value;render();});
  const c1=document.getElementById("c1");if(c1){c1.focus();app.querySelectorAll("#c1,#c2").forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter")A.tlogin();}));}
  const sel=document.getElementById("stu");
@@ -739,6 +773,7 @@ async function checkPin(){
 }
 
 /* ---------- actions ---------- */
+function pMark(n){const P=pLoad();const r=rowsAll().find(x=>x.n===n);P.sent[n]={date:new Date().toISOString(),stage:r?(!r.pre?"تذكير بالقبلي":!r.post?"نتيجة القبلي":"نتيجة البعدي"):""};pSave(P);setTimeout(render,300);}
 const SEEN=new Set();
 function pickTrain(skill){const pool=BANK.filter(q=>q.skill===skill&&!POST.includes(q.id)&&!SEEN.has(q.id));if(pool.length&&Math.random()<0.5){const q=pool[Math.floor(Math.random()*pool.length)];SEEN.add(q.id);return q;}return G[skill](rng((Math.random()*4294967296)>>>0));}
 function newTrainQ(skill){S.train={skill,q:pickTrain(skill),picked:null,streak:S.train&&S.train.skill===skill?S.train.streak:0};}
@@ -786,6 +821,7 @@ const GR={
 };
 function setGrade(k){const g=GR[k];if(!g)return;S.grade=k;STUDENTS=g.STUDENTS;SKILLS=g.SKILLS;SYM=g.SYM;ORDER=g.ORDER;PRE=g.PRE;POST=g.POST;BANK=g.BANK;BYID=g.BYID;G=g.G;TRIP=g.trip;KEY=g.key;
  const cs=[];STUDENTS.forEach(s=>{if(!cs.includes(s.c))cs.push(s.c);});CLASSES=cs;S.cls="";DB=load();try{localStorage.setItem("remedial-grade",k);}catch(e){}}
+A.pmark=b=>{pMark(b.dataset.n);};
 A.grade=b=>{setGrade(b.dataset.k);S.student="";S.other=false;S.verified=null;S.pinVal="";S.err="";go("home");};
 A.chgrade=()=>{S.grade=null;S.student="";S.other=false;S.verified=null;S.pinVal="";S.err="";go("home");};
 A.tgrade=async b=>{setGrade(b.dataset.k);S.status="";if(remote()&&S.tAuth){S.status="جارٍ التحميل…";render();try{await pullAll(S.tcodePlain);S.status="";}catch(e){S.status="تعذّر التحميل";}}render();};
