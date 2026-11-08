@@ -133,6 +133,7 @@ main{position:relative;z-index:1}
 body.wide main{max-width:1040px}
 .narrow{max-width:460px}
 .err{color:var(--bad);min-height:1.2em;margin:8px 0 0}
+.okpin{color:var(--ok);font-weight:600;margin:10px 0 0}
 .dash-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .dash-top select{width:auto}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
@@ -174,11 +175,11 @@ table.kv th{width:55%}
 (function(){
 "use strict";
 let STUDENTS=[
- {n:"فاطمه سطام القثامي",c:"ثالث/١"},{n:"سبأ قاسم داود",c:"ثالث/١"},{n:"لانا همام العتيبي",c:"ثالث/١"},
- {n:"ريمان نواف الجعيد",c:"ثالث/١"},{n:"وسن عبدالله القثامي",c:"ثالث/١"},
- {n:"أميرة بدر المطيري",c:"ثالث/١"},{n:"هوازن ماجد القثامي",c:"ثالث/١"},
- {n:"ألماس منصور العتيبي",c:"ثالث/٢"},{n:"ريوف بدر المقاطي",c:"ثالث/٢"},{n:"عائشة غازي العتيبي",c:"ثالث/٢"},
- {n:"رتيل حميد المطيري",c:"ثالث/٢"}
+ {n:"فاطمه سطام القثامي",c:"ثالث/١",h:"0ee82afca59cbbd7edb9cb2d"},{n:"سبأ قاسم داود",c:"ثالث/١",h:"7d208c45c4a78baa25a8313f"},{n:"لانا همام العتيبي",c:"ثالث/١",h:"f7c739d74b0e4a0107f7340c"},
+ {n:"ريمان نواف الجعيد",c:"ثالث/١",h:"945fa1c21c1ba259c6a8d8ea"},{n:"وسن عبدالله القثامي",c:"ثالث/١",h:"3af3c84d526bc4789e6bf8b8"},
+ {n:"أميرة بدر المطيري",c:"ثالث/١",h:"e965d5a77f534632e0e3c7fe"},{n:"هوازن ماجد القثامي",c:"ثالث/١",h:"b51cea5ba0603fe15590f53c"},
+ {n:"ألماس منصور العتيبي",c:"ثالث/٢",h:"d103d0b01c68d8512c2a42db"},{n:"ريوف بدر المقاطي",c:"ثالث/٢",h:"6f57b50ba66aac9bf4016554"},{n:"عائشة غازي العتيبي",c:"ثالث/٢",h:"46aa39db2b1fc63b6d35230d"},
+ {n:"رتيل حميد المطيري",c:"ثالث/٢",h:"bcb8415aa366ce40122f7369"}
 ];
 let SKILLS={
  eq:{name:"المعادلات ومجموعة التعويض",hint:"عوّضي كل قيمة من مجموعة التعويض في المعادلة، والقيمة التي تجعلها صحيحة هي الحل. وطبّقي ترتيب العمليات: الأقواس، ثم الأسس، ثم الضرب والقسمة، ثم الجمع والطرح."},
@@ -364,7 +365,7 @@ const PP=(inner,e)=>`<bdi dir="ltr"><sup>${ar(e)}</sup>(${inner})</bdi>`;
 /* candidates by value: [[value, html], ...] -> 3 wrong htmls, distinct and != correct */
 function byVal(cv,cands,fill){const out=[],seen=[cv];for(const [v,hh] of cands){if(v==null||!isFinite(v))continue;if(seen.some(x=>Math.abs(x-v)<1e-9))continue;seen.push(v);out.push(hh);if(out.length===3)break;}let k=1;while(out.length<3&&fill){const [v,hh]=fill(k++);if(!seen.some(x=>Math.abs(x-v)<1e-9)){seen.push(v);out.push(hh);}}return out;}
 
-const STUDENTS2=[{n:"تالا عبدالكريم الحارثي",c:"ثاني/٤"},{n:"جمانه عبدالله البقمي",c:"ثاني/٤"},{n:"ديما عبدالمجيد المطيري",c:"ثاني/٤"}];
+const STUDENTS2=[{n:"تالا عبدالكريم الحارثي",c:"ثاني/٤",h:"424b54b3fc8f397f4ba4c517"},{n:"جمانه عبدالله البقمي",c:"ثاني/٤",h:"1a6da7e624ded49500b289da"},{n:"ديما عبدالمجيد المطيري",c:"ثاني/٤",h:"8a7c4dc77454120165c3d312"}];
 const SKILLS2={
  dec:{name:"الكسور الاعتيادية والعشرية",hint:"لتحويل الكسر الاعتيادي إلى عشري اقسمي البسط على المقام، أو اجعلي المقام ١٠ أو ١٠٠ أو ١٠٠٠. وللمقارنة حوّلي العددين إلى الصورة نفسها."},
  muldiv:{name:"ضرب الأعداد النسبية وقسمتها",hint:"حوّلي العدد الكسري إلى كسر غير فعلي، واضربي البسط في البسط والمقام في المقام. والقسمة على كسر = الضرب في مقلوبه. وسالب × سالب = موجب."},
@@ -501,9 +502,10 @@ function vHome(){
  <p class="sub">${GR[S.grade].label}، الاختبار القبلي والتدريب العلاجي والاختبار البعدي. <button class="link" data-act="chgrade">تغيير الصف</button></p>
  <div class="panel">
   <label for="stu">اسم الطالبة</label>
-  <select id="stu"><option value="" ${!S.student&&!S.other?"selected":""}>اختاري الاسم</option>${groups}<option value="__other" ${S.other?"selected":""}>طالبة أخرى</option></select>
-  ${S.other?`<input id="otherName" placeholder="اكتبي اسم الطالبة" value="${esc(S.student)}">`:""}
-  ${has?"":`<p class="hint">اختاري اسم الطالبة حتى تُحفظ نتيجتها.</p>`}
+  <select id="stu"><option value="" ${!S.student&&!S.other?"selected":""}>اختاري الاسم</option>${groups}</select>
+  ${S.student?(S.verified===S.student?`<p class="okpin">✓ تم التحقق من الرمز السري</p>`:`<label for="pin" style="margin-top:12px">الرمز السري</label><input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="اكتبي رمزك السري">`):""}
+  ${S.err&&S.view==="home"?`<p class="err">${S.err}</p>`:""}
+  ${has?"":`<p class="hint">اختاري اسمك، ثم اكتبي رمزك السري.</p>`}
  </div>
  <div class="actions">
   <button class="act ${pre?"":"primary"}" data-act="start" data-kind="pre" ${has?"":"disabled"}><span class="ico">؟</span><span class="lbl">الاختبار القبلي</span><small>${pre?`آخر نتيجة ${ar(pre.score)} من ${ar(pre.total)}`:"١٠ أسئلة"}</small></button>
@@ -712,7 +714,9 @@ function render(){
  const fc=document.getElementById("fcls");if(fc)fc.addEventListener("change",()=>{S.cls=fc.value;render();});
  const c1=document.getElementById("c1");if(c1){c1.focus();app.querySelectorAll("#c1,#c2").forEach(i=>i.addEventListener("keydown",e=>{if(e.key==="Enter")A.tlogin();}));}
  const sel=document.getElementById("stu");
- if(sel)sel.addEventListener("change",()=>{if(sel.value==="__other"){S.other=true;S.student="";S.cls="";}else{S.other=false;S.student=sel.value;S.cls=clsOf(sel.value);}render();const o=document.getElementById("otherName");if(o)o.focus();});
+ if(sel)sel.addEventListener("change",()=>{S.other=false;S.student=sel.value;S.cls=clsOf(sel.value);S.verified=null;S.pinVal="";S.err="";render();const p=document.getElementById("pin");if(p)p.focus();});
+ const pn=document.getElementById("pin");
+ if(pn){pn.addEventListener("input",()=>{S.pinVal=pn.value;});pn.addEventListener("keydown",e=>{if(e.key==="Enter")checkPin().then(ok=>{if(ok)render();});});}
  const o=document.getElementById("otherName");
  if(o)o.addEventListener("input",()=>{S.student=o.value;const has=!!o.value.trim();document.querySelectorAll('[data-act="start"]').forEach(b=>b.disabled=!has);});
 }
@@ -721,6 +725,18 @@ function render(){
 const SYMS=["+","−","×","÷","=","س","π","√","∞","٪","≠","ن","( )","| |","٣","٧"];
 (function(){const bg=document.getElementById("bg");if(!bg)return;let out="";for(let i=0;i<20;i++){const s=SYMS[i%SYMS.length],c=`var(--c${1+i%4})`,left=Math.round(Math.random()*96),size=1.2+Math.random()*2.6,dur=22+Math.random()*26,delay=-Math.random()*dur,top=Math.round(Math.random()*90);out+=`<span style="left:${left}%;top:${top}%;color:${c};font-size:${size.toFixed(1)}rem;animation-duration:${dur.toFixed(0)}s;animation-delay:${delay.toFixed(0)}s">${s}</span>`;}bg.innerHTML=out;bg.querySelectorAll("span").forEach(sp=>{sp.style.top="auto";});})();
 function burst(el){try{if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;const b=el.getBoundingClientRect(),x=b.left+b.width/2,y=b.top+b.height/2;for(let i=0;i<12;i++){const s=document.createElement("span");s.className="burst";s.textContent=SYMS[i%SYMS.length];const ang=Math.PI*2*i/12,d=60+Math.random()*50;s.style.cssText=`left:${x}px;top:${y}px;color:var(--c${1+i%4});--dx:${Math.cos(ang)*d}px;--dy:${Math.sin(ang)*d}px;--rot:${Math.round(Math.random()*180)}deg`;document.body.appendChild(s);setTimeout(()=>s.remove(),950);}}catch(e){}}
+
+/* ---------- student PIN ---------- */
+const toEnDigits=s=>String(s||"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/\s+/g,"");
+async function pinHash(name,code){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("pin|"+name+"|"+code));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("").slice(0,24);}
+async function checkPin(){
+ if(!S.student)return false; if(S.verified===S.student)return true;
+ const st=STUDENTS.find(s=>s.n===S.student); if(!st||!st.h){S.err="اختاري اسمك من القائمة.";render();return false;}
+ const code=toEnDigits(S.pinVal); if(!code){S.err="اكتبي رمزك السري أولاً.";render();return false;}
+ let h=""; try{h=await pinHash(st.n,code);}catch(e){S.err="المتصفح لا يدعم التحقق. افتحي الرابط من Safari أو Chrome.";render();return false;}
+ if(h!==st.h){S.err="الرمز السري غير صحيح. تأكدي منه أو اسألي المعلمة.";S.pinVal="";render();return false;}
+ S.verified=S.student;S.err="";return true;
+}
 
 /* ---------- actions ---------- */
 const SEEN=new Set();
@@ -740,8 +756,8 @@ const A={
  async refresh(){if(!remote())return;S.status="";try{await pullAll(S.tcodePlain);S.status="تم التحديث";}catch(e){S.status="تعذّر التحديث";}render();},
  tab(b){S.tab=b.dataset.k;S.status="";S.copyText="";S.confirmClear=false;render();},
  qk(b){S.qk=b.dataset.k;render();},
- trainlist(){go("trainlist");},
- start(b){if(!S.student.trim())return;S.quiz={kind:b.dataset.kind,qs:makeTest(b.dataset.kind),i:0,ans:Array(PRE.length).fill(null)};go("quiz");},
+ async trainlist(){if(S.view==="home"&&S.student&&!(await checkPin()))return;go("trainlist");},
+ async start(b){if(!S.student.trim())return;if(!(await checkPin()))return;S.quiz={kind:b.dataset.kind,qs:makeTest(b.dataset.kind),i:0,ans:Array(PRE.length).fill(null)};go("quiz");},
  pick(b){const j=+b.dataset.j;
   if(S.view==="quiz"){S.quiz.ans[S.quiz.i]=j;render();return;}
   if(S.view==="train"){const T=S.train;if(T.picked!==null)return;T.picked=j;const ok=j===T.q.ans;T.streak=ok?T.streak+1:0;
@@ -753,7 +769,7 @@ const A={
  finish(){const Q=S.quiz,skills={};let score=0;
   Q.qs.forEach((q,i)=>{const ok=Q.ans[i]===q.ans;if(ok)score++;const v=skills[q.skill]||(skills[q.skill]=[0,0]);v[1]++;if(ok)v[0]++;});
   const rec={name:S.student.trim(),cls:clsOf(S.student.trim()),kind:Q.kind,score,total:Q.qs.length,skills,qids:Q.qs.map(q=>q.id),answers:Q.ans.slice(),date:new Date().toISOString(),type:"res",id:"r_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)};
-  DB.rec.push(rec);save();post({action:"save",record:rec});S.result={rec,qs:Q.qs,ans:Q.ans};S.quiz=null;go("result");if(score>=7){const sc=document.querySelector(".score");if(sc)burst(sc);}
+  DB.rec.push(rec);save();post({action:"save",record:rec});S.verified=null;S.pinVal="";S.result={rec,qs:Q.qs,ans:Q.ans};S.quiz=null;go("result");if(score>=7){const sc=document.querySelector(".score");if(sc)burst(sc);}
  },
  train(b){S.train=null;newTrainQ(b.dataset.skill);go("train");},
  newq(){newTrainQ(S.train.skill);render();window.scrollTo(0,0);},
@@ -770,8 +786,8 @@ const GR={
 };
 function setGrade(k){const g=GR[k];if(!g)return;S.grade=k;STUDENTS=g.STUDENTS;SKILLS=g.SKILLS;SYM=g.SYM;ORDER=g.ORDER;PRE=g.PRE;POST=g.POST;BANK=g.BANK;BYID=g.BYID;G=g.G;TRIP=g.trip;KEY=g.key;
  const cs=[];STUDENTS.forEach(s=>{if(!cs.includes(s.c))cs.push(s.c);});CLASSES=cs;S.cls="";DB=load();try{localStorage.setItem("remedial-grade",k);}catch(e){}}
-A.grade=b=>{setGrade(b.dataset.k);S.student="";S.other=false;go("home");};
-A.chgrade=()=>{S.grade=null;S.student="";S.other=false;go("home");};
+A.grade=b=>{setGrade(b.dataset.k);S.student="";S.other=false;S.verified=null;S.pinVal="";S.err="";go("home");};
+A.chgrade=()=>{S.grade=null;S.student="";S.other=false;S.verified=null;S.pinVal="";S.err="";go("home");};
 A.tgrade=async b=>{setGrade(b.dataset.k);S.status="";if(remote()&&S.tAuth){S.status="جارٍ التحميل…";render();try{await pullAll(S.tcodePlain);S.status="";}catch(e){S.status="تعذّر التحميل";}}render();};
 const _teacher=A.teacher;A.teacher=b=>{if(!S.grade)setGrade("g3");_teacher(b);};
 try{const k=localStorage.getItem("remedial-grade");if(k&&GR[k])setGrade(k);}catch(e){}
