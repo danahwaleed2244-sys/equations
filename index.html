@@ -138,7 +138,8 @@ body.wide main{max-width:1040px}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
 .tabs button,.seg button{font:inherit;font-size:.95rem;padding:8px 14px;border-radius:999px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
 .tabs button.on,.seg button.on{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
-.seg{display:flex;gap:6px;margin-bottom:10px}
+.seg{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.gsel{margin-top:10px}
 h3{font-size:1.1rem;margin:22px 0 8px;color:var(--primary)}
 h3:first-child{margin-top:0}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
@@ -172,14 +173,14 @@ table.kv th{width:55%}
 <script>
 (function(){
 "use strict";
-const STUDENTS=[
+let STUDENTS=[
  {n:"فاطمه سطام القثامي",c:"ثالث/١"},{n:"سبأ قاسم داود",c:"ثالث/١"},{n:"لانا همام العتيبي",c:"ثالث/١"},
  {n:"ريمان نواف الجعيد",c:"ثالث/١"},{n:"وسن عبدالله القثامي",c:"ثالث/١"},
  {n:"أميرة بدر المطيري",c:"ثالث/١"},{n:"هوازن ماجد القثامي",c:"ثالث/١"},
  {n:"ألماس منصور العتيبي",c:"ثالث/٢"},{n:"ريوف بدر المقاطي",c:"ثالث/٢"},{n:"عائشة غازي العتيبي",c:"ثالث/٢"},
  {n:"رتيل حميد المطيري",c:"ثالث/٢"}
 ];
-const SKILLS={
+let SKILLS={
  eq:{name:"المعادلات ومجموعة التعويض",hint:"عوّضي كل قيمة من مجموعة التعويض في المعادلة، والقيمة التي تجعلها صحيحة هي الحل. وطبّقي ترتيب العمليات: الأقواس، ثم الأسس، ثم الضرب والقسمة، ثم الجمع والطرح."},
  write:{name:"كتابة المعادلات",hint:"حوّلي الكلمات إلى رموز: «أمثال» و«أضعاف» ضرب، «مضافاً إليه» جمع، «يساوي» =. والأعداد المتتالية: ن، ن + ١، ن + ٢، والفردية أو الزوجية: ن، ن + ٢، ن + ٤."},
  onestep:{name:"معادلات بخطوة واحدة",hint:"استخدمي العملية العكسية على الطرفين: الطرح يعكس الجمع، والقسمة تعكس الضرب، ومع الكسر اضربي في مقلوبه."},
@@ -187,10 +188,10 @@ const SKILLS={
  both:{name:"المتغير في الطرفين والمتطابقات",hint:"اجمعي حدود المتغير في طرف والأعداد في الطرف الآخر. إذا اختفى المتغير وبقيت جملة صحيحة فهي متطابقة (جميع الأعداد الحقيقية)، وإن بقيت جملة خاطئة فلا يوجد حل ∅."},
  abs:{name:"معادلات القيمة المطلقة",hint:"القيمة المطلقة تعطي حالتين: ما بداخلها يساوي العدد، أو يساوي سالبه. وإذا كانت تساوي عدداً سالباً فلا يوجد حل ∅."}
 };
-const SYM={eq:"=",write:"ن",onestep:"+",multi:"( )",both:"⇄",abs:"| |"};
-const ORDER=["eq","write","onestep","multi","both","abs"];
-const PRE=["q1","q25","q2","q18","q14","q19","q22","q8","q7","q55"];
-const POST=["q24","q57","q38","q54","q48","q60","q56","q53","q20","q26"];
+let SYM={eq:"=",write:"ن",onestep:"+",multi:"( )",both:"⇄",abs:"| |"};
+let ORDER=["eq","write","onestep","multi","both","abs"];
+let PRE=["q1","q25","q2","q18","q14","q19","q22","q8","q7","q55"];
+let POST=["q24","q57","q38","q54","q48","q60","q56","q53","q20","q26"];
 
 /* ---------- helpers ---------- */
 const AR="٠١٢٣٤٥٦٧٨٩";
@@ -220,7 +221,7 @@ function NL(pts){
 }
 
 /* ---------- questions from the chapter collection ---------- */
-const BANK=[
+let BANK=[
  {id:"q1",skill:"eq",prompt:"مجموعة الحل للمعادلة في مجموعة التعويض { ٠ ، ١ ، ٣ ، ٥ } هي:",eq:"٨م + ٧ = ٧",opts:["{ ٢ }","{ ٠ }","{ ١ }","{ ٣ }"],ans:1,steps:["عوّضي م = ٠: ٨ × ٠ + ٧ = ٧ ✓","القيم ١ و٣ و٥ تعطي ناتجاً أكبر من ٧، إذن مجموعة الحل { ٠ }"]},
  {id:"q5",skill:"eq",prompt:"حل المعادلة هو ص =",eq:"ص = ٧ + (٩<sup>٢</sup> − ٩) ÷ ٢",opts:["٨","١١٫٥","٣٩٫٥","٤٣"],ans:3,steps:["داخل القوس أولاً: ٩<sup>٢</sup> − ٩ = ٨١ − ٩ = ٧٢","ثم القسمة: ٧٢ ÷ ٢ = ٣٦","ثم الجمع: ٧ + ٣٦ = ٤٣"]},
  {id:"q16",skill:"eq",prompt:"ما حل المعادلة إذا كانت مجموعة التعويض { ٣٦ ، ٣٧ ، ٣٨ ، ٣٩ }؟",eq:"٧٤ = ٢ق",opts:["٣٦","٣٧","٣٨","٣٩"],ans:1,steps:["عوّضي ق = ٣٧: ٢ × ٣٧ = ٧٤ ✓"]},
@@ -274,10 +275,10 @@ const BANK=[
  {id:"q50",skill:"abs",prompt:"حل المعادلة:",eq:`${AB("٤ن − ١")} = −٦`,opts:["١","٢","٣","∅"],ans:3,steps:["القيمة المطلقة لا تكون سالبة أبداً","إذن لا يوجد حل ∅"]},
  {id:"q55",skill:"abs",prompt:"المعادلة التي تتضمن القيمة المطلقة للتمثيل المجاور هي:",eq:NL([-2,4]),opts:[`${AB("س + ١")} = ٤`,`${AB("س − ١")} = ٣`,`${AB("س − ١")} = ٤`,`${AB("س + ١")} = ٣`],ans:1,steps:["منتصف النقطتين −٢ و٤ هو ١","البعد من المنتصف إلى كل نقطة ٣",`المعادلة: ${AB("س − ١")} = ٣`]}
 ];
-const BYID={};BANK.forEach(q=>{BYID[q.id]=q;});
+let BYID={};BANK.forEach(q=>{BYID[q.id]=q;});
 
 /* ---------- generated practice ---------- */
-const G={
+let G={
  eq(r){
   const a=ri(r,2,6),x=ri(r,2,15),b=nz(r,-12,12),c=a*x+b;
   const set=[x];while(set.length<4){const v=ri(r,Math.max(1,x-4),x+4);if(!set.includes(v))set.push(v);}set.sort((p,q)=>p-q);
@@ -351,10 +352,114 @@ const G={
  }
 };
 function makeTest(kind){return (kind==="pre"?PRE:POST).map(id=>BYID[id]);}
+/* ===================== الصف الثاني المتوسط: الأعداد النسبية ===================== */
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a||1;};
+function FR(n,d){if(d<0){n=-n;d=-d;}const g=gcd(n,d);n/=g;d/=g;if(d===1)return N(n);return `${n<0?"−":""}${frac(ar(Math.abs(n)),ar(d))}`;}
+function MX(n,d){if(d<0){n=-n;d=-d;}const g=gcd(n,d);n/=g;d/=g;const s=n<0?"−":"";n=Math.abs(n);if(d===1)return s+ar(n);const w=Math.floor(n/d),r=n%d;return w?`${s}${ar(w)} ${frac(ar(r),ar(d))}`:`${s}${frac(ar(r),ar(d))}`;}
+const FV=(n,d)=>Math.abs(n)>Math.abs(d)?MX(n,d):FR(n,d);
+function DC(x){let s=String(+(+x).toFixed(8));const neg=s.startsWith("-");if(neg)s=s.slice(1);return `<bdi dir="rtl">${neg?"−":""}${ar(s).replace(".","٫")}</bdi>`;}
+const SC=(a,k)=>`${DC(a)} × ${ar(10)}<sup>${k<0?"−":""}${ar(Math.abs(k))}</sup>`;
+const PW=(b,e)=>`${ar(b)}<sup>${ar(e)}</sup>`;
+/* candidates by value: [[value, html], ...] -> 3 wrong htmls, distinct and != correct */
+function byVal(cv,cands,fill){const out=[],seen=[cv];for(const [v,hh] of cands){if(v==null||!isFinite(v))continue;if(seen.some(x=>Math.abs(x-v)<1e-9))continue;seen.push(v);out.push(hh);if(out.length===3)break;}let k=1;while(out.length<3&&fill){const [v,hh]=fill(k++);if(!seen.some(x=>Math.abs(x-v)<1e-9)){seen.push(v);out.push(hh);}}return out;}
+
+const STUDENTS2=[{n:"تالا عبدالكريم الحارثي",c:"ثاني/٤"},{n:"جمانه عبدالله البقمي",c:"ثاني/٤"},{n:"ديما عبدالمجيد المطيري",c:"ثاني/٤"}];
+const SKILLS2={
+ dec:{name:"الكسور الاعتيادية والعشرية",hint:"لتحويل الكسر الاعتيادي إلى عشري اقسمي البسط على المقام، أو اجعلي المقام ١٠ أو ١٠٠ أو ١٠٠٠. وللمقارنة حوّلي العددين إلى الصورة نفسها."},
+ muldiv:{name:"ضرب الأعداد النسبية وقسمتها",hint:"حوّلي العدد الكسري إلى كسر غير فعلي، واضربي البسط في البسط والمقام في المقام. والقسمة على كسر = الضرب في مقلوبه. وسالب × سالب = موجب."},
+ addsub:{name:"جمع الأعداد النسبية وطرحها",hint:"وحّدي المقامات أولاً، ثم اجمعي البسطين أو اطرحيهما، واكتبي الناتج في أبسط صورة."},
+ pow:{name:"القوى والأسس",hint:"الأس يدل على عدد مرات ضرب الأساس في نفسه: ٢ أس ٣ = ٢ × ٢ × ٢ = ٨."},
+ sci:{name:"الصيغة العلمية",hint:"الصيغة العلمية: عدد بين ١ و١٠ مضروب في قوة للعدد ١٠. الأس الموجب يحرّك الفاصلة يميناً في الصيغة القياسية، والسالب يحرّكها يساراً."}
+};
+const SYM2={dec:"٫",muldiv:"×",addsub:"±",pow:"ⁿ",sci:"١٠"};
+const ORDER2=["dec","muldiv","addsub","pow","sci"];
+const f=frac;
+const BANK2=[
+ {id:"r1",skill:"dec",prompt:"اكتبي العدد الكسري على صورة كسر عشري:",eq:MX(113,25),opts:[DC(4.57),DC(4.52),DC(0.52),"٤٫٥٢٥٢…"],ans:1,steps:[`${f("١٣","٢٥")} = ${f("٥٢","١٠٠")} = ٠٫٥٢ (اضربي البسط والمقام في ٤)`,"إذن العدد = ٤٫٥٢"]},
+ {id:"r2",skill:"dec",prompt:"ما العلاقة الصحيحة بين العددين؟",eq:`${DC(0.22)} ○ ${f("١١","٥٠")}`,opts:["الأول أكبر","الأول أصغر","متساويان","لا يمكن المقارنة"],ans:2,steps:[`${f("١١","٥٠")} = ${f("٢٢","١٠٠")} = ٠٫٢٢`,"إذن العددان متساويان"]},
+ {id:"r3",skill:"muldiv",prompt:"أوجدي الناتج في أبسط صورة:",eq:`${MX(8,5)} × ${f("٥","٧")}`,opts:[MX(-8,7),f("١٥","٣٥"),MX(10,7),MX(8,7)],ans:3,steps:[`حوّلي العدد الكسري: ${MX(8,5)} = ${f("٨","٥")}`,`${f("٨","٥")} × ${f("٥","٧")} = ${f("٤٠","٣٥")} = ${f("٨","٧")}`,`${f("٨","٧")} = ${MX(8,7)}`]},
+ {id:"r4",skill:"muldiv",prompt:"أوجدي الناتج:",eq:`${FR(-4,9)} ÷ (${FR(-4,3)})`,opts:[N(3),N(-3),FR(-1,3),FR(1,3)],ans:3,steps:[`القسمة على كسر = الضرب في مقلوبه: ${FR(-4,9)} × (${FR(-3,4)})`,"سالب × سالب = موجب",`${f("١٢","٣٦")} = ${f("١","٣")}`]},
+ {id:"r5",skill:"addsub",prompt:"أوجدي الناتج في أبسط صورة:",eq:`${f("٤","٩")} + ${f("٨","٩")}`,opts:[MX(19,9),MX(7,3),MX(4,3),N(-1)],ans:2,steps:["المقامان متساويان: اجمعي البسطين ٤ + ٨ = ١٢",`${f("١٢","٩")} = ${f("٤","٣")} = ${MX(4,3)}`]},
+ {id:"r6",skill:"addsub",prompt:"صبّ ناصر ٧ ٢/٥ لترات من وعاء يحتوي ١٠ ١/٤ لترات. فكم لتراً بقي في الوعاء؟",eq:`${MX(41,4)} − ${MX(37,5)}`,opts:[MX(77,20),MX(37,20),MX(57,20),MX(-57,20)],ans:2,steps:[`حوّلي إلى كسور غير فعلية: ${f("٤١","٤")} − ${f("٣٧","٥")}`,`وحّدي المقامات (٢٠): ${f("٢٠٥","٢٠")} − ${f("١٤٨","٢٠")} = ${f("٥٧","٢٠")}`,`${f("٥٧","٢٠")} = ${MX(57,20)} لتر`]},
+ {id:"r7",skill:"pow",prompt:"قيمة العبارة:",eq:`${PW(3,2)} × ${PW(2,3)} × ${ar(7)}`,opts:["٢٥٢","٥٠٠٤","٥٠٤","٤٢٠"],ans:2,steps:[`${PW(3,2)} = ٩ و ${PW(2,3)} = ٨`,"٩ × ٨ × ٧ = ٥٠٤"]},
+ {id:"r8",skill:"pow",prompt:"اكتبي العبارة باستعمال الأسس:",eq:`٧ × ${f("٢","٣")} × ٧ × ${f("٢","٣")} × ${f("٢","٣")}`,opts:[`${PW(7,2)} × (${f("٢","٣")})<sup>٣</sup>`,`${PW(7,3)} × (${f("٢","٣")})<sup>٢</sup>`,`٧ × (${f("٢","٣")})<sup>٣</sup>`,`(٧ × ${f("٢","٣")})<sup>٥</sup>`],ans:0,steps:["العدد ٧ مكرر مرتين: ٧ أس ٢",`الكسر ${f("٢","٣")} مكرر ثلاث مرات: أس ٣`]},
+ {id:"r9",skill:"sci",prompt:"تبلغ المسافة بين الشمس والأرض ٩٢٩٠٠٠٠٠ ميل تقريباً. ما الصيغة العلمية لهذا العدد؟",eq:DC(92900000),opts:[SC(9.29,7),SC(92.9,6),SC(929,5),SC(9.29,6)],ans:0,steps:["ضعي الفاصلة بعد أول رقم: ٩٫٢٩","حرّكنا الفاصلة ٧ منازل، فالأس ٧"]},
+ {id:"r10",skill:"sci",prompt:"تصل درجة الحرارة في مركز الشمس إلى العدد الآتي تقريباً. اكتبيه بالصيغة القياسية:",eq:SC(1.55,6),opts:[DC(15500000),DC(0.00000155),DC(1550000),DC(0.0000155)],ans:2,steps:["الأس موجب ٦: حرّكي الفاصلة ٦ منازل لليمين","١٫٥٥ ← ١٥٥٠٠٠٠"]},
+ {id:"s1",skill:"dec",prompt:"أكملت مها حل ٠٫٩ من واجباتها. اكتبي الكسر العشري على صورة كسر اعتيادي في أبسط صورة:",eq:DC(0.9),opts:[FR(9,10),FR(19,10),FR(9,100),FR(1,9)],ans:0,steps:["٠٫٩ = تسعة أعشار",`= ${f("٩","١٠")}`]},
+ {id:"s2",skill:"dec",prompt:"فاز حمد في ٦ سباقات من ٣٦ سباقاً. ما الكسر العشري الدال على نسبة فوزه مقرباً لأقرب جزء من ألف؟",eq:f("٦","٣٦"),opts:[DC(0.167),DC(0.166),DC(0.6),DC(0.36)],ans:0,steps:[`${f("٦","٣٦")} = ${f("١","٦")}`,"١ ÷ ٦ = ٠٫١٦٦٦…","التقريب لأقرب جزء من ألف: ٠٫١٦٧"]},
+ {id:"s3",skill:"muldiv",prompt:"قطع نجار ٢/٣ قطعة خشب طولها ٢ ١/٤ متر. ما طول القطعة المستعملة؟",eq:`${f("٢","٣")} × ${MX(9,4)}`,opts:[MX(3,2),MX(8,3),FR(3,4),MX(11,4)],ans:0,steps:[`${MX(9,4)} = ${f("٩","٤")}`,`${f("٢","٣")} × ${f("٩","٤")} = ${f("١٨","١٢")} = ${f("٣","٢")}`,`= ${MX(3,2)} متر`]},
+ {id:"s4",skill:"muldiv",prompt:"رف طوله ٢٦ ١/٤ سم، وسمك كل كتاب ١ ٣/٤ سم. ما عدد الكتب التي يمكن وضعها على الرف؟",eq:`${MX(105,4)} ÷ ${MX(7,4)}`,opts:["١٥","١٦","١٤","٢٨"],ans:0,steps:[`${f("١٠٥","٤")} ÷ ${f("٧","٤")} = ${f("١٠٥","٤")} × ${f("٤","٧")}`,"١٠٥ ÷ ٧ = ١٥ كتاباً"]},
+ {id:"s5",skill:"addsub",prompt:"أوجدي الناتج في أبسط صورة:",eq:`${f("٥","٨")} − ${f("٣","٨")}`,opts:[FR(1,2),FR(1,3),FR(1,4),FR(-1,4)],ans:2,steps:["المقامان متساويان: ٥ − ٣ = ٢",`${f("٢","٨")} = ${f("١","٤")}`]},
+ {id:"s6",skill:"addsub",prompt:"أوجدي الناتج في أبسط صورة:",eq:`${MX(77,8)} − ${MX(27,8)}`,opts:[MX(33,4),MX(25,4),MX(13,2),N(6)],ans:1,steps:["اطرحي الأعداد الصحيحة: ٩ − ٣ = ٦",`اطرحي الكسور: ${f("٥","٨")} − ${f("٣","٨")} = ${f("٢","٨")} = ${f("١","٤")}`,`الناتج ${MX(25,4)}`]},
+ {id:"s7",skill:"pow",prompt:`أي العبارات الآتية تكافئ ${PW(2,3)} × ${PW(3,4)}؟`,opts:["٣ × ٣ × ٣ × ٣ × ٢ × ٢ × ٢","٣ × ٣ × ٣ × ٢ × ٢ × ٢ × ٢","٤ × ٤ × ٤ × ٤ × ٢ × ٢ × ٢","١٢ × ٦"],ans:0,steps:[`${PW(3,4)} = ٣ × ٣ × ٣ × ٣`,`${PW(2,3)} = ٢ × ٢ × ٢`]},
+ {id:"s8",skill:"pow",prompt:"مكعب طول ضلعه ٦ سم. ما حجمه باستعمال الأسس؟ (الحجم = الطول × العرض × الارتفاع)",opts:[PW(6,2),PW(6,4),PW(6,3),PW(6,6)],ans:2,steps:["الحجم = ٦ × ٦ × ٦","العدد ٦ مكرر ٣ مرات: ٦ أس ٣"]},
+ {id:"s9",skill:"sci",prompt:"اكتبي العدد بالصيغة القياسية:",eq:SC(6.1,-3),opts:[DC(0.00061),DC(0.061),DC(6100),DC(0.0061)],ans:3,steps:["الأس سالب ٣: حرّكي الفاصلة ٣ منازل لليسار","٦٫١ ← ٠٫٠٠٦١"]},
+ {id:"s10",skill:"sci",prompt:"اكتبي العدد بالصيغة العلمية:",eq:DC(14140000),opts:[SC(1.414,7),SC(14.14,6),SC(1.414,6),SC(1414,4)],ans:0,steps:["ضعي الفاصلة بعد أول رقم: ١٫٤١٤","حرّكنا الفاصلة ٧ منازل، فالأس ٧"]},
+ {id:"t1",skill:"muldiv",prompt:"تحتاج وصفة إلى ٣/٤ كوب سكر للكعكة الواحدة. كم كوباً تحتاج لصنع ٦ كعكات؟",eq:`٦ × ${f("٣","٤")}`,opts:[MX(9,2),MX(15,4),N(8),MX(11,2)],ans:0,steps:[`٦ × ${f("٣","٤")} = ${f("١٨","٤")}`,`${f("١٨","٤")} = ${f("٩","٢")} = ${MX(9,2)} كوب`]},
+ {id:"t2",skill:"addsub",prompt:"يخطط أحمد لإحاطة حديقة مستطيلة بسياج طوله ٤٥ ٣/٤ متراً. إذا كان عرضها ١٠ ١/٢ أمتار، فما طولها؟",opts:[MX(99,8),MX(35,2),MX(99,4),MX(141,4)],ans:0,steps:["العرضان معاً: ٢ × ١٠ ١/٢ = ٢١ متراً",`الطولان معاً: ${MX(183,4)} − ٢١ = ${MX(99,4)}`,`الطول = ${MX(99,4)} ÷ ٢ = ${MX(99,8)} متراً`]},
+ {id:"t3",skill:"muldiv",prompt:"عند ضرب عدد كلي أكبر من ١ في كسر اعتيادي موجب أقل من ١، فإن الناتج يكون دائماً:",opts:["أكبر من العدد الكلي","يقع بين الكسر والعدد الكلي","أقل من الكسر","جميع ما ذُكر"],ans:1,steps:["مثال: ٤ × ١/٢ = ٢","٢ أصغر من ٤ وأكبر من ١/٢، فهو بينهما"]},
+ {id:"t4",skill:"muldiv",prompt:"ما النظير الضربي للعدد الآتي؟",eq:f("١١","٧"),opts:[FR(7,11),FR(-11,7),FR(-7,11),N(1)],ans:0,steps:["النظير الضربي هو مقلوب العدد",`${f("١١","٧")} × ${f("٧","١١")} = ١`]},
+ {id:"t5",skill:"dec",prompt:"اكتبي الكسر العشري الدوري على صورة كسر اعتيادي في أبسط صورة:",eq:"−٠٫٧٧٧…",opts:[FR(-7,9),FR(-7,10),FR(-77,100),FR(-9,7)],ans:0,steps:["افرضي س = ٠٫٧٧٧…، فإن ١٠س = ٧٫٧٧٧…","بالطرح: ٩س = ٧، إذن س = ٧/٩","العدد سالب: −٧/٩"]},
+ {id:"t6",skill:"sci",prompt:"اكتبي العدد بالصيغة القياسية:",eq:SC(1.07042,5),opts:[DC(107042),DC(1070420),DC(10704.2),DC(10704200)],ans:0,steps:["الأس موجب ٥: حرّكي الفاصلة ٥ منازل لليمين","١٫٠٧٠٤٢ ← ١٠٧٠٤٢"]},
+ {id:"t7",skill:"muldiv",prompt:"ناتج ضرب عددين نسبيين سالبين يكون:",opts:["عدداً موجباً","عدداً سالباً","صفراً دائماً","لا يمكن تحديده"],ans:0,steps:["سالب × سالب = موجب"]}
+];
+const BYID2={};BANK2.forEach(q=>{BYID2[q.id]=q;});
+const PRE2=["r1","r2","r3","r4","r5","r6","r7","r8","r9","r10"];
+const POST2=["s1","s2","s3","s4","s5","s6","s7","s8","s9","s10"];
+const DENS=[2,4,5,8,10,20,25,50];
+const G2={
+ dec(r){
+  const d=DENS[ri(r,0,DENS.length-1)];let n;do{n=ri(r,1,d-1);}while(gcd(n,d)!==1);
+  const w=r()<0.4?ri(r,1,5):0,v=w+n/d;
+  if(r()<0.6){
+   const wrongs=byVal(v,[[w+n/100,DC(w+n/100)],[w+d/100,DC(w+d/100)],[v+0.1,DC(v+0.1)],[w+n/(d*10),DC(w+n/(d*10))]],k=>[v+0.01*k,DC(v+0.01*k)]);
+   let p=1;while((10**p)%d)p++;const k=10**p/d;
+   return Object.assign({skill:"dec",prompt:"اكتبي العدد على صورة كسر عشري:",eq:w?MX(w*d+n,d):FR(n,d),steps:[`${f(ar(n),ar(d))} = ${f(ar(n*k),ar(10**p))} (اضربي البسط والمقام في ${ar(k)})`,`إذن العدد = ${DC(v)}`]},pack(r,DC(v),wrongs));
+  }
+  const wrongs=byVal(n/d,[[d/n,FR(d,n)],[(n+1)/d,FR(n+1,d)],[n/(d*10),FR(n,d*10)],[(n)/(d+1),FR(n,d+1)]],k=>[(n+k)/(d+k),FR(n+k,d+k)]);
+  let p=1;while((10**p)%d)p++;
+  return Object.assign({skill:"dec",prompt:"اكتبي الكسر العشري على صورة كسر اعتيادي في أبسط صورة:",eq:DC(n/d),steps:[`${DC(n/d)} = ${f(ar(n*10**p/d),ar(10**p))}`,`بالتبسيط: ${FR(n,d)}`]},pack(r,FR(n,d),wrongs));
+ },
+ muldiv(r){
+  const a=nz(r,-7,7),b=ri(r,2,9),c=nz(r,-7,7),d=ri(r,2,9),div=r()<0.45;
+  const n=div?a*d:a*c,m=div?b*c:b*d,v=n/m;
+  const wrongs=byVal(v,[[-v,FV(-n,m)],[div?(a*c)/(b*d):(a*d)/(b*c),div?FV(a*c,b*d):FV(a*d,b*c)],[(a+c)/(b+d),FV(a+c,b+d)],[(a*c)/(b+d),FV(a*c,b+d)]],k=>[v+k,FV(n+k*m,m)]);
+  const op=div?"÷":"×";const sec=c<0?`(${FR(c,d)})`:FR(c,d);
+  const steps=div?[`القسمة على كسر = الضرب في مقلوبه: ${FR(a,b)} × ${c<0?`(${FR(d,c)})`:FR(d,c)}`,`= ${FR(n,m)}${gcd(n,m)>1?" بعد التبسيط":""}`]:[`اضربي البسطين والمقامين: ${FR(a,b)} × ${sec} = ${f(ar(Math.abs(n)),ar(m))}${n<0?" (والإشارة سالبة)":""}`,`في أبسط صورة: ${FR(n,m)}`];
+  if((a<0)===(c<0))steps.push("الإشارتان متشابهتان، فالناتج موجب");else steps.push("الإشارتان مختلفتان، فالناتج سالب");
+  return Object.assign({skill:"muldiv",prompt:"أوجدي الناتج في أبسط صورة:",eq:`${FR(a,b)} ${op} ${sec}`,steps},pack(r,FV(n,m),wrongs));
+ },
+ addsub(r){
+  const b=ri(r,2,9);let d;do{d=ri(r,2,9);}while(d===b);
+  const a=ri(r,1,b*2),c=ri(r,1,d*2),sub=r()<0.5;
+  const n=sub?a*d-c*b:a*d+c*b,m=b*d,v=n/m;
+  const wrongs=byVal(v,[[sub?(a-c)/(b+d):(a+c)/(b+d),FV(sub?a-c:a+c,b+d)],[sub?(a-c)/m:(a+c)/m,FV(sub?a-c:a+c,m)],[-v,FV(-n,m)],[v+1,FV(n+m,m)]],k=>[v+k/m,FV(n+k,m)]);
+  const L=b*d/gcd(b,d);
+  return Object.assign({skill:"addsub",prompt:"أوجدي الناتج في أبسط صورة:",eq:`${FV(a,b)} ${sub?"−":"+"} ${FV(c,d)}`,
+   steps:[`وحّدي المقامات (${ar(L)}): ${f(ar(a*L/b),ar(L))} ${sub?"−":"+"} ${f(ar(c*L/d),ar(L))}`,`= ${FR(sub?a*L/b-c*L/d:a*L/b+c*L/d,L)}`,`في أبسط صورة: ${FV(n,m)}`]},pack(r,FV(n,m),wrongs));
+ },
+ pow(r){
+  if(r()<0.5){const b=ri(r,2,5),e=ri(r,2,4),c=ri(r,2,9),v=b**e*c;
+   const wrongs=byVal(v,[[b*e*c,ar(b*e*c)],[b**e+c,ar(b**e+c)],[b**(e+1)*c,ar(b**(e+1)*c)],[e**b*c,ar(e**b*c)]],k=>[v+k*c,ar(v+k*c)]);
+   return Object.assign({skill:"pow",prompt:"أوجدي قيمة العبارة:",eq:`${PW(b,e)} × ${ar(c)}`,steps:[`${PW(b,e)} = ${Array(e).fill(ar(b)).join(" × ")} = ${ar(b**e)}`,`${ar(b**e)} × ${ar(c)} = ${ar(v)}`]},pack(r,ar(v),wrongs));}
+  const b=ri(r,2,9);let e;do{e=ri(r,3,6);}while(e===b);
+  const correct=PW(b,e),wrongs=[PW(e,b),`${ar(b)} × ${ar(e)}`,PW(b,e+1)];
+  return Object.assign({skill:"pow",prompt:"اكتبي العبارة باستعمال الأسس:",eq:Array(e).fill(ar(b)).join(" × "),steps:[`العدد ${ar(b)} مكرر ${ar(e)} مرات`,`إذن العبارة = ${correct}`]},pack(r,correct,wrongs));
+ },
+ sci(r){
+  const a=ri(r,11,99)/10;
+  if(r()<0.5){const k=ri(r,3,8),v=a*10**k;
+   const wrongs=[SC(a*10,k-1),SC(a,k-1),SC(a,k+1)];
+   return Object.assign({skill:"sci",prompt:"اكتبي العدد بالصيغة العلمية:",eq:DC(v),steps:[`ضعي الفاصلة بعد أول رقم: ${DC(a)}`,`حرّكنا الفاصلة ${ar(k)} منازل، فالأس ${ar(k)}`]},pack(r,SC(a,k),wrongs));}
+  const neg=r()<0.5,k=neg?-ri(r,2,5):ri(r,3,6),v=+(a*10**k).toFixed(8);
+  const wrongs=byVal(v,[[v*10,DC(v*10)],[v/10,DC(v/10)],[+(a*10**(-k)).toFixed(8),DC(+(a*10**(-k)).toFixed(8))]],j=>[v*10**(j+1),DC(v*10**(j+1))]);
+  return Object.assign({skill:"sci",prompt:"اكتبي العدد بالصيغة القياسية:",eq:SC(a,k),steps:[neg?`الأس سالب: حرّكي الفاصلة ${ar(-k)} منازل لليسار`:`الأس موجب: حرّكي الفاصلة ${ar(k)} منازل لليمين`,`${DC(a)} ← ${DC(v)}`]},pack(r,DC(v),wrongs));
+ }
+};
 
 /* ---------- Google Sheets (اختياري) ---------- */
 const CFG={scriptUrl:"https://script.google.com/macros/s/AKfycbxZAUVLbZHn9UK33mJMecJezFs8Ocws3_F1X5cqDSpXzRiqVeUzQ8p6Ol4PEZH5UpvE/exec"}; /* ← ضعي هنا رابط تطبيق الويب من Google Apps Script */
-const TRIP="المعادلات الخطية";
+let TRIP="المعادلات الخطية";
 const remote=()=>/^https:\/\/script\.google(usercontent)?\.com\//.test(CFG.scriptUrl);
 function post(body){if(!remote())return;try{fetch(CFG.scriptUrl,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({trip:TRIP},body))}).catch(()=>{});}catch(e){}}
 const trTimers={};
@@ -363,7 +468,7 @@ async function pullAll(code){const r=await fetch(CFG.scriptUrl+"?action=all&trip
  const rec=[],tr={};(j.records||[]).forEach(x=>{if(x.type==="tr"&&x.name)tr[x.name]=x.stats||{};else if(x.type==="res")rec.push(x);});rec.sort((a,b)=>a.date<b.date?-1:1);DB.rec=rec;DB.tr=tr;return j.role||"teacher";}
 
 /* ---------- storage ---------- */
-const KEY="remedial-linear-eq-v1";
+let KEY="remedial-linear-eq-v1";
 let canStore=true;
 function load(){try{const v=JSON.parse(localStorage.getItem(KEY));return v&&v.rec?v:{rec:[],tr:{}};}catch(e){canStore=false;return{rec:[],tr:{}};}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){canStore=false;}}
@@ -380,12 +485,19 @@ function fmtDate(iso){try{return new Intl.DateTimeFormat("ar-SA-u-ca-islamic-uma
 function go(view){S.view=view;S.status="";S.confirmClear=false;render();window.scrollTo(0,0);}
 
 /* ---------- views ---------- */
+function vGrade(){
+ return `<div class="hero"><h1>الخطة العلاجية في الرياضيات</h1></div>
+ <p class="sub">اختاري صفّك الدراسي للبدء</p>
+ <div class="actions">${Object.keys(GR).map(k=>`<button class="act primary" data-act="grade" data-k="${k}"><span class="ico">${GR[k].icon}</span><span class="lbl">${GR[k].label}</span><small>${GR[k].title}</small></button>`).join("")}</div>
+ <div class="row"><button class="link" data-act="teacher">لوحة المعلمة</button></div>`;
+}
 function vHome(){
- const groups=["ثالث/١","ثالث/٢"].map(c=>`<optgroup label="${c}">${STUDENTS.filter(s=>s.c===c).map(s=>`<option value="${esc(s.n)}" ${S.student===s.n&&!S.other?"selected":""}>${esc(s.n)}</option>`).join("")}</optgroup>`).join("");
+ if(!S.grade)return vGrade();
+ const groups=CLASSES.map(c=>`<optgroup label="${c}">${STUDENTS.filter(s=>s.c===c).map(s=>`<option value="${esc(s.n)}" ${S.student===s.n&&!S.other?"selected":""}>${esc(s.n)}</option>`).join("")}</optgroup>`).join("");
  const has=!!S.student.trim();
  const pre=has?latest(S.student,"pre"):null;
- return `<div class="hero"><h1>المعادلات الخطية</h1><span class="formula">${N(2)}س + ${N(3)} = ${N(7)}</span></div>
- <p class="sub">الاختبار القبلي والتدريب العلاجي والاختبار البعدي من تجميعات فصل المعادلات الخطية، رياضيات الثالث المتوسط</p>
+ return `<div class="hero"><h1>${GR[S.grade].title}</h1><span class="formula">${GR[S.grade].formula}</span></div>
+ <p class="sub">${GR[S.grade].label}، الاختبار القبلي والتدريب العلاجي والاختبار البعدي. <button class="link" data-act="chgrade">تغيير الصف</button></p>
  <div class="panel">
   <label for="stu">اسم الطالبة</label>
   <select id="stu"><option value="" ${!S.student&&!S.other?"selected":""}>اختاري الاسم</option>${groups}<option value="__other" ${S.other?"selected":""}>طالبة أخرى</option></select>
@@ -458,7 +570,7 @@ function vTrain(){
  </div>`;
 }
 /* ---------- teacher dashboard ---------- */
-const CLASSES=["ثالث/١","ثالث/٢"];
+let CLASSES=["ثالث/١","ثالث/٢"];
 const P=x=>x==null||isNaN(x)?"—":`${ar(Math.round(x))}٪`;
 const NUM=(x,d)=>x==null||!isFinite(x)?"—":`<bdi dir="rtl">${x<0?"−":""}${ar(Math.abs(x).toFixed(d==null?2:d)).replace(".","٫")}</bdi>`;
 const pctOf=rec=>rec?rec.score/rec.total*100:null;
@@ -587,6 +699,7 @@ function vTeacher(){
  const body={over:tOver,students:tStudents,impact:tImpact,questions:tQuestions,follow:tFollow,data:tData}[S.tab]();
  return `<div class="dash-top"><h1>${S.role==="viewer"?"نتائج الطالبات":"لوحة المعلمة"}</h1><div class="row" style="margin:0"><select id="fcls" aria-label="الفصل"><option value="">كل الفصول</option>${CLASSES.map(c=>`<option ${S.cls===c?"selected":""}>${c}</option>`).join("")}</select>${remote()?`<button class="btn ghost" data-act="refresh">تحديث</button>`:""}<button class="btn ghost" data-act="tout">خروج</button></div></div>
  <p class="note">${remote()?("متصلة بـ Google Sheets: تظهر نتائج كل الطالبات من أي جهاز."+(S.role==="viewer"?" أنتِ في وضع الاطلاع فقط.":"")):"بيانات هذا الجهاز فقط. لتجميع نتائج الطالبات من جوالاتهن اربطي الأداة بـ Google Sheets."}${S.status&&S.tab!=="data"?` <span class="status">${S.status}</span>`:""}</p>
+ <div class="seg gsel">${Object.keys(GR).map(k=>`<button class="${S.grade===k?"on":""}" data-act="tgrade" data-k="${k}">${GR[k].label}</button>`).join("")}</div>
  <div class="tabs">${TABS.map(([k,t])=>`<button class="${S.tab===k?"on":""}" data-act="tab" data-k="${k}">${t}</button>`).join("")}</div>
  <div class="panel">${body}</div>`;
 }
@@ -650,6 +763,17 @@ const A={
  },
  clear(){if(S.role==="viewer")return;if(!S.confirmClear){S.confirmClear=true;render();return;}if(remote())post({action:"clear",code:S.tcodePlain});DB={rec:[],tr:{},tcode:DB.tcode};save();S.confirmClear=false;render();}
 };
+const GR={
+ g2:{label:"الثاني المتوسط",title:"الأعداد النسبية",icon:"٢",formula:`${f("١","٢")} + ${f("١","٤")} = ${f("٣","٤")}`,trip:"الأعداد النسبية",key:"remedial-rational-v1",STUDENTS:STUDENTS2,SKILLS:SKILLS2,SYM:SYM2,ORDER:ORDER2,PRE:PRE2,POST:POST2,BANK:BANK2,BYID:BYID2,G:G2},
+ g3:{label:"الثالث المتوسط",title:"المعادلات الخطية",icon:"٣",formula:`${N(2)}س + ${N(3)} = ${N(7)}`,trip:TRIP,key:KEY,STUDENTS,SKILLS,SYM,ORDER,PRE,POST,BANK,BYID,G}
+};
+function setGrade(k){const g=GR[k];if(!g)return;S.grade=k;STUDENTS=g.STUDENTS;SKILLS=g.SKILLS;SYM=g.SYM;ORDER=g.ORDER;PRE=g.PRE;POST=g.POST;BANK=g.BANK;BYID=g.BYID;G=g.G;TRIP=g.trip;KEY=g.key;
+ const cs=[];STUDENTS.forEach(s=>{if(!cs.includes(s.c))cs.push(s.c);});CLASSES=cs;S.cls="";DB=load();try{localStorage.setItem("remedial-grade",k);}catch(e){}}
+A.grade=b=>{setGrade(b.dataset.k);S.student="";S.other=false;go("home");};
+A.chgrade=()=>{S.grade=null;S.student="";S.other=false;go("home");};
+A.tgrade=async b=>{setGrade(b.dataset.k);S.status="";if(remote()&&S.tAuth){S.status="جارٍ التحميل…";render();try{await pullAll(S.tcodePlain);S.status="";}catch(e){S.status="تعذّر التحميل";}}render();};
+const _teacher=A.teacher;A.teacher=b=>{if(!S.grade)setGrade("g3");_teacher(b);};
+try{const k=localStorage.getItem("remedial-grade");if(k&&GR[k])setGrade(k);}catch(e){}
 app.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b||b.disabled)return;const f=A[b.dataset.act];if(f)f(b);});
 render();
 })();
