@@ -158,6 +158,7 @@ body.wide main{max-width:1040px}
 .certimg{display:block;width:100%;height:auto;border-radius:10px;box-shadow:0 4px 18px rgba(0,0,0,.15);margin:10px 0;background:#FFFDF7;min-height:120px}
 .certbox{border:2px solid var(--cc);border-radius:14px;padding:14px;margin:14px 0;display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
 .certbox b{color:var(--cc);font-size:1.15rem}
+.btn.sm{padding:4px 10px;min-height:0;font-size:.85rem}
 .okpin{color:var(--ok);font-weight:600;margin:10px 0 0}
 .dash-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .dash-top select{width:auto}
@@ -709,10 +710,13 @@ function tData(){
  <div class="row" style="justify-content:flex-start"><button class="btn" data-act="copy">نسخ الملخص</button>${S.status?`<span class="status">${S.status}</span>`:""}</div>
  ${S.copyText?`<textarea rows="6" readonly id="copyBox">${esc(S.copyText)}</textarea><p class="note">حدّدي النص وانسخيه يدوياً.</p>`:""}
  <h3>كل المحاولات</h3>
- <div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>الطالبة</th><th>الاختبار</th><th>الدرجة</th></tr></thead><tbody>
- ${DB.rec.length?DB.rec.slice().reverse().map(x=>`<tr><td>${fmtDate(x.date)}</td><td>${esc(x.name)}</td><td>${x.kind==="pre"?"قبلي":"بعدي"}</td><td>${ar(x.score)} من ${ar(x.total)}</td></tr>`).join(""):`<tr><td colspan="4">لا توجد محاولات بعد.</td></tr>`}
+ <div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>الطالبة</th><th>الاختبار</th><th>الدرجة</th>${S.role==="viewer"?"":"<th>حذف</th>"}</tr></thead><tbody>
+ ${DB.rec.length?DB.rec.slice().reverse().map(x=>`<tr><td>${fmtDate(x.date)}</td><td>${esc(x.name)}</td><td>${GR[S.grade]&&GR[S.grade].enrich?"بطاقة التحدي":x.kind==="pre"?"قبلي":"بعدي"}</td><td>${ar(x.score)} من ${ar(x.total)}</td>${S.role==="viewer"?"":`<td><button class="btn ${S.confirmDel===x.id?"danger":"ghost"} sm" data-act="delrec" data-id="${esc(x.id||"")}">${S.confirmDel===x.id?"تأكيد الحذف":"🗑"}</button></td>`}</tr>`).join(""):`<tr><td colspan="5">لا توجد محاولات بعد.</td></tr>`}
  </tbody></table></div>
  <p class="note">${remote()?"النتائج محفوظة في Google Sheets، والحذف يمسحها من الجدول أيضاً.":"تُحفظ النتائج على هذا الجهاز وهذا المتصفح فقط."}</p>${store}
+${S.role==="viewer"?"":(()=>{const names=[...new Set(DB.rec.map(r=>r.name).concat(Object.keys(DB.tr||{})))].sort();return names.length?`<h3>حذف نتائج طالبة واحدة</h3><p class="note">يحذف كل محاولات الطالبة المختارة وتدريبها في هذا الفصل فقط، ولا يمس بقية الطالبات.</p>
+ <div class="row" style="justify-content:flex-start"><select id="delname" aria-label="الطالبة">${names.map(n=>`<option ${S.delName===n?"selected":""}>${esc(n)}</option>`).join("")}</select><button class="btn ${S.confirmDelStu?"danger":""}" data-act="delstu">${S.confirmDelStu?"اضغطي مرة أخرى لتأكيد الحذف":"حذف نتائج الطالبة"}</button></div>`:"";})()}
+ <h3>حذف كل النتائج</h3>
  <div class="row" style="justify-content:flex-start"><button class="btn danger" data-act="clear" ${S.role==="viewer"?"hidden":""}>${S.confirmClear?"اضغطي مرة أخرى لتأكيد الحذف":"حذف كل النتائج"}</button></div>`;
 }
 const TABS=[["over","نظرة عامة"],["students","الطالبات"],["impact","قياس الأثر"],["questions","تحليل الأسئلة"],["follow","المتابعة العلاجية"],["parents","أولياء الأمور"],["data","البيانات"]];
@@ -899,6 +903,11 @@ const A={
   const fallback=()=>{S.copyText=text;S.status="";render();const t=document.getElementById("copyBox");if(t)t.select();};
   try{navigator.clipboard.writeText(text).then(()=>{S.copyText="";S.status="نُسخ الملخص";render();},fallback);}catch(e){fallback();}
  },
+ delrec(b){if(S.role==="viewer")return;const id=b.dataset.id;if(!id)return;if(S.confirmDel!==id){S.confirmDel=id;render();return;}
+  if(remote())post({action:"del",code:S.tcodePlain,ids:[id]});DB.rec=DB.rec.filter(r=>r.id!==id);save();S.confirmDel=null;S.status="حُذفت المحاولة.";render();},
+ delstu(){if(S.role==="viewer")return;const sel=document.getElementById("delname");const n=sel?sel.value:"";if(!n)return;if(!S.confirmDelStu||S.delName!==n){S.confirmDelStu=true;S.delName=n;render();return;}
+  const ids=DB.rec.filter(r=>r.name===n).map(r=>r.id).filter(Boolean).concat(["tr_"+n]);if(remote())post({action:"del",code:S.tcodePlain,ids});
+  DB.rec=DB.rec.filter(r=>r.name!==n);if(DB.tr)delete DB.tr[n];save();S.confirmDelStu=false;S.delName="";S.status=`حُذفت نتائج ${n}.`;render();},
  clear(){if(S.role==="viewer")return;if(!S.confirmClear){S.confirmClear=true;render();return;}if(remote())post({action:"clear",code:S.tcodePlain});DB={rec:[],tr:{},tcode:DB.tcode};save();S.confirmClear=false;render();}
 };
 /*UNITS*/
