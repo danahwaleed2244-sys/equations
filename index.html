@@ -508,7 +508,7 @@ let DB=load();
 const S={tcodePlain:"",tab:"over",qk:"pre",cls:"",tAuth:false,err:"",view:"home",student:"",cls:"",other:false,quiz:null,result:null,train:null,status:"",confirmClear:false,copyText:""};
 const app=document.getElementById("app");
 const clsOf=n=>{const s=STUDENTS.find(x=>x.n===n);return s?s.c:"";};
-const latest=(name,kind)=>{for(let i=DB.rec.length-1;i>=0;i--){const x=DB.rec[i];if(x.name===name&&x.kind===kind)return x;}return null;};
+const latest=(name,kind)=>{let b=null;for(const x of DB.rec){if(x.name===name&&x.kind===kind&&(!b||String(x.date)<String(b.date)))b=x;}return b;};
 const weakOf=rec=>rec?ORDER.filter(s=>rec.skills[s]&&rec.skills[s][0]<rec.skills[s][1]):[];
 function fmtDate(iso){try{return new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura",{day:"numeric",month:"numeric",year:"numeric"}).format(new Date(iso));}catch(e){return iso.slice(0,10);}}
 
@@ -535,10 +535,10 @@ function vHome(){
   ${S.err&&S.view==="home"?`<p class="err">${S.err}</p>`:""}
   ${has?"":`<p class="hint">اختاري اسمك، ثم اكتبي رمزك السري.</p>`}
  </div>
- ${GR[S.grade]&&GR[S.grade].enrich?`<div class="actions"><button class="act primary" data-act="start" data-kind="pre" ${has?"":"disabled"}><span class="ico">★</span><span class="lbl">بطاقة التحدي</span><small>${pre?`آخر نتيجة ${ar(pre.score)} من ${ar(pre.total)}`:"١٠ أسئلة إثرائية"}</small></button></div>`:`<div class="actions">
-  <button class="act ${pre?"":"primary"}" data-act="start" data-kind="pre" ${has?"":"disabled"}><span class="ico">؟</span><span class="lbl">الاختبار القبلي</span><small>${pre?`آخر نتيجة ${ar(pre.score)} من ${ar(pre.total)}`:"١٠ أسئلة"}</small></button>
+ ${GR[S.grade]&&GR[S.grade].enrich?`<div class="actions"><button class="act primary" data-act="start" data-kind="pre" ${has?"":"disabled"}><span class="ico">★</span><span class="lbl">بطاقة التحدي</span><small>${pre?`نتيجتك الأولى ${ar(pre.score)} من ${ar(pre.total)}`:"١٠ أسئلة إثرائية"}</small></button></div>`:`<div class="actions">
+  <button class="act ${pre?"":"primary"}" data-act="start" data-kind="pre" ${has&&!pre?"":"disabled"}><span class="ico">${pre?"✓":"؟"}</span><span class="lbl">الاختبار القبلي</span><small>${pre?`تم ✓ – نتيجتك ${ar(pre.score)} من ${ar(pre.total)}`:"١٠ أسئلة – مرة واحدة فقط"}</small></button>
   <button class="act" data-act="trainlist"><span class="ico">±</span><span class="lbl">التدريب العلاجي</span><small>تمارين بحلول مشروحة</small></button>
-  <button class="act ${pre?"primary":""}" data-act="start" data-kind="post" ${has?"":"disabled"}><span class="ico">✓</span><span class="lbl">الاختبار البعدي</span><small>١٠ أسئلة مختلفة</small></button>
+  ${(()=>{const post=S.student?latest(S.student,"post"):null;return `<button class="act ${pre&&!post?"primary":""}" data-act="start" data-kind="post" ${has&&!post?"":"disabled"}><span class="ico">✓</span><span class="lbl">الاختبار البعدي</span><small>${post?`تم ✓ – نتيجتك ${ar(post.score)} من ${ar(post.total)}`:"١٠ أسئلة مختلفة – مرة واحدة فقط"}</small></button>`;})()}
  </div>`}
  <div class="row">${S.student&&S.verified===S.student&&myCerts().some(x=>x.name===S.student&&x.unit===S.grade)?`<button class="btn ghost" data-act="mycert">🏅 عرض شهادتي</button> `:""}<button class="link" data-act="teacher">لوحة المعلمة</button></div>`;
 }
@@ -882,7 +882,13 @@ const A={
  tab(b){S.tab=b.dataset.k;S.status="";S.copyText="";S.confirmClear=false;render();},
  qk(b){S.qk=b.dataset.k;render();},
  async trainlist(){if(S.view==="home"&&S.student&&!(await checkPin()))return;go("trainlist");},
- async start(b){if(!S.student.trim())return;if(!(await checkPin()))return;S.quiz={kind:b.dataset.kind,qs:makeTest(b.dataset.kind),i:0,ans:Array(PRE.length).fill(null)};go("quiz");},
+ async start(b){if(!S.student.trim())return;if(!(await checkPin()))return;
+  const kind=b.dataset.kind;
+  if(!GR[S.grade].enrich){const nm=kind==="pre"?"الاختبار القبلي":"الاختبار البعدي";
+   let done=!!latest(S.student,kind);
+   if(!done&&remote()){S.err="جارٍ التحقق…";render();try{const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),7000);
+    const r=await fetch(CFG.scriptUrl+"?action=has&trip="+encodeURIComponent(TRIP)+"&name="+encodeURIComponent(S.student)+"&kind="+kind+"&t="+Date.now(),{signal:ctl.signal});clearTimeout(tm);const j=await r.json();if(j&&j.ok&&j.has)done=true;}catch(e){}S.err="";}
+   if(done){S.err=`أدّيتِ ${nm} من قبل، ولا يمكن إعادته. إذا كان عندك عذر، راجعي معلمتك.`;render();return;}}S.quiz={kind:b.dataset.kind,qs:makeTest(b.dataset.kind),i:0,ans:Array(PRE.length).fill(null)};go("quiz");},
  pick(b){const j=+b.dataset.j;
   if(S.view==="quiz"){if(GR[S.grade]&&GR[S.grade].enrich&&S.quiz.ans[S.quiz.i]!==null)return;S.quiz.ans[S.quiz.i]=j;render();if(GR[S.grade]&&GR[S.grade].enrich&&j===S.quiz.qs[S.quiz.i].ans){const c=document.querySelector(".opt.ok");if(c)burst(c);}return;}
   if(S.view==="train"){const T=S.train;if(T.picked!==null)return;T.picked=j;const ok=j===T.q.ans;T.streak=ok?T.streak+1:0;
