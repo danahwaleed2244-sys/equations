@@ -651,7 +651,7 @@ ${GR[S.grade]&&GR[S.grade].enrich?"":`<div class="kpi"><b>${ar(rows.filter(r=>r.
 }
 function tStudents(){
  const rows=rowsAll();
- const st=r=>GR[S.grade]&&GR[S.grade].enrich?(r.pre?`<span class="tag ok">أنجزت التحدي</span>`:`<span class="tag">لم تبدأ</span>`):!r.pre?`<span class="tag">لم تبدأ</span>`:!r.post?`<span class="tag warn">بانتظار البعدي</span>`:(r.imp<=0||r.po<50)?`<span class="tag bad">تحتاج متابعة</span>`:`<span class="tag ok">تحسّنت</span>`;
+ const st=r=>GR[S.grade]&&GR[S.grade].enrich?(r.pre?`<span class="tag ok">أنجزت التحدي</span>`:`<span class="tag">لم تبدأ</span>`):!r.pre?`<span class="tag">لم تبدأ</span>`:!r.post?`<span class="tag warn">بانتظار البعدي</span>`:r.po>=80&&r.imp<=0?`<span class="tag ok">متقنة</span>`:(r.imp<=0||r.po<50)?`<span class="tag bad">تحتاج متابعة</span>`:`<span class="tag ok">تحسّنت</span>`;
  return `<div class="table-wrap"><table><thead><tr><th>الطالبة</th><th>الفصل</th><th>القبلي</th><th>البعدي</th><th>التحسن</th><th>التقدير</th><th>التدريب</th><th>مهارات الضعف (القبلي)</th><th>الشهادة</th><th>الحالة</th></tr></thead><tbody>
  ${rows.map(r=>`<tr><td><b>${esc(r.n)}</b></td><td>${r.cls}</td><td>${P(r.pp)}</td><td>${P(r.po)}</td><td>${r.imp==null?"—":(r.imp>0?"+":r.imp<0?"−":"")+P(Math.abs(r.imp))}</td><td>${grade(r.po!=null?r.po:r.pp)}</td><td>${r.tt?`${ar(r.c)} من ${ar(r.tt)}`:"—"}</td><td class="wrap">${r.weakPre.map(s=>SKILLS[s].name).join("، ")||"—"}</td><td>${(c=>c?`<button class="link" data-act="tcert" data-n="${esc(r.n)}">${CERT_T[c.type].replace("شهادة ","")}<br><small>${c.no}</small></button>`:"—")(certOf(r.n))}</td><td>${st(r)}</td></tr>`).join("")}
  </tbody></table></div><p class="note">النسب من ١٠٠٪، والتقدير حسب آخر اختبار أدّته الطالبة.</p>`;
