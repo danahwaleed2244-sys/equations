@@ -159,6 +159,7 @@ body.wide main{max-width:1040px}
 .certbox{border:2px solid var(--cc);border-radius:14px;padding:14px;margin:14px 0;display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
 .certbox b{color:var(--cc);font-size:1.15rem}
 .btn.sm{padding:4px 10px;min-height:0;font-size:.85rem}
+.progress{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:0 0 12px}.progress>i{display:block;height:100%;background:var(--ok)}
 .okpin{color:var(--ok);font-weight:600;margin:10px 0 0}
 .dash-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .dash-top select{width:auto}
@@ -537,7 +538,7 @@ function vHome(){
  </div>
  ${GR[S.grade]&&GR[S.grade].enrich?`<div class="actions"><button class="act primary" data-act="start" data-kind="pre" ${has?"":"disabled"}><span class="ico">★</span><span class="lbl">بطاقة التحدي</span><small>${pre?`نتيجتك الأولى ${ar(pre.score)} من ${ar(pre.total)}`:"١٠ أسئلة إثرائية"}</small></button></div>`:`<div class="actions">
   <button class="act ${pre?"":"primary"}" data-act="start" data-kind="pre" ${has&&!pre?"":"disabled"}><span class="ico">${pre?"✓":"؟"}</span><span class="lbl">الاختبار القبلي</span><small>${pre?`تم ✓ – نتيجتك ${ar(pre.score)} من ${ar(pre.total)}`:"١٠ أسئلة – مرة واحدة فقط"}</small></button>
-  <button class="act" data-act="trainlist"><span class="ico">±</span><span class="lbl">التدريب العلاجي</span><small>تمارين بحلول مشروحة</small></button>
+  <button class="act" data-act="trainlist"><span class="ico">±</span><span class="lbl">التدريب العلاجي</span><small>${(()=>{const pl=S.student?trainPlan(S.student):null;return !pl?"بعد الاختبار القبلي":pl.length?`${ar(pl.length)} أسئلة على أخطائك فقط`:"لا توجد أخطاء";})()}</small></button>
   ${(()=>{const post=S.student?latest(S.student,"post"):null;return `<button class="act ${pre&&!post?"primary":""}" data-act="start" data-kind="post" ${has&&!post?"":"disabled"}><span class="ico">✓</span><span class="lbl">الاختبار البعدي</span><small>${post?`تم ✓ – نتيجتك ${ar(post.score)} من ${ar(post.total)}`:"١٠ أسئلة مختلفة – مرة واحدة فقط"}</small></button>`;})()}
  </div>`}
  <div class="row">${S.student&&S.verified===S.student&&myCerts().some(x=>x.name===S.student&&x.unit===S.grade)?`<button class="btn ghost" data-act="mycert">🏅 عرض شهادتي</button> `:""}<button class="link" data-act="teacher">لوحة المعلمة</button></div>`;
@@ -573,7 +574,7 @@ function vResult(){
    ${R.qs.map((q,i)=>{const ok=R.ans[i]===q.ans;return `<div class="rev"><p class="q">${ar(i+1)}. ${q.prompt} <span>${q.eq}</span></p><p class="mine ${ok?"ok":"bad"}">إجابة الطالبة: ${q.opts[R.ans[i]]}</p>${ok?"":`<p>الإجابة الصحيحة: ${q.opts[q.ans]}</p>`}</div>`;}).join("")}
   </details>
   <div class="row">
-   ${weak.length?`<button class="btn" data-act="trainlist">تدرّبي على المهارات غير المتقنة</button>`:"<span></span>"}
+   ${weak.length&&rec.kind==="pre"?`<button class="btn" data-act="trainlist">تدرّبي على الأسئلة اللي أخطأتِ فيها</button>`:"<span></span>"}
    <button class="btn ghost" data-act="home">الصفحة الرئيسية</button>
   </div>
  </div>`;
@@ -585,19 +586,27 @@ function vTrainList(){
  <div class="actions">${ORDER.map(s=>{const t=st[s];const isWeak=weak.includes(s);return `<button class="act ${isWeak?"primary":""}" data-act="train" data-skill="${s}"><span class="ico">${SYM[s]}</span><span class="lbl">${SKILLS[s].name}</span><small>${isWeak?"من مهارات الضعف":""}${isWeak&&t?"، ":""}${t?`صحيحة ${ar(t.c)} من ${ar(t.t)}`:""}</small></button>`;}).join("")}</div>
  <div class="row"><button class="link" data-act="home">الصفحة الرئيسية</button></div>`;
 }
+function trainPlan(name){const r=firstRec(name,"pre");if(!r)return null;const out=[];
+ (r.qids||[]).forEach((id,k)=>{const q=BYID[id];if(q&&(!r.answers||r.answers[k]!==q.ans))out.push(q.skill);});return out;}
 function vTrain(){
- const T=S.train,q=T.q,p=T.picked;
+ const T=S.train,N=T.plan.length;
+ if(T.done){return `<div class="panel" style="text-align:center"><h2>أحسنتِ! أنهيتِ التدريب العلاجي 🎉</h2>
+  <p class="sub">تدربتِ على الأسئلة اللي أخطأتِ فيها في الاختبار القبلي، وأجبتِ إجابة صحيحة عن ${ar(T.correct)} من ${ar(T.total)}.</p>
+  <p class="cmp">${T.correct===T.total?"ممتاز! أنتِ جاهزة للاختبار البعدي.":"راجعي طريقة الحل للأسئلة اللي أخطأتِ فيها، ثم ادخلي الاختبار البعدي."}</p>
+  <div class="row" style="justify-content:center"><button class="btn" data-act="home">الصفحة الرئيسية</button><button class="btn ghost" data-act="trainlist">أعيدي التدريب</button></div></div>`;}
+ const q=T.q,p=T.picked;
  const cls=j=>p===null?"":(j===q.ans?"ok":(j===p?"bad":""));
  let fb="";
  if(p!==null){
   const ok=p===q.ans;
   fb=`<div class="fb ${ok?"ok":"bad"}">${ok?`<strong>إجابة صحيحة.</strong><details><summary>طريقة الحل</summary><ol>${q.steps.map(s=>`<li>${s}</li>`).join("")}</ol></details>`
-   :`<strong>ليست الإجابة الصحيحة.</strong><p>تلميح: ${SKILLS[q.skill].hint}</p><p>طريقة الحل:</p><ol>${q.steps.map(s=>`<li>${s}</li>`).join("")}</ol>`}
-   ${ok&&T.streak>=5?`<p class="master">أتقنتِ هذه المهارة: ${ar(T.streak)} إجابات صحيحة متتالية.</p>`:""}</div>`;
+   :`<strong>ليست الإجابة الصحيحة.</strong><p>تلميح: ${SKILLS[q.skill].hint}</p><p>طريقة الحل:</p><ol>${q.steps.map(s=>`<li>${s}</li>`).join("")}</ol>${T.retry?"":`<p>بعدها يجيك سؤال مشابه واحد للتأكد.</p>`}`}</div>`;
  }
- return `<div class="top"><span>${SKILLS[q.skill].name}</span><span>صحيحة متتالية: ${ar(T.streak)}</span></div>
+ const last=T.i===N-1&&(T.retry||(p!==null&&p===q.ans));
+ return `<div class="top"><span>${SKILLS[q.skill].name}</span><span>${T.retry?"سؤال مشابه · ":""}سؤال ${ar(T.i+1)} من ${ar(N)}</span></div>
+ <div class="progress"><i style="width:${Math.round((T.i+(p!==null?1:0))/N*100)}%"></i></div>
  <div class="panel">${qBlock(q,cls)}${fb}
-  <div class="row"><button class="btn ghost" data-act="trainlist">مهارة أخرى</button><button class="btn" data-act="newq" ${p===null?"disabled":""}>سؤال جديد</button></div>
+  <div class="row"><button class="btn ghost" data-act="home">الصفحة الرئيسية</button><button class="btn" data-act="tnext" ${p===null?"disabled":""}>${last?"إنهاء التدريب":"التالي"}</button></div>
  </div>`;
 }
 /* ---------- teacher dashboard ---------- */
@@ -881,7 +890,15 @@ const A={
  async refresh(){if(!remote())return;S.status="";try{await pullAll(S.tcodePlain);S.status="تم التحديث";}catch(e){S.status="تعذّر التحديث";}render();},
  tab(b){S.tab=b.dataset.k;S.status="";S.copyText="";S.confirmClear=false;render();},
  qk(b){S.qk=b.dataset.k;render();},
- async trainlist(){if(S.view==="home"&&S.student&&!(await checkPin()))return;go("trainlist");},
+ async trainlist(){if(S.view==="home"&&S.student&&!(await checkPin()))return;
+  const name=S.student.trim();const plan=name?trainPlan(name):null;
+  if(!plan){S.err="ادخلي الاختبار القبلي أولاً، والتدريب يكون على الأسئلة اللي أخطأتِ فيها.";go("home");return;}
+  if(!plan.length){S.err="ما عندك أخطاء في الاختبار القبلي، أحسنتِ! أنتِ جاهزة للاختبار البعدي.";go("home");return;}
+  S.err="";S.train={plan,i:0,retry:false,correct:0,total:0,done:false,streak:0};S.train.skill=plan[0];S.train.q=pickTrain(plan[0]);S.train.picked=null;go("train");},
+ tnext(){const T=S.train;if(!T||T.picked===null)return;const ok=T.picked===T.q.ans;
+  if(!ok&&!T.retry){T.retry=true;}else{T.i++;T.retry=false;}
+  if(T.i>=T.plan.length){T.done=true;render();window.scrollTo(0,0);return;}
+  T.skill=T.plan[T.i];T.q=pickTrain(T.skill);T.picked=null;render();window.scrollTo(0,0);},
  async start(b){if(!S.student.trim())return;if(!(await checkPin()))return;
   const kind=b.dataset.kind;
   if(!GR[S.grade].enrich){const nm=kind==="pre"?"الاختبار القبلي":"الاختبار البعدي";
@@ -891,7 +908,7 @@ const A={
    if(done){S.err=`أدّيتِ ${nm} من قبل، ولا يمكن إعادته. إذا كان عندك عذر، راجعي معلمتك.`;render();return;}}S.quiz={kind:b.dataset.kind,qs:makeTest(b.dataset.kind),i:0,ans:Array(PRE.length).fill(null)};go("quiz");},
  pick(b){const j=+b.dataset.j;
   if(S.view==="quiz"){if(GR[S.grade]&&GR[S.grade].enrich&&S.quiz.ans[S.quiz.i]!==null)return;S.quiz.ans[S.quiz.i]=j;render();if(GR[S.grade]&&GR[S.grade].enrich&&j===S.quiz.qs[S.quiz.i].ans){const c=document.querySelector(".opt.ok");if(c)burst(c);}return;}
-  if(S.view==="train"){const T=S.train;if(T.picked!==null)return;T.picked=j;const ok=j===T.q.ans;T.streak=ok?T.streak+1:0;
+  if(S.view==="train"){const T=S.train;if(T.done||T.picked!==null)return;T.picked=j;const ok=j===T.q.ans;T.streak=ok?T.streak+1:0;T.total++;if(ok)T.correct++;
    const name=S.student.trim();if(name){const tr=DB.tr[name]||(DB.tr[name]={});const s=tr[T.skill]||(tr[T.skill]={c:0,t:0});s.t++;if(ok)s.c++;save();pushTr(name);}
    render();if(ok){const c=document.querySelector(".opt.ok");if(c)burst(c);}}
  },
